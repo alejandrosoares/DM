@@ -33,7 +33,8 @@ class Opening(models.Model):
         ordering = ['day']
     
     def __update_str_schedule(self):
-
+        """Write schedules or closed in str_schedules field"""
+        
         if not self.closed:
             scheds = self.schedules.all().order_by('order')
             str_schedules = ''

@@ -1,148 +1,132 @@
 /*
-    Functions of contact form
+    CONTACT SECTION:
     See the url name of contact view en contact.html
     whose values is loaded in URL_CONTACT
 */
+
+import sendRequest from "./request.js";
+
 const REGEX_PHONE = /^([0-9-()+]{6,19})+$/,
-  REGEX_EMAIL =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	REGEX_EMAIL = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const inputName = document.querySelector('#contact input[name="name"]'),
-  inputEmail = document.querySelector('#contact input[name="email"]'),
-  textMessage = document.querySelector('#contact textarea[name="message"]'),
-  URL_CONTACT = document.querySelector("#contact input.url-contact").value;
+  	inputEmail = document.querySelector('#contact input[name="email"]'),
+  	textMessage = document.querySelector('#contact textarea[name="message"]');
 
+	  
 function insertMessage(node, message) {
-  const messageNode = node.parentNode.querySelector("p.msg-field");
+	/* Insert error message in fiels of form */
 
-  messageNode.textContent = message;
-  messageNode.classList.add("error");
-  messageNode.classList.remove("d-none");
+  	const messageNode = node.parentNode.querySelector("p.msg-field");
+
+  	messageNode.textContent = message;
+  	messageNode.classList.add("error");
+  	messageNode.classList.remove("d-none");
 }
+
 function removeMessage(e) {
-  const node = e.target,
-    messageNode = node.parentNode.querySelector("p.msg-field");
+	/* Remove error message in fiels of form */
 
-  messageNode.classList.remove("error");
-  messageNode.classList.add("d-none");
+  	const node = e.target,
+    	messageNode = node.parentNode.querySelector("p.msg-field");
+
+  	messageNode.classList.remove("error");
+  	messageNode.classList.add("d-none");
 }
+
+function validateLengthField(field) {
+	if (field.value.length > 0) return true;
+
+	insertMessage(field, "Este campo es requerido.");
+
+	return false;
+}
+
 function validateName() {
-  if (inputName.value.length > 0) return true;
-
-  const msg = "Este campo es requerido";
-
-  insertMessage(inputName, msg);
-
-  return false;
+	return validateLengthField(inputName);
 }
+
 function validateEmail() {
-  const email = inputEmail.value;
+	const email = inputEmail.value;
 
-  let msg;
+	let msg;
 
-  // No valid pattern
-  if (REGEX_EMAIL.test(email) || REGEX_PHONE.test(email)) {
-    return email;
-  }
+	// Validating patterns
+	if (REGEX_EMAIL.test(email) || REGEX_PHONE.test(email)) {
+		return email;
+	}
 
-  // Empty Field
-  if (email.length === 0) {
-    msg = "Este campo es requerido";
-  } else {
-    msg = "Ingrese un email o teléfono válido";
-  }
+	if (validateLengthField(inputEmail)) {
+		// If is not empty, then it does not check the pattern
+		msg = "Ingrese un email o teléfono válido";
+		insertMessage(inputEmail, msg);
+	}
 
-  insertMessage(inputEmail, msg);
-  return false;
+	return false;
 }
+
 function validateMessage() {
-  if (textMessage.value.length > 0) return true;
-
-  const msg = "Este campo es requerido";
-
-  insertMessage(textMessage, msg);
-
-  return false;
+	return validateLengthField(textMessage);
 }
+
 function validateFields() {
-  validateName();
-  validateEmail();
-  validateMessage();
+ 	
+	console.log(validateName());
+  	console.log(validateEmail());
+  	console.log(validateMessage());
 
-  if (validateName() && validateEmail() && validateMessage()) {
-    return true;
-  }
-  return false;
-}
-function buildRequest() {
-  const csrf = document.querySelector(
-    '#contact input[name="csrfmiddlewaretoken"]'
-  ).value;
+  	if (validateName() && validateEmail() && validateMessage()) {
+    	return true;
+  	}
 
-  const data = {
-    name: inputName.value,
-    email: inputEmail.value,
-    message: textMessage.value,
-  };
-
-  const headers = new Headers();
-  headers.set("Content-Type", "application/json");
-  headers.set("X-CSRFToken", csrf);
-  headers.set("Access-Control-Allow-Origin", "same-origin");
-
-  const request = {
-    method: "POST",
-    headers: headers,
-    body: JSON.stringify(data),
-  };
-
-  return request;
-}
-function sendMessage() {
-  const messageDiv = document.querySelector("#contact div.msg-form"),
-    messageNode = messageDiv.querySelector("p");
-
-  const successfulResponse = () => {
-    messageDiv.classList.remove("d-none");
-    messageNode.innerHTML =
-      "Su mensaje ha sido enviado correctamente <br> Nos contactaremos a la brevedad.";
-    messageNode.classList.add("text-success");
-    messageNode.classList.remove("text-danger");
-
-    // reset inputs
-    inputName.value = "";
-    inputEmail.value = "";
-    textMessage.value = "";
-  };
-  const failedResponse = () => {
-    messageDiv.classList.remove("d-none");
-    messageNode.innerHTML =
-      "Ha sucedido un error <br> Por favor, espere un momento e intentelo nuevamente.";
-    messageNode.classList.add("text-danger");
-    messageNode.classList.remove("text-success");
-  };
-  if (validateFields()) {
-    fetch(URL_CONTACT, buildRequest())
-      .then((response) => {
-        if (response.ok) return response.json();
-      })
-      .then((object) => {
-        if (object.status === "ok") {
-          successfulResponse();
-        } else {
-          failedResponse();
-        }
-      })
-      .catch((error) => failedResponse());
-  }
+  	return false;
 }
 
-document.addEventListener("DOMContentLoaded", (e) => {
-  const btnSend = document.querySelector("#contact button.send");
 
-  btnSend.addEventListener("click", sendMessage);
+function successfulResponse() {
+	const messageDiv = document.querySelector("#contact div.msg-form"),
+    	messageNode = messageDiv.querySelector("p");
 
-  inputName.addEventListener("focus", removeMessage);
-  inputEmail.addEventListener("focus", removeMessage);
-  textMessage.addEventListener("focus", removeMessage);
+	messageDiv.classList.remove("d-none");
+	messageNode.innerHTML =` Su mensaje ha sido enviado correctamente 
+							<br> Nos contactaremos a la brevedad.`;
+	messageNode.classList.add("text-muted");
+	messageNode.classList.remove("text-danger");
+
+	// reset inputs
+	inputName.value = "";
+	inputEmail.value = "";
+	textMessage.value = "";
+}
+
+function failedResponse() {
+	const messageDiv = document.querySelector("#contact div.msg-form"),
+    	messageNode = messageDiv.querySelector("p");
+
+	messageDiv.classList.remove("d-none");
+	messageNode.innerHTML = `Ha sucedido un error 
+							<br> Por favor, espere un momento e intentelo nuevamente.`;
+	messageNode.classList.add("text-danger");
+	messageNode.classList.remove("text-muted");
+}
+
+function sendMessage(e) {
+	
+	console.log("Send message");
+
+	if (validateFields()) {
+		console.log("valid fields");
+		sendRequest(successfulResponse, failedResponse);
+	} else {
+		console.log("not valid fields");
+	}
+}
+
+document.addEventListener("DOMContentLoaded", e => {
+	const btnSend = document.querySelector("#contact button.send");
+
+	btnSend.addEventListener("click", sendMessage);
+	inputName.addEventListener("focus", removeMessage);
+	inputEmail.addEventListener("focus", removeMessage);
+	textMessage.addEventListener("focus", removeMessage);
 });

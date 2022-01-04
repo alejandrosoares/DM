@@ -20,9 +20,9 @@ from . import settings
 
 urlpatterns = [
  	path('', include("home.urls")),
-    path('contact/', include("contact.urls")),
-    path('products/', include("products.urls")),
-    path('admin/', admin.site.urls),
+    path('contact', include("contact.urls")),
+    path('products', include("products.urls")),
+    path('admin', admin.site.urls),
 ]
 
 if settings.DEBUG:

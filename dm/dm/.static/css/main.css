@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;700&display=swap');
 @import url('opening.css');
 
 :root{
@@ -9,10 +9,15 @@
   --gray1: rgba(0,0,0,.2); /* Cuando los inputs no tienen foco*/
   --gray2: rgba(0,0,0,.5); /* Cuando los inputs tienen foco */
   --gray3: rgba(0,0,0,.125); /* Separa el cuerpo de la img en las card de los productos */
-  --red1: rgba(255,0,0,0.5); /* inputs no validos */
   --green1: rgba(0,128,0,0.5); /* inputs validos */
+
+  --red: #dc3545;
   --border-color: rgba(0, 0, 0, .05);
   --white: white;
+  --sm: 14px;
+  --md: 16px;
+  --lg: 18px;
+  --x-lg: 20px;
 }
 
 *, *::before, *::after{
@@ -29,7 +34,7 @@ body{
   padding-top: 56px;
   overflow-x: hidden;
   background-color: #f8f8f8;
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Quicksand', sans-serif;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;

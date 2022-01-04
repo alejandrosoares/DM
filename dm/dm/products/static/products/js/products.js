@@ -17,7 +17,7 @@ function createProductList(){
 
     PRODUCTS.forEach(p => {
         const card = template.querySelector("div.card"),
-            img = template.querySelector("div.con-img img"),
+            img = template.querySelector("div.product-header img"),
             name = template.querySelector("div.name > p"),
             price = template.querySelector("div.price > span"),
             code = template.querySelector("div.in-stock > span");

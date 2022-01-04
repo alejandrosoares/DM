@@ -1,22 +1,24 @@
 {% load static %}
 
-<div class="row my-4" id="products">
+<div class="row products" id="products">
 
-   <div class="col-12">
+   <div class="col-12 products-search">
       {% include 'products/search.html' %}
    </div>
 
    <div class="col-12 information d-none">
       <input type="text" class="url-all" value="{% url 'product:all' %}">
    </div>
+
    <div class="col-12 loader">
       <img src="{% static 'img/loader.svg' %}" alt="Load products">
    </div>
 
    <template id="item-product">
-      <div class="col-lg-3 col-sm-6 my-1 px-1 container" onclick="">
-         <div class="card custom-card h-100">
-            <div class="con-img">
+      <div class="col-lg-3 col-sm-6 my-1 px-1" onclick="">
+         <div class="card product">
+
+            <div class="product-header">
                <img class="card-img-top custom-img" src="" alt="Image">
                <div class="price">
                   <span></span>
@@ -25,13 +27,13 @@
                   <span></span>
                </div>
             </div>
-            <div class="card-body py-1">
-               <div class="row">
-                  <div class="col-12 name">
-                     <p></p>
-                  </div>
+
+            <div class="product-title">
+               <div class="name">
+                  <p></p>
                </div>
             </div>
+
          </div>
       </div>
    </template>

@@ -1,0 +1,106 @@
+/* .contact-information div div a {
+    color:var(--gray);
+  }
+  
+  .name-input, .email-phone-input, .message-input{
+    border: 1px solid var(--gray1);
+    border-radius: 5px;
+    width: 100%;
+    margin:5px auto;
+    -webkit-box-shadow: 0 0 10px -4px var(--gray1);
+    -moz-box-shadow: 0 0 10px -4px var(--gray1);
+    box-shadow: 0 0 10px -4px var(--gray1);
+    padding: 2px 5px;
+  }
+  
+  
+  .name-input:focus, .email-phone-input:focus, .message-input:focus{
+    border: 1px solid var(--gray2);
+     -webkit-box-shadow: 0 0 10px 1px  var(--gray2);
+      -moz-box-shadow: 0 0 10px 1px  var(--gray2);
+      box-shadow: 0 0 10px 1px  var(--gray2);
+  }
+  
+  .btn-send-form{
+    border-style: none;
+    background: var(--gray-dark);
+    width: 20%;
+    color:white;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 17px;
+    transition: 2s all ease;
+  }
+  
+  .btn-disabled{
+    opacity: 0.7;
+  }
+  
+  .error{
+    border: 1px solid var(--red1);
+    -webkit-box-shadow: 0 0 10px -4px var(--red1);
+    -moz-box-shadow: 0 0 10px -4px var(--red1);
+    box-shadow: 0 0 10px -4px var(--red1);
+  }
+  
+  .valid{
+    -webkit-box-shadow: 0 0 10px -4px var(--green1);
+    -moz-box-shadow: 0 0 10px -4px var(--green1);
+    box-shadow: 0 0 10px -4px var(--green1);
+    border: 1px solid var(--green1);
+  }
+  
+  .form-messages{
+    display: none;
+  }
+  #messagesListForm{ list-style: none; }
+  
+  .text-error{
+    color: red;
+    text-align: center;
+  }
+  .text-successful{
+    color: green;
+    text-align: center;
+  }
+  
+  .google-maps-container iframe{
+    border: 2px solid var(--gray1);
+    border-radius: 5px;
+  }
+  
+  @media screen  and (max-width: 250px){
+    .google-maps-container iframe{
+      max-width: 200px;
+      max-height: 100px;
+    }
+  }
+  
+  @media screen  and (max-width: 300px){
+    .google-maps-container iframe{
+      max-width: 200px;
+      max-height: 100px;
+    }
+  }
+  
+  @media screen  and (min-width: 301px) and (max-width: 576px){
+    .google-maps-container iframe{
+      width: 300px;
+      height: 150px;
+    }
+  }
+  
+  @media screen  and (min-width: 577px) and (max-width: 768px){
+    .google-maps-container iframe{
+      width: 500px;
+      height: 250px;
+    }
+  }
+  
+  @media screen  and (min-width: 769px){
+    .google-maps-container iframe{
+      width: 700px;
+      height: 350px;
+    }
+  } */
+

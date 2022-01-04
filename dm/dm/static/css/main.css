@@ -1,0 +1,254 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+:root{
+  /* Color utilizando en la etiqueta de categorias */
+  --blue1: #0268D5; /* Cuando la etiqueta tiene el evento hover o esta seleccionada */
+
+  /* Colores para el formulario de contacto  y el box shadow del card del producto*/
+  --gray1: rgba(0,0,0,.2); /* Cuando los inputs no tienen foco*/
+  --gray2: rgba(0,0,0,.5); /* Cuando los inputs tienen foco */
+  --gray3: rgba(0,0,0,.125); /* Separa el cuerpo de la img en las card de los productos */
+  --red1: rgba(255,0,0,0.5); /* inputs no validos */
+  --green1: rgba(0,128,0,0.5); /* inputs validos */
+}
+
+*, *::before, *::after{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
+body{
+  padding-top: 56px;
+  overflow-x: hidden;
+  background-color: #f8f8f8;
+  font-family: 'Ubuntu', sans-serif;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+main{
+  flex-grow: 1;
+}
+.loader img{
+  display: block;
+  margin:30px auto;
+}
+.carousel-item {
+  height: 65vh;
+  min-height: 300px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+.cerrar-modal{
+  position: absolute;
+  left: 5px;
+  top:-13px;
+}
+
+.cerrar-modal i {
+  color:var(--gray-dark);
+  font-size: 40px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.cerrar-modal i:hover{
+  font-size: 38px;
+}
+
+
+.categories-list{
+  list-style: none;
+}
+
+
+.categories-list li{
+  display: inline;
+}
+
+.custom-span-category{
+  padding: .5em .7em;
+  cursor: pointer;
+  margin:1px;
+}
+
+
+.custom-span-category:hover{
+  background: var(--blue1);
+}
+
+.welcome-tex{
+  font-family: 'Dancing Script', cursive;
+  font-size: 25px;
+}
+
+.category-activate{
+  padding: .7em 1em;
+  cursor:none;
+  background: var(--blue1);
+}
+
+@media screen and (max-width: 576px) {
+  .cerrar-modal{
+    left: -7px;
+    top:-27px;
+    font-size: 38px;
+  }
+  .img-modal{
+    padding-top: 5px;
+  }
+}
+
+/*
+@media screen and (max-width: 576px) {
+  .img-modal{
+    padding-top: 5px;
+  }
+}
+*/
+
+/* Ajuste de los estilos */
+
+.welcome-text{
+  font-family: 'Dancing Script', cursive;
+}
+
+@media screen  and (max-width: 250px){
+  .img-modal{
+    max-width: 200px;
+    max-height: auto;
+  }
+  .welcome-text{
+    font-size: 40px;
+  }
+}
+
+@media screen  and (max-width: 300px) and (min-width: 251px){
+  .img-modal{
+    max-width: 250px;
+    max-height: auto;
+  }
+  .welcome-text{
+    font-size: 45px;
+  }
+}
+
+@media screen  and (min-width: 301px) and (max-width: 576px){
+  .img-modal{
+    max-width: 300px;
+    height: auto;
+  }
+  .welcome-text{
+    font-size: 55px;
+  }
+}
+
+@media screen  and (min-width: 577px){
+  .img-modal{
+    max-width: 430px;
+    height: auto;
+  }
+  .welcome-text{
+    font-size: 60px;
+  }
+}
+
+.footer-list{
+  list-style: none;
+  padding-left: 0;
+}
+
+.footer-list li a{
+  color:rgba(255,255,255,.5);
+}
+.footer-list li a:hover{
+  color:rgba(255,255,255,.7);
+}
+
+.text-copyright{
+  color:rgba(255,255,255,.5);
+  font-size: 14px; 
+}
+
+i.fa{
+  margin-right: 5px;
+}
+
+@media screen  and (max-width: 767px){
+  .center-items li{
+    text-align: center;
+  }
+}
+
+.nav-products{
+  display: none;
+}
+.nav-products-lg{
+  position: absolute; 
+  top: 40px; 
+  left: 0; 
+  background-color:var(--dark);
+  padding-left: 20px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+
+/* Button para mostrar mas productos 
+
+.container-more{
+  border:1px solid var(--gray1);
+  border-radius: 50%;
+  display: inline;
+  padding: 5px;
+  -webkit-box-shadow: 0 0 10px -4px var(--gray2);
+  -moz-box-shadow: 0 0 10px -4px var(--gray2);
+  box-shadow: 0 0 10px -4px var(--gray2);
+}
+
+.container-more > img{
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.container-more:hover{
+-webkit-box-shadow: 0 0 10px 1px  var(--gray2);
+  -moz-box-shadow: 0 0 10px 1px var(--gray2);
+  box-shadow: 0 0 10px 1px  var(--gray2);
+}
+
+.container-more:hover img{
+  max-width: 32px;
+  max-height: 32px;
+}
+
+*/
+
+#attention, #contact, #products{
+  scroll-margin-top: 60px;
+}
+.schedule{
+  background-color: white;
+  border:1px solid rgba(0,0,0,.2);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.schedule > div{
+  border-bottom: rgba(0,0,0,.2);
+  padding: 2px 10px;
+  color:rgba(0,0,0,.5)
+}
+.schedule p{
+ margin-bottom: 0;
+ text-align: left;
+}

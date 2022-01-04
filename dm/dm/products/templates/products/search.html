@@ -1,0 +1,35 @@
+<div class="row justify-content-center" id="search">
+    <div class="col-12">
+        <h2 class="text-center">Nuestros productos</h2>
+    </div>
+
+    <div class="col-12 col-md-8">
+
+        <!-- Buscador -->
+        <div class="row mx-0 my-4 justify-content-center">
+            <div class="col-10 col-sm-11 p-0">
+                <input type="text" name="q" id="searchInput" class="custom-input w-100" placeholder="¿Que buscas?"
+                    value="" onkeypress="KeyPress(event)" onkeyup="SearchWords()" onclick="ShowResults(event)"
+                    autocomplete="off">
+            </div>
+            <div class="col-2 col-sm-1 p-0">
+                <button type="button" class="custom-btn w-100" onclick="Search()" id="searchBtn"><i
+                    class="fa fa-search"></i></button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- inicio de categorias -->
+    <div class="col-12 pl-0 pr-0">
+        <ul class="categories-list">
+            <li><span class="badge badge-primary custom-span-category categories" idvalue="0"
+                    onclick="SearchByCategory('0')">Todos</span></li>
+            {% for c in categories %}
+            <li><span class="badge badge-primary custom-span-category categories" idvalue="{{c.id}}"
+                    onclick="SearchByCategory('{{c.id}}')">{{c.category}}</span></li>
+            {% endfor %}
+        </ul>
+    </div>
+    <!-- fin de categorias -->
+</div>

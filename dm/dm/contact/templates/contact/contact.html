@@ -1,0 +1,58 @@
+<div class="row justify-content-center my-4" id="contact">
+  <div class="col-12">
+    <h2 class="text-center">Contacto</h2>
+  </div>
+  <!--- contact form -->
+  <div class="col-12 col-md-8 col-lg-6 form-content">
+    <div class="row justify-content-center">
+      <input type="hidden" class="url-contact" value="{% url 'contact:contact' %}">
+      {% csrf_token %}
+      <div class="col-12 msg-form d-none">
+        <p class="text-center"></p>
+      </div>
+      <div class="col-12 name">
+        <p class="msg-field d-none"></p>
+        <input type="text" class="field-form" name="name" placeholder="Nombre">
+      </div>
+      <div class="col-12 email">
+        <p class="msg-field d-none"></p>
+        <input type="email" class="field-form" name="email" placeholder="Email o tel&eacute;fono">
+      </div>
+      <div class="col-12 message">
+        <p class="msg-field d-none"></p>
+        <textarea class="field-form" name="message" cols="30" rows="4"
+          placeholder="Ingrese su mensaje aqu&iacute;"></textarea>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-primary w-100 send">Enviar</button>
+      </div>
+    </div>
+  </div>
+  <!-- contact information -->
+  <div class="col-12 form-information mt-2">
+    <div class="row justify-content-center">
+      <div class="col-12 title-information">
+        <p class="text-muted text-center m-2">Tambi&eacute;n puedes encontrarnos en:</p>
+      </div>
+      <div class="col-12 d-flex justify-content-center">
+        <ul>
+          <li>
+            <a href="https://www.facebook.com">
+              <i class="fa fa-facebook-f"></i>
+            </a>
+          </li>
+          <li>
+            <a href="https://api.whatsapp.com/send?phone=+55555555555">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+          </li>
+          <li>
+            <a href="mailto:tiendamarcia0@gmail.com">
+              <i class="fa fa-envelope"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

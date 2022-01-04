@@ -1,0 +1,10 @@
+django==3.2.5
+Pillow==8.3.2
+redislite==5.0.165407
+django-redis==4.12.1
+django-webp-converter==0.3.0
+pyyaml==5.4
+ua-parser==0.10.0
+user-agents==2.2.0
+django-user-agents
+

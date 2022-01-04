@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <div class="row my-4">
+        <div class="col-12">
+            <div class="row product">
+                <div class="col-12 col-md-8 img">
+                    <img src="/static/img/3.png" alt="">
+                </div>
+                <div class="col-12 col-md-4 detail">
+                    <div class="title">
+                        <h2>Camion con acoplado</h2>
+                    </div>
+                    <div class="row extra">
+                        <div class="col-6 availability">
+                            <p class="text-success text-left">Disponible</p>
+                        </div>
+                        <div class="col-6 code">
+                            <p class="text-muted text-right">C&oacute;d: 02</p>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        </p>
+                    </div>
+                    <div class="consult">
+                        <button type="button" class="btn btn-success d-block w-100">
+                            Consultar <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"> back</i></a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

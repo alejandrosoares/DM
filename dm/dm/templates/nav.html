@@ -1,0 +1,43 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home:home' %}">Tienda Marcia</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+            aria-label="Toggle navigation" id="btnNavbarToggler">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                {% if request.path == "/" %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#home" onclick="HideNavBarElements()">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#products" onclick="HideNavBarElements()">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#attention" onclick="HideNavBarElements()">Horarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact" onclick="HideNavBarElements()">Contacto</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:home' %}#home" onclick="HideNavBarElements()">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:home' %}#products"
+                        onclick="HideNavBarElements()">Productos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:home' %}#attention"
+                        onclick="HideNavBarElements()">Horarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home:home' %}#contact" onclick="HideNavBarElements()">Contacto</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,65 @@
+#contact .field-form {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  transition: border 0.2s ease;
+  color: var(--dark);
+}
+#contact .name,
+#contact .email,
+#contact .message {
+  margin: 5px auto;
+}
+#contact .field-form:focus{
+  border: 3px solid var(--blue);
+  outline: none;
+}
+#contact .msg-field {
+  margin-bottom: 0;
+  text-align: center;
+  font-size: 13px;
+  height: 20px;
+  padding: 0 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+#contact .msg-field.error {
+  color: var(--red);
+}
+#contact .msg-field.error + input,
+#contact .msg-field.error + textarea {
+  border: 2px solid red;
+}
+
+#contact .title-information {
+  font-size: 0.9rem;
+}
+#contact ul {
+  list-style: none;
+  padding-left: 0;
+}
+#contact ul li {
+  display: inline-block;
+}
+#contact a {
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: var(--gray);
+  border-radius: 50px;
+  width: 35px;
+  height: 35px;
+  margin: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#contact a > i {
+  margin-right: 0;
+}
+
+#contact a:hover {
+  color: var(--dark);
+  background-color: rgba(0, 0, 0, 0.1);
+}

@@ -14,8 +14,9 @@ ALLOWED_HOSTS = ['*']
 ADMINS = [('Alejandro','soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro','soaresalejandro@outlook.com')]
 
+# Apps
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -23,14 +24,21 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_user_agents',
-    'attention',
+]
+
+LOCAL_APPS = [
     'home',
     'products',
     'contact',
     'vendors',
     'user_information',
-    'webp_converter',
+    'opening',
+    'webp_converter'
 ]
+
+THIRD_PARTY_APPS = []
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
 # Redislite

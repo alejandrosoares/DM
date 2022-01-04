@@ -1,14 +1,19 @@
 from redislite import StrictRedis
 from pathlib import Path
 import os
+import json
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = ')3zf)0_e+pivts3l0i*82*-&y2%v!132x^85tvywvmnlr%4-pw'
+# Gettings Enviroment variables
+with open(BASE_DIR / ".env"  / "env.json") as f:
+    ENV = json.loads(f.read())
+
+SECRET_KEY = ENV["DJANGO"]["SECRET_KEY"]
 
 DEBUG = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-DOMAIN = "http"
+DOMAIN = 'https://b032f1195da6.ngrok.io'
 
 ALLOWED_HOSTS = ['*']
 ADMINS = [('Alejandro','soaresalejandro@outlook.com')]
@@ -156,10 +161,25 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / '.media'
 
 
+# Email
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ENV['EMAIL']['USER']
+EMAIL_HOST_PASSWORD = ENV['EMAIL']['PASSWORD']
+
+
+
+# Bitly
+
+TOKEN_BITLY = ENV['BITLY']['TOKEN']
+
+
+# Security
+
 '''
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 '''
-TOKEN_BITLY = '3792d49cc9a9c03651536c5420eadbf0fc0bd8a2'
-DOMAIN = 'https://b032f1195da6.ngrok.io'

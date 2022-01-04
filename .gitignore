@@ -1,0 +1,9 @@
+# Folders
+
+dm/venv
+dm/img_with_text
+
+
+# Files
+
+*.pyc

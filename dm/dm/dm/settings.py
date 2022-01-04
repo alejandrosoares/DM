@@ -137,24 +137,24 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 
-STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-
-'''
+# Static files
+"""
     Cambiar STATICFILE_DIRS antes de realizar el collectstatic y configurar el STATIC_ROOT
     Se toma los archivos estaticos del directorio static que esta en la base del proyecto
-'''
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    # BASE_DIR / 'contact/static'
-]
+"""
+STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_DIRS = [ BASE_DIR / '.static']
+
+
+
+# Media Files
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / '.media'
+
 
 '''
 SESSION_COOKIE_SECURE = True

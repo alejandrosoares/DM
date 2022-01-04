@@ -13,38 +13,55 @@ from .variables import (
 class Opening(models.Model):
     """Opening Times"""
 
-    day = models.SmallIntegerField("Day", choices=DAYS)
+    day = models.SmallIntegerField(
+        'Day', 
+        choices=DAYS, 
+        unique=True,
+        error_messages= {
+            'unique': 'Ya existe este día.'
+        }
+    )
     str_schedules = models.CharField(
-        "Schedules", 
+        'Schedules', 
         max_length=36, 
         null=True,
         blank=True
     )
+    closed = models.BooleanField('Closed', default=False)
 
     class Meta:
         ordering = ['day']
     
-    def update_str_schedule(self):
+    def __update_str_schedule(self):
 
-        scheds = self.schedules.all().order_by('order')
-        str_schedules = ''
-        last_item = scheds.last()
+        if not self.closed:
+            scheds = self.schedules.all().order_by('order')
+            str_schedules = ''
+            last_item = scheds.last()
 
-        for sched in scheds:
-            # Add schedule to str_schedule
-            str_schedules += '{} a {}'.format(
-                sched.start,
-                sched.end
-            )
-            if not sched == last_item:
-                # Is not last item
-                str_schedules += ' - '
+            for sched in scheds:
+                # Add schedule to str_schedule
+                str_schedules += '{} a {}'.format(
+                    sched.start,
+                    sched.end
+                )
+                if not sched == last_item:
+                    # Is not last item
+                    str_schedules += ' - '
 
-        self.str_schedules = str_schedules
-        self.save()
+            self.str_schedules = str_schedules
+        else:
+            # Closed
+            self.str_schedules = 'Cerrado'
 
     def get_day(self):
         return DIC_DAYS[self.day]
+
+    def save(self, *args, **kwargs):
+
+        self.__update_str_schedule()
+
+        super(__class__, self).save(*args, **kwargs)
 
     def __str__(self):
         return DIC_DAYS[self.day]
@@ -58,23 +75,15 @@ class Schedule(models.Model):
         on_delete=models.CASCADE,
         related_name='schedules'
     )
-    start = models.CharField("Start", max_length=5, choices=HOURS)
-    end = models.CharField("End",  max_length=5, choices=HOURS)
-    order = models.SmallIntegerField("Order", blank=True)
-    closed = models.BooleanField("Closed", default=False)
+    start = models.CharField('Start', max_length=5, choices=HOURS)
+    end = models.CharField('End',  max_length=5, choices=HOURS)
+    order = models.SmallIntegerField('Order', blank=True)
     
-    def get_status(self):
-        """Get status of schedule"""
-
-        if self.closed:
-            return 'Cerrado'
-        
-        return f'{self.start} a {self.end}'
     
     def __update_opening(self):
-        """Trigger update schedules"""
+        """Trigger update Opening instance"""
 
-        self.opening.update_str_schedule()
+        self.opening.save()
     
     def __set_schedule_order(self):
         """Set schedule order

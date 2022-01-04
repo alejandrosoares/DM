@@ -6,6 +6,8 @@ from django.views.decorators.http import require_http_methods
 from products.models import Product, Category, Brand
 from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation, Publications
 
+from opening.models import Opening
+
 from functions.recordMaker import RecordMaker
 from functions.createUserId import CreateUserId
 from functions.recordVisit import RecordVisit
@@ -137,14 +139,27 @@ def HomeView(request):
 	publicationCode = request.GET.get("c", False)
 	lastPage = request.META.get('HTTP_REFERER', None)
 
-	print("Inside home view")
 	acceptWebp, browser, versionBrowser =  AWCookies(request, request.COOKIES)
 
 	createdUser, userid = GetUserId(request.COOKIES)
 
 	products, isPublication = GetProducts(publicationCode, userid)
 
-	response = render(request, 'home/home.html', {'products':products,'categories':categories, 'listWords':listWords, 'isPublication':isPublication, 'acceptWebp':acceptWebp})
+
+
+	# Opening
+	opening = Opening.objects.all()
+
+	context = {
+		'products':products, 
+		'categories':categories, 
+		'listWords':listWords, 
+		'isPublication':isPublication, 
+		'acceptWebp':acceptWebp,
+		'opening': opening
+		}
+
+	response = render(request, 'home/home.html', context)
 
 	date = GetDateForCookies()
 

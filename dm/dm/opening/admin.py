@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Opening, Schedule
+
+admin.site.register(Opening)
+admin.site.register(Schedule)
+

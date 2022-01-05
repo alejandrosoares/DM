@@ -5,19 +5,21 @@ from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
+# Own
+from dm.settings import TOKEN_BITLY, DOMAIN, BASE_DIR
 from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation, Publications
-
 from opening.models import Opening
 from products.models import Product, Category, Brand
+from .utils import (
+   RecordMaker,
+   create_userid_for_cookies,
+   RecordVisit,
+   RoundPrice
+)
 
-from functions.recordMaker import RecordMaker
-from functions.createUserId import CreateUserId
-from functions.recordVisit import RecordVisit
-from functions.roundPrice import RoundPrice as rp
 
+# Third Party
 from datetime import datetime, timedelta
-
-from dm.settings import TOKEN_BITLY, DOMAIN, BASE_DIR
 import requests
 import json
 import os
@@ -32,6 +34,19 @@ def get_date_cookies():
 
    return date.strftime("%a, %d-%b-%Y %H:%M:%S GMT")
 
+def get_userid_cookies(dicCookies):
+   """Get userid for cookies
+   Get or create userid for insert in cookies
+
+   @param: dict
+   @return: bool, str
+   """
+
+   if 'userid' not in dicCookies:
+
+      return True, create_userid_for_cookies()
+
+   return False, dicCookies.get('userid')
 
 def GetProducts(publicationCode, userid):
     #	Funcion para obtener los productos de manera personalizada
@@ -66,7 +81,6 @@ def GetProducts(publicationCode, userid):
 def DetectUserAgent(request):
 
     acceptWebp = False
-
     browser = request.user_agent.browser.family
     stringVersion = request.user_agent.browser.version_string
 
@@ -111,18 +125,7 @@ def DetectUserAgent(request):
     return acceptWebp, browser, versionBrowser
 
 
-def GetUserId(dicCookies):
-    # Obtiene o crea el userid para colocarlos en las cookies
-    created = False
 
-    if 'userid' not in dicCookies:
-        date = get_date_cookies()
-        userid = CreateUserId()
-        created = True
-    else:
-        userid = dicCookies.get('userid')
-
-    return created, userid
 
 
 def AWCookies(request, dicCookies):
@@ -152,7 +155,7 @@ def HomeView(request):
     publicationCode = request.GET.get("c", False)
     lastPage = request.META.get('HTTP_REFERER', None)
     acceptWebp, browser, versionBrowser = AWCookies(request, request.COOKIES)
-    createdUser, userid = GetUserId(request.COOKIES)
+    createdUser, userid = get_userid_cookies(request.COOKIES)
     products, isPublication = GetProducts(publicationCode, userid)
 
     # Opening

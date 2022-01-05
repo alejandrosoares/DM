@@ -25,16 +25,17 @@ def ProductsView(request):
 
 
 def ProductView(request, product_id):
-
+    """Product View."""
+    
     try:
         product = Product.objects.get(id=product_id)
 
-        response = render(
-            request, 
-            "products/product.html",
-            {"product": product}
-            )
+        context =  {
+            "product": product
+            }
+        return render(request, "products/product.html", context)
+    
     except Product.DoesNotExist:
-        response = HttpResponse("Product Not Found")
+        pass
 
-    return response
+    return HttpResponse("Product Not Found")

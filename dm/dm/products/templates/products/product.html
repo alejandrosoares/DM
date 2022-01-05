@@ -2,35 +2,46 @@
 
 {% load static %}
 
+{% block style %}
+    <link href="{% static 'products/css/product.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row my-4">
         <div class="col-12">
             <div class="row product">
-                <div class="col-12 col-md-8 img">
-                    <img src="/static/img/3.png" alt="">
+                <div class="col-12 col-md-8 product-img">
+                    <img src="{{product.img.url}}" alt="Product Image">
                 </div>
-                <div class="col-12 col-md-4 detail">
-                    <div class="title">
-                        <h2>Camion con acoplado</h2>
+                <div class="col-12 col-md-4 product-detail">
+                    <div class="row product-title">
+                        <div class="col-12">
+                            <h2>{{product.name}}</h2>
+                        </div>
                     </div>
-                    <div class="row extra">
+                    <div class="row product-info">
+                        <div class="col-6 price">
+                            <p class="text-success text-left">$ {{product.price}}</p>
+                        </div>
                         <div class="col-6 availability">
-                            <p class="text-success text-left">Disponible</p>
-                        </div>
-                        <div class="col-6 code">
-                            <p class="text-muted text-right">C&oacute;d: 02</p>
+                            <p class="text-muted text-right">Disponible</p>
                         </div>
                     </div>
-                    <div class="description">
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                        </p>
+                    <div class="row product-description">
+                        <div class="col-12">
+                            <p>{{product.description}}</p>
+                        </div>
+                        <div class="col-12 code">
+                            <p class="text-muted text-left">C&oacute;d: {{product.code}}</p>
+                        </div>
                     </div>
-                    <div class="consult">
-                        <button type="button" class="btn btn-success d-block w-100">
-                            Consultar <i class="bi bi-whatsapp" aria-hidden="true"></i>
-                        </button>
+                    <div class="row product-consult">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-success d-block w-100">
+                                Consultar <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                            </button>                                
+                        </div>
                     </div>
                 </div>
             </div>

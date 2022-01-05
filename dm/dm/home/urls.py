@@ -1,6 +1,15 @@
+# Django
 from django.urls import path
-from .views import HomeView, SearchView, SearchByIdView, SearchByCategoryView, HomeWholeSalerView, ReceivingData
 
+# Own
+from .views import (
+   HomeView, 
+   SearchView, 
+   SearchByIdView, 
+   SearchByCategoryView, 
+   HomeWholeSalerView, 
+   ReceivingData
+)
 from .views import Pruebas,Pruebas2
 
 app_name = "home"

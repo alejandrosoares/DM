@@ -2,9 +2,10 @@
 from django.urls import path
 
 # Own
-from .views import ProductView
+from .views import ProductsView, ProductView
 
-app_name = "product"
+app_name = "products"
 urlpatterns = [
+   path('', ProductsView, name="all"),
    path('<int:product_id>', ProductView, name="product"),
 ]

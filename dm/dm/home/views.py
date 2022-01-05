@@ -1,12 +1,14 @@
+# Django
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
-from products.models import Product, Category, Brand
+
 from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation, Publications
 
 from opening.models import Opening
+from products.models import Product, Category, Brand
 
 from functions.recordMaker import RecordMaker
 from functions.createUserId import CreateUserId
@@ -134,32 +136,28 @@ def AWCookies(request, dicCookies):
 
 @require_http_methods(["GET"])
 def HomeView(request):
-	categories = Category.objects.all()
-	listWords = SearchWords.objects.all()
+   categories = Category.objects.all()
+   listWords = SearchWords.objects.all()
 	publicationCode = request.GET.get("c", False)
 	lastPage = request.META.get('HTTP_REFERER', None)
-
 	acceptWebp, browser, versionBrowser =  AWCookies(request, request.COOKIES)
-
 	createdUser, userid = GetUserId(request.COOKIES)
-
 	products, isPublication = GetProducts(publicationCode, userid)
 
-
-
-	# Opening
+   # Opening
 	opening = Opening.objects.all()
+   products = Product.objects.all()
 
-	context = {
-		'products':products, 
-		'categories':categories, 
-		'listWords':listWords, 
-		'isPublication':isPublication, 
-		'acceptWebp':acceptWebp,
+   context = {
+		'products': products, 
+		'categories': categories, 
+		'listWords': listWords, 
+		'isPublication': isPublication, 
+		'acceptWebp': acceptWebp,
 		'opening': opening
 		}
 
-	response = render(request, 'home/home.html', context)
+   response = render(request, 'home/home.html', context)
 
 	date = GetDateForCookies()
 

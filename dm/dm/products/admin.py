@@ -1,5 +1,7 @@
+# Django
 from django.contrib import admin
 
+# Own
 from .models import Product, Category, Brand
 
 

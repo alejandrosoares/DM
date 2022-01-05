@@ -7,3 +7,4 @@ dm/img_with_text
 # Files
 
 *.pyc
+.env/*

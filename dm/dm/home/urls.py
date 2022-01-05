@@ -7,7 +7,6 @@ from .views import (
    SearchView, 
    SearchByIdView, 
    SearchByCategoryView, 
-   HomeWholeSalerView, 
    ReceivingData
 )
 from .views import Pruebas,Pruebas2
@@ -15,7 +14,6 @@ from .views import Pruebas,Pruebas2
 app_name = "home"
 urlpatterns = [
     path('', HomeView, name="home"),
-    path('wholesaler', HomeWholeSalerView, name="home-wholesaler"),
     # path('products/', SearchView, name="search"),
     path('search-by-id/', SearchByIdView, name="search-by-id"),
     path('search-by-category/', SearchByCategoryView, name="search-by-category"),

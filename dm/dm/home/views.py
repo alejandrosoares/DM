@@ -125,9 +125,6 @@ def DetectUserAgent(request):
     return acceptWebp, browser, versionBrowser
 
 
-
-
-
 def AWCookies(request, dicCookies):
     # Verificacion de las cookies para saber si el navegador del usuario acepta img webp
     if 'aw_cookie' not in dicCookies:  # La cookie no esta configurada

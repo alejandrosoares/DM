@@ -6,7 +6,7 @@ import json
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Gettings Enviroment variables
-with open(BASE_DIR / ".env"  / "env.json") as f:
+with open(BASE_DIR / ".env" / "env.json") as f:
     ENV = json.loads(f.read())
 
 SECRET_KEY = ENV["DJANGO"]["SECRET_KEY"]
@@ -16,8 +16,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DOMAIN = 'https://b032f1195da6.ngrok.io'
 
 ALLOWED_HOSTS = ['*']
-ADMINS = [('Alejandro','soaresalejandro@outlook.com')]
-MANAGERS = [('Alejandro','soaresalejandro@outlook.com')]
+ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
+MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
 
 # Apps
 
@@ -54,7 +54,7 @@ redis_connection = StrictRedis('/tmp/cache.db')
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': "unix://@%s" %(redis_connection.socket_file, ),
+        'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
     }
 }
 
@@ -142,21 +142,18 @@ USE_L10N = True
 USE_TZ = True
 
 
-
-
 # Static files
 """
-    Cambiar STATICFILE_DIRS antes de realizar el collectstatic y configurar el STATIC_ROOT
-    Se toma los archivos estaticos del directorio static que esta en la base del proyecto
+   Cambiar STATICFILE_DIRS antes de realizar el collectstatic y configurar el STATIC_ROOT
+   Se toma los archivos estaticos del directorio static que esta en la base del proyecto
 """
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-STATICFILES_DIRS = [ 
-    BASE_DIR / '.static',
-    BASE_DIR / 'contact/static',
-    BASE_DIR / 'products/static'
+STATICFILES_DIRS = [
+   BASE_DIR / '.static',
+   BASE_DIR / 'contact/static',
+   BASE_DIR / 'products/static'     
 ]
-
 
 
 # Media Files
@@ -172,7 +169,6 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = ENV['EMAIL']['USER']
 EMAIL_HOST_PASSWORD = ENV['EMAIL']['PASSWORD']
-
 
 
 # Bitly

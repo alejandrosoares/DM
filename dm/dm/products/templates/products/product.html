@@ -1,98 +1,95 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% load static %} {% block style %}
+<link href="{% static 'products/css/product.css' %}" rel="stylesheet">
 
-{% load static %}
-
-{% block style %}
-    <link href="{% static 'products/css/product.css' %}" rel="stylesheet">
-
-    <style>
-        .product-questions {
-            background-color: var(--green);
-            border-top: 1px solid var(--border-color);
-            color: var(--white);
-            margin-left: 10px;
-            margin-right: 10px;
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-        .product-questions ul {
-            list-style: none;
-        }
-        .product-questions ul li {
-            padding: 8px 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-        .product-questions ul li.last-question {
-            border-bottom: none;
-        }
-        .product-questions ul li:hover {
-            background-color: #2a8236;
-        }
-        .product-questions ul li.last-question:hover {
-            border-bottom-left-radius: 10px;
-            border-bottom-right-radius: 10px;
-        }
-    </style>
-{% endblock %}
-
-{% block content %}
+<style>
+   .product-questions {
+      background-color: var(--green);
+      border-top: 1px solid var(--border-color);
+      color: var(--white);
+      margin-left: 10px;
+      margin-right: 10px;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+   }
+   
+   .product-questions ul {
+      list-style: none;
+   }
+   
+   .product-questions ul li {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-color);
+   }
+   
+   .product-questions ul li.last-question {
+      border-bottom: none;
+   }
+   
+   .product-questions ul li:hover {
+      background-color: #2a8236;
+   }
+   
+   .product-questions ul li.last-question:hover {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+   }
+</style>
+{% endblock %} {% block content %}
 <div class="container">
-    <div class="row my-4">
+   <div class="row my-4">
 
-        <div class="col-12">
-            <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"></i>Volver</a>
-        </div>
-        <!-- product -->
-        <div class="col-12">
-            <div class="row product">
-                <div class="col-12 col-md-8 product-img">
-                    <img src="{{product.img.url}}" alt="Product Image">
-                </div>
-                <div class="col-12 col-md-4 product-detail">
-                    <div class="row product-title">
-                        <div class="col-12">
-                            <h2>{{product.name}}</h2>
-                        </div>
-                    </div>
-                    <div class="row product-info">
-                        <div class="col-6 price">
-                            <p class="text-success text-left">$ {{product.price}}</p>
-                        </div>
-                        <div class="col-6 availability">
-                            <p class="text-muted text-right">Disponible</p>
-                        </div>
-                    </div>
-                    <div class="row product-description">
-                        <div class="col-12">
-                            <p>{{product.description}}</p>
-                        </div>
-                        <div class="col-12 code" data-code="{{product.code}}">
-                            <p class="text-muted text-left">C&oacute;d: {{product.code}}</p>
-                        </div>
-                    </div>
-                    <div class="row product-consult">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-success d-block w-100">
-                                Consultar <i class="bi bi-whatsapp" aria-hidden="true"></i>
-                            </button>
-                            <div class="product-questions d-none">
-                                <ul>
-                                    <li data-question="1">¿Ten&eacute;s disponible?</li>
-                                    <li data-question="2">¿Me pod&eacute;s enviar?</li>
-                                    <li class="last-question" data-question="3">Otra pregunta.</li>
-                                </ul>
-                            </div>                                
-                        </div>
-                    </div>
-                </div>
+      <div class="col-12">
+         <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"></i>Volver</a>
+      </div>
+      <!-- product -->
+      <div class="col-12">
+         <div class="row product">
+            <div class="col-12 col-md-8 product-img">
+               <img src="{{product.img.url}}" alt="Product Image">
             </div>
-        </div>
-        <!-- /product -->
-    </div>
+            <div class="col-12 col-md-4 product-detail">
+               <div class="row product-title">
+                  <div class="col-12">
+                     <h2>{{product.name}}</h2>
+                  </div>
+               </div>
+               <div class="row product-info">
+                  <div class="col-6 price">
+                     <p class="text-success text-left">$ {{product.price}}</p>
+                  </div>
+                  <div class="col-6 availability">
+                     <p class="text-muted text-right">Disponible</p>
+                  </div>
+               </div>
+               <div class="row product-description">
+                  <div class="col-12">
+                     <p>{{product.description}}</p>
+                  </div>
+                  <div class="col-12 code" data-code="{{product.code}}">
+                     <p class="text-muted text-left">C&oacute;d: {{product.code}}</p>
+                  </div>
+               </div>
+               <div class="row product-consult">
+                  <div class="col-12">
+                     <button type="button" class="btn btn-success d-block w-100">
+                        Consultar <i class="bi bi-whatsapp"></i>
+                     </button>
+                     <div class="product-questions d-none">
+                        <ul>
+                           <li data-question="1">¿Ten&eacute;s disponible?</li>
+                           <li data-question="2">¿Me pod&eacute;s enviar?</li>
+                           <li class="last-question" data-question="3">Realizar otra pregunta.</li>
+                        </ul>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- /product -->
+   </div>
 </div>
 
-{% endblock %}
-
-{% block script %}
-    <script src="{% static 'products/js/product.js'%}"></script>
+{% endblock %} {% block script %}
+<script src="{% static 'products/js/product.js'%}" type="module"></script>
 {% endblock %}

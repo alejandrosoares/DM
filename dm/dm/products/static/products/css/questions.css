@@ -1,0 +1,31 @@
+.product-questions {
+   background-color: var(--green);
+   border-top: 1px solid var(--border-color);
+   color: var(--white);
+   margin-left: 10px;
+   margin-right: 10px;
+   border-bottom-left-radius: 10px;
+   border-bottom-right-radius: 10px;
+}
+
+.product-questions ul {
+   list-style: none;
+}
+
+.product-questions ul li {
+   padding: 8px 12px;
+   border-bottom: 1px solid var(--border-color);
+}
+
+.product-questions ul li.last-question {
+   border-bottom: none;
+}
+
+.product-questions ul li:hover {
+   background-color: #2a8236;
+}
+
+.product-questions ul li.last-question:hover {
+   border-bottom-left-radius: 10px;
+   border-bottom-right-radius: 10px;
+}

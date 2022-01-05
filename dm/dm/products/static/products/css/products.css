@@ -5,11 +5,10 @@
 	margin-top: 50px;
   	margin-bottom: 50px;
 }
-
 .product {
 	border: 1px solid var(--border-color);
 	height: 100%;
-	background-color: white;
+	background-color: var(--white);
 	border-radius: 10px;
 	transition: 1s all ease;
 	cursor: pointer;
@@ -82,9 +81,8 @@
   padding:10px;
 }
 .product .detail .consult button {
-  color:white;
+  color: var(--white);
 }
-
 .product .description p{
   padding: 5px 10px;
   text-align: justify;

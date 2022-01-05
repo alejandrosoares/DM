@@ -33,7 +33,10 @@
 }
 .footer-section-title {
    height: 32px;
+}
+.footer-section-title p {
    font-size: var(--lg);
+   text-decoration: underline;
 }
 .footer-section-body {
    font-size: var(--md);

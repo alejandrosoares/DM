@@ -48,18 +48,9 @@ class SearchWords(models.Model):
 		ordering = ['-priority','-quantity']
 
 
-class UserInformation(models.Model):
-	# Se puede generar un usuario anonimo donde se registre todas las visualizaciones de los productos
-	# userid de usuario anonimo 2020251100000
-	userid = models.CharField(verbose_name="ID de usuario", max_length=20)
-
-	def __str__(self):
-		return self.userid
-
-
 class ProductsOfInterest(models.Model):
 	#	Registra los productos que a mirado el usuario
-	user = models.ForeignKey(UserInformation, on_delete=models.CASCADE)
+
 	idProduct = models.PositiveIntegerField(verbose_name="Id de producto de interes")
 	quantity = models.PositiveIntegerField(verbose_name="Cantidad de visualizaciones")
 	date = models.DateField(verbose_name="Fecha de registro", auto_now_add=True, auto_now=False)
@@ -74,7 +65,6 @@ class ProductsOfInterest(models.Model):
 class DateOfVisit(models.Model):
 	#	Solo para usuarios que los pueda identificar
 	#	Registra las visitas de los usuarios
-	user = models.ForeignKey(UserInformation, on_delete=models.CASCADE)
 	date = models.DateField(verbose_name="Fecha visita", auto_now_add=True, auto_now=False)
 	lastPage = models.URLField(verbose_name="Pagina de la que proviene", null=True)
 	browser = models.CharField(verbose_name="Navegador", max_length=20, null=True)

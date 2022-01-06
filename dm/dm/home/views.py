@@ -6,16 +6,10 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
 # Own
-from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation
+from user_information.models import Queries, SearchWords, UseOfCategories
 from publications.models import Publication
 from opening.models import Opening
 from products.models import Product, Category, Brand
-from .utils import (
-   RecordMaker,
-   create_userid_for_cookies,
-   RecordVisit,
-   RoundPrice
-)
 
 
 # Third Party

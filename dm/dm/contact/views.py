@@ -7,7 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 # Own
 from .validators import validate_email, validate_phone
 from .models import Contact
-from utils.views import get_user
 
 # Thrid Party
 from json import loads
@@ -44,7 +43,6 @@ def ContactView(request):
 		valid, email, phone = get_email_or_phone(email_or_phone)
 
 		if valid:
-			data['user'] = get_user(request.COOKIES)
 			data['email'] = email
 			data['phone'] = phone
 

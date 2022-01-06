@@ -47,6 +47,9 @@ class Publication(models.Model):
    class Meta:
       verbose_name = "Publicacion"
       verbose_name_plural = "Publicaciones"
+      indexes = [
+         models.Index(fields=['code'])
+      ]
    
    def __add_code_field(self):
 

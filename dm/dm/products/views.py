@@ -28,35 +28,33 @@ def ProductsView(request):
    return JsonResponse(product_list, safe=False)
 
 
-def get_recommedations_products(categories):
-   auxiliary = []
-   recommendations = []
+def get_recommedations_products(categories, exclude_id=None):
+   """ Get recommendations products
+   @param: products.Category
+   @return: list
+   """
+
+   initial_list = []
+   clean_list = []
+   number_of_items = 4
 
    for c in categories:
          products = Product.objects.filter(category=c)
-         auxiliary.extend(products)
+
+         if exclude_id:
+            products.exclude(id=exclude_id)
+            
+         initial_list.extend(products)
 
    # Clear repeated
-   for product in auxiliary:
-      if product not in recommendations:
-         recommendations.append(product)
+   for product in initial_list:
+      if product not in clean_list:
+         clean_list.append(product)
 
-   if len(recommendations) > 12:
-      recommendations = recommendations[:12]
+   if len(clean_list) > number_of_items:
+      clean_list = clean_list[:number_of_items]
    
-   index_last_item =  len(recommendations) - 1
-   start = 0
-   end = 3
-   auxiliary = []
-
-   for _ in range(3):
-      auxiliary.append(recommendations[start: end])
-      start = end
-      end = end + 3
-      if end > index_last_item:
-         end = index_last_item
-
-   return auxiliary
+   return clean_list
 
 def ProductView(request, product_id):
    """Product View."""

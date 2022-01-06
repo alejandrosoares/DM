@@ -24,7 +24,7 @@
    margin-bottom: 0;
 }
 
-.main-product .product-img>img {
+.main-product .product-img > img {
    display: block;
    margin: auto;
 }
@@ -47,19 +47,15 @@
       margin-left: 5px;
       margin-right: 5px;
    }
-   .main-product .product-img>img {
+   .main-product .product-img > img {
       max-width: 300px;
       height: auto;
    }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
-   .main-product .product-img>img {
+   .main-product .product-img > img {
       max-width: 600px;
       height: auto;
    }
-}
-
-.recommendations .products > a:hover {
-   text-decoration: none;
 }

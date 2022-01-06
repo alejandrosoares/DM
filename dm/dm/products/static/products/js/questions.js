@@ -2,7 +2,7 @@
    FUNCTIONS FOR SEND QUESTIONS TO SELLER
 */
 const questionsContainer = document.querySelector(
-   ".product .product-questions"
+   ".main-product .product-questions"
 );
 
 let questionVisibility = false;
@@ -40,7 +40,7 @@ function getProductCode() {
    /* Get product Code 
    @return: int
    */
-   const divCode = document.querySelector(".product .product-description .code");
+   const divCode = document.querySelector(".main-product .product-description .code");
    return parseInt(divCode.getAttribute("data-code"));
 }
 
@@ -107,8 +107,8 @@ function performQuestion(e) {
 function loadQuestions() {
    /* Load events related to questions */
 
-   const btnConsult = document.querySelector(".product .product-consult button"),
-      questions = document.querySelectorAll(".product .product-questions li");
+   const btnConsult = document.querySelector(".main-product .product-consult button"),
+      questions = document.querySelectorAll(".main-product .product-questions li");
 
    btnConsult.addEventListener("click", showOrHideQuestions);
    questions.forEach(li => {
@@ -116,9 +116,9 @@ function loadQuestions() {
    });
 
    document.addEventListener("click", e => {
-      if (!e.target.matches('.product .product-consult button *')) {
+      if (!e.target.matches('.main-product .product-consult button *')) {
          if (questionVisibility) {
-            document.querySelector(".product .product-consult button").click();
+            document.querySelector(".main-product .product-consult button").click();
          }
       }
    });

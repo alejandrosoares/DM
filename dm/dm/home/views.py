@@ -5,9 +5,6 @@ from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
-
-from django.contrib import messages
-
 # Own
 from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation
 from publications.models import Publication
@@ -184,8 +181,6 @@ def HomeView(request):
 
    # Registrando Visita con la pagina de donde proviene
    RecordVisit(userid, lastPage, browser, versionBrowser)
-
-   messages.info(request, "La publicación a la que intentas acceder no existe.")
    
    return response
 

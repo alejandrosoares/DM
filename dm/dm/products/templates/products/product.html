@@ -17,8 +17,8 @@
       </div>
 
       <!-- product -->
-      <div class="col-12">
-         <div class="row product">
+      <div class="col-12 main-product">
+         <div class="row">
             <div class="col-12 col-md-8 product-img">
                <img src="{{product.img.url}}" alt="Product Image">
             </div>
@@ -65,34 +65,52 @@
 
       <!-- More Products -->
       <div class="col-12 recommendations">
-         <div class="row">
+         <div class="row my-4">
             <div class="col-12">
-               <p>Productos que te pueden interesar</p>
+               <p class="text-center">Productos que te pueden interesar</p>
             </div>
          </div>
          <div class="row products">
-            {% for r in recommendations %}
-            <a class="col-lg-3 col-sm-6 my-1 px-1" href="{% url 'products:product' r.id %}">
-               <div class="card product">
-                  <div class="product-header">
-                     <img class="card-img-top custom-img" src="{{r.img.url}}" alt="Image">
-                     <div class="price">
-                        <span>{{r.price}}</span>
-                     </div>
-                     <div class="in-stock">
-                        <span>{% if r.in_stock %}Disponible{% else %}Sin stock{% endif %}</span>
+         
+            <div id="carouselIndicators" class="carousel slide full-width" data-ride="carousel">
+               <div class="carousel-inner" role="listbox">
+                  {% for asd in recommendations %}
+                  <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                     <div class="row">
+                        {% for p in asd %}
+                        <a class="col-lg-3 col-sm-6 my-1 px-1" href="{% url 'products:product' p.id %}">
+                           <div class="card product">
+                              <div class="product-header">
+                                 <img class="card-img-top custom-img" src="{{p.img.url}}" alt="Image">
+                                 <div class="price">
+                                    <span>{{p.price}}</span>
+                                 </div>
+                                 <div class="in-stock">
+                                    <span>{% if p.in_stock %}Disponible{% else %}Sin stock{% endif %}</span>
+                                 </div>
+                              </div>
+                  
+                              <div class="product-title">
+                                 <div class="name">
+                                    <p>{{p.name}}</p>
+                                 </div>
+                              </div>
+                           </div>
+                        </a>
+                        {% endfor %}
                      </div>
                   </div>
-      
-                  <div class="product-title">
-                     <div class="name">
-                        <p>{{r.name}}</p>
-                     </div>
-                  </div>
-      
+                  {% endfor %}
                </div>
-            </a>
-            {% endfor %}
+               <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+               </a>
+               <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+               </a>
+            </div>
          </div>
       </div>
       

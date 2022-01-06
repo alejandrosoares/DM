@@ -1,58 +1,65 @@
-/* PRODUCT SECTION */
+/* 
+   PRODUCT SECTION 
+   Main product is the product that show their details and image with larger size
+*/
 
-.product {
+.main-product {
    border: 1px solid var(--border-color);
    background-color: var(--white);
    border-radius: 10px;
 }
 
-.product-img,
-.product-detail {
+.main-product .product-img,
+.main-product .product-detail {
    padding: 15px;
 }
 
-.product .product-title h2 {
+.main-product .product-title h2 {
    text-align: center;
    font-size: var(--x-lg);
 }
 
-.product .product-info {
+.main-product .product-info {
    padding: 5px 10px;
    margin-bottom: 0;
 }
 
-.product .product-img>img {
+.main-product .product-img>img {
    display: block;
    margin: auto;
 }
 
-.product .product-detail {
+.main-product .product-detail {
    border-left: 1px solid var(--border-color);
 }
 
-.product-info .price p {
+.main-product .product-info .price p {
    font-size: var(--lg);
 }
 
-.product-info .availability p,
-.product-description .code p {
+.main-product .product-info .availability p,
+.main-product .product-description .code p {
    font-size: var(--sm);
 }
 
 @media screen and (max-width: 575px) {
-   .product {
+   .main-product {
       margin-left: 5px;
       margin-right: 5px;
    }
-   .product .product-img>img {
+   .main-product .product-img>img {
       max-width: 300px;
       height: auto;
    }
 }
 
 @media screen and (min-width: 576px) and (max-width: 767px) {
-   .product .product-img>img {
+   .main-product .product-img>img {
       max-width: 600px;
       height: auto;
    }
+}
+
+.recommendations .products > a:hover {
+   text-decoration: none;
 }

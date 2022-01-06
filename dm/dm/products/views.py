@@ -3,7 +3,7 @@ from django.http import Http404, JsonResponse
 from django.shortcuts import render
 
 # Own
-from .models import Product
+from .models import Product, Category
 
 
 def ProductsView(request):
@@ -33,7 +33,26 @@ def ProductView(request, product_id):
 
    try:
       product = Product.objects.get(id=product_id)
-      context = {"product": product}
+      categories = product.category.all()
+      auxiliary = []
+      recommendations = []      
+
+      for c in categories:
+         products = Product.objects.filter(category=c)
+         auxiliary.extend(products)
+
+      # Clear repeated
+      for product in auxiliary:
+         if product not in recommendations:
+            recommendations.append(product)
+
+      context = {
+         "product": product,
+         "recommendations": recommendations
+         }
+
+      print(recommendations)
+      print("len ", len(recommendations))
 
    except Product.DoesNotExist:
       raise Http404("Product Not Found")

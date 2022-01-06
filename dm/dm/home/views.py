@@ -194,7 +194,7 @@ def SearchByIdView(request):
     '''
             Vista que realiza las busquedas por id
             Utilizada para responder a las busquedas que se realizan en el input de busqueda y que a partir de lo
-            que coincide con lo que el usuario escribe realiza la busqueda del item por su id
+            que coincide con lo que el usuario escribe, se realiza la busqueda del item por su id
     '''
     identifier = request.GET.get('q', False)
     typeQuery = request.GET.get('t', False)

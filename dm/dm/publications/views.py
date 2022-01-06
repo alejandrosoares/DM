@@ -22,6 +22,9 @@ def PublicationView(request, code):
       product_id = products[0].id
       return redirect(reverse('products:product', kwargs={'product_id': product_id}))
    
-
-   return HttpResponse("Hola mundo")   
+   context = {
+      'publication': publication,
+      'products': products
+   }
+   return render(request, 'publications/product_group.html', context)
 

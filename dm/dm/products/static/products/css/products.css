@@ -7,6 +7,14 @@
    padding: 15px;
 }
 
+#products a:hover {
+   /* 
+   To erase underline from a.products  used
+   in variuos templates
+   */
+   text-decoration: none;
+}
+
 .product {
    border: 1px solid var(--border-color);
    height: 100%;

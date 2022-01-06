@@ -49,7 +49,7 @@ def get_recommedations_products(categories):
    end = 3
    auxiliary = []
 
-   for x in range(3):
+   for _ in range(3):
       auxiliary.append(recommendations[start: end])
       start = end
       end = end + 3
@@ -66,10 +66,6 @@ def ProductView(request, product_id):
       categories = product.category.all()
       recommendations = get_recommedations_products(categories)
 
-      print()
-      for r in recommendations:
-         print(r)
-
       context = {
          "product": product,
          "recommendations": recommendations
@@ -79,3 +75,4 @@ def ProductView(request, product_id):
       raise Http404("Product Not Found")
 
    return render(request, "products/product.html", context)
+

@@ -78,7 +78,7 @@
                   <div class="carousel-item {% if forloop.first %} active {% endif %}">
                      <div class="row">
                         {% for p in asd %}
-                        <a class="col-lg-3 col-sm-6 my-1 px-1" href="{% url 'products:product' p.id %}">
+                        <a class="col-lg-3 col-sm-6 my-1 px-1" href="{% url 'products:product' product_id=p.id%}">
                            <div class="card product">
                               <div class="product-header">
                                  <img class="card-img-top custom-img" src="{{p.img.url}}" alt="Image">

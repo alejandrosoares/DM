@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<link href="{% static 'products/css/products.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center products" id="products">
+
+   <div class="col-12">
+      <h2 class="text-center">Productos de la publicaci&oacute;n</h2>
+   </div>
+
+   <div class="col-10">
+      <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"></i>Inicio</a>
+   </div>
+
+   <!-- product list -->
+   <div class="col-12 products-list">
+      <div class="row justify-content-center">
+         {% for p in products %}
+         <a class="col-lg-3 col-sm-6 my-1 px-1" href="{% url 'products:product' product_id=p.id %}">
+            <div class="card product">
+
+               <div class="product-header">
+                  <img class="card-img-top custom-img" src="{{p.img.url}}" alt="Image">
+                  <div class="price">
+                     <span>{{p.price}}</span>
+                  </div>
+                  <div class="in-stock">
+                     <span>{% if p.in_stock %}Disponible{% else %}Sin stock{% endif %}</span>
+                  </div>
+               </div>
+
+               <div class="product-title">
+                  <div class="name">
+                     <p>{{p.name}}</p>
+                  </div>
+               </div>
+
+            </div>
+         </a>
+         {% endfor %}
+      </div>
+   </div>
+   <!-- /product list -->
+</div>
+{% endblock %}

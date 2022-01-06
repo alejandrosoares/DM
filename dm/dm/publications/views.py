@@ -12,10 +12,10 @@ def PublicationView(request, code):
    try:
       p = Publication.objects.get(code=code)
    except Publication.DoesNotExist:
-      messages.info(request, "La publicación a la que intentas acceder ya no existe.")
+      messages.info(request, "La publicación a la que intentas acceder no existe.")
       return redirect('home:home')
    
-
+   
 
    return HttpResponse("Hola mundo")   
 

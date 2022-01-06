@@ -1,34 +1,39 @@
 /* MESSAGES */
 
-nav.message-container {
-	margin-top:50px !important;
+nav.user-messsages {
+   position: fixed;
+	top: 10px;
 	max-width: 80%;
 	border-radius: 5px;
-	margin:auto;
-}
-nav.message-container .container {
-	padding-left: 2px;
-	padding-right: 2px;
+	margin: auto;
+   z-index: 2000;
+   padding: 0 !important;
 }
 
-.message-container .col-msg-navbar {
+.user-messages .row{
 	position: relative;
 }
-.message-container .col-msg-navbar > p{
-	margin-left: 12px; 
-	margin-bottom:0;	
+.user-messages-message,
+.user-messages-close {
+   padding: 0;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
-.col-msg-navbar > button.close-message {
-   position: absolute; 
-   right: 0px; 
-   top: -2px;
-	border: none;
-	padding: 0 15px;
-	background:transparent;
+.user-messages-message > p {
+	padding: 0 8px; 
+   text-align: center;
+   margin-bottom: 0;
+}
+
+.user-messages-close button {
+   padding: 4px;
+	background: transparent;
 	font-size: 16px;
-	color:#f8f9fa;
+	color: var(--white);
 	font-weight: bold;
+   border: none;
 }
 
 

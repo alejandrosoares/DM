@@ -41,13 +41,13 @@ class Publication(models.Model):
    code = models.PositiveIntegerField("Code", blank=True)
    visits = models.PositiveIntegerField("Visitas", default=0)
    link = models.URLField("Link", blank=True)
+   shorten_link = models.BooleanField("Acortar link", default=True)
    short_link = models.URLField("Link corto", blank=True, null=True)
 
    class Meta:
       verbose_name = "Publicacion"
       verbose_name_plural = "Publicaciones"
    
-
    def __add_code_field(self):
 
       codes = __class__.objects.values_list("code", flat=True)
@@ -91,7 +91,7 @@ class Publication(models.Model):
 def PostSavePublication(sender, instance, created, **kwargs):
    """ Create short link through Bitly API Service """
 
-   if created:
+   if instance.shorten_link and not instance.short_link:
 
       # Request to Bitly API
       headers = {

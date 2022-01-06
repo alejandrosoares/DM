@@ -1,7 +1,7 @@
 function closeMessage(e){
 	/* Close message container */
 
-	const nav = e.target.closest('nav.message-container');
+	const nav = e.target.closest('nav.user-messages');
 	nav.classList.add('d-none');
 }
 

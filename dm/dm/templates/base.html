@@ -10,18 +10,19 @@
 
   <title>Tienda Marcia</title>
 
+  <!-- Thrid parties -->
   <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+
+  <!-- Own -->
   <link href="{% static 'css/main.css' %}" rel="stylesheet">
   {% block style %}{% endblock %}
+  
 </head>
 
 <body>
-
-
-  {% include 'home/modal.html' %}
   {% include 'nav.html' %}
   {% include 'messages.html' %}
 
@@ -32,16 +33,12 @@
   {% include 'footer.html' %}
 </body>
 
-  <!-- Bootstrap core JavaScript -->
+  <!-- Bootstrap -->
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Own -->
   <script src="{% static 'js/main.js' %}" type="module"></script>
-  
-  <!-- esto debe ir en el home -->
-  <script src="{% static 'contact/js/contact.js' %}" type="module"></script>
-  <script src="{% static 'js/search.js' %}"></script>
-  <script src="{% static 'js/modal-products.js' %}"></script>
-  <script src="{% static 'products/js/products.js'%}"></script>
   {% block script %}{% endblock %}
   
 <script>

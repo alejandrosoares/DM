@@ -68,6 +68,11 @@ class Publication(models.Model):
             reverse("publications:publication", kwargs=kwargs)
          )
 
+   def increase_visits(self):
+      """ Increse the number of visits """
+      self.visits += 1
+      self.save()
+
    def pre_save(self):
       """Pre save tasks"""
 

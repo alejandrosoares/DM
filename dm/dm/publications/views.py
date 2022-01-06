@@ -16,6 +16,7 @@ def PublicationView(request, code):
       messages.info(request, "La publicación a la que intentas acceder no existe.")
       return redirect('home:home')
 
+   publication.increase_visits()
    products = publication.products.all()
 
    if len(products) == 1:

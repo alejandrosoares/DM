@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block style %}
+   <link href="{% static 'css/search.css' %}" rel="stylesheet">
+   <link href="{% static 'products/css/products.css' %}" rel="stylesheet">
+   <link href="{% static 'contact/css/contact.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid px-0">
+   {% include 'home/header.html' %}
+</div>
+
+<div class="container">
+   {% include 'products/products.html' %}
+   {% include 'opening/index.html' %}
+   {% include 'contact/contact.html' %}
+</div>
+
+<script>
+
+function support_format_webp()
+{
+ var elem = document.createElement('canvas');
+
+ if (!(elem.getContext && elem.getContext('2d')))
+ {
+  // was able or not to get WebP representation
+  return elem.toDataURL('image/webp').indexOf('data:image/webp') == 0;
+ }
+ else
+ {
+  // very old browser like IE 8, canvas not supported
+  return false;
+ }
+}
+
+function loadHome() {
+   console.log("support webp", support_format_webp());
+}
+
+document.addEventListener('DOMContentLoaded', loadHome);
+</script>
+
+{% endblock %}

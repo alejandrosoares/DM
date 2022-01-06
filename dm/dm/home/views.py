@@ -6,8 +6,8 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
 # Own
-from dm.settings import TOKEN_BITLY, DOMAIN, BASE_DIR
-from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation, Publications
+from user_information.models import Queries, SearchWords, UseOfCategories, UserInformation
+from publications.models import Publication
 from opening.models import Opening
 from products.models import Product, Category, Brand
 from .utils import (
@@ -20,10 +20,6 @@ from .utils import (
 
 # Third Party
 from datetime import datetime, timedelta
-import requests
-import json
-import os
-
 
 def get_date_cookies():
    """Get date for cookies 
@@ -56,7 +52,7 @@ def GetProducts(publicationCode, userid):
 
     if publicationCode:
         try:
-            p = Publications.objects.get(code=publicationCode)
+            p = Publication.objects.get(code=publicationCode)
             p.numberOfVisites = p.numberOfVisites + 1
             p.save()
 
@@ -147,46 +143,46 @@ def AWCookies(request, dicCookies):
 
 @require_http_methods(["GET"])
 def HomeView(request):
-    categories = Category.objects.all()
-    listWords = SearchWords.objects.all()
-    publicationCode = request.GET.get("c", False)
-    lastPage = request.META.get('HTTP_REFERER', None)
-    acceptWebp, browser, versionBrowser = AWCookies(request, request.COOKIES)
-    createdUser, userid = get_userid_cookies(request.COOKIES)
-    products, isPublication = GetProducts(publicationCode, userid)
+   categories = Category.objects.all()
+   listWords = SearchWords.objects.all()
+   publicationCode = request.GET.get("c", False)
+   lastPage = request.META.get('HTTP_REFERER', None)
+   acceptWebp, browser, versionBrowser = AWCookies(request, request.COOKIES)
+   createdUser, userid = get_userid_cookies(request.COOKIES)
+   products, isPublication = GetProducts(publicationCode, userid)
 
-    # Opening
-    opening = Opening.objects.all()
-    products = Product.objects.all()
+   # Opening
+   opening = Opening.objects.all()
+   products = Product.objects.all()
 
-    context = {
-        'products': products,
-        'categories': categories,
-        'listWords': listWords,
-        'isPublication': isPublication,
-        'acceptWebp': acceptWebp,
-        'opening': opening
-    }
+   context = {
+      'products': products,
+      'categories': categories,
+      'listWords': listWords,
+      'isPublication': isPublication,
+      'acceptWebp': acceptWebp,
+      'opening': opening
+   }
 
-    response = render(request, 'home/home.html', context)
+   response = render(request, 'home/home.html', context)
 
-    date = get_date_cookies()
+   date = get_date_cookies()
 
-    if createdUser:
-        response.set_cookie('userid', userid, max_age=None, expires=date,
-                            path='/', domain=None, secure=False, httponly=True)
+   if createdUser:
+      response.set_cookie('userid', userid, max_age=None, expires=date,
+                           path='/', domain=None, secure=False, httponly=True)
 
-    if acceptWebp:
-        response.set_cookie('aw_cookie', "1", max_age=None, expires=date,
-                            path='/', domain=None, secure=False, httponly=True)
-    else:
-        response.set_cookie('aw_cookie', "0", max_age=None, expires=date,
-                            path='/', domain=None, secure=False, httponly=True)
+   if acceptWebp:
+      response.set_cookie('aw_cookie', "1", max_age=None, expires=date,
+                           path='/', domain=None, secure=False, httponly=True)
+   else:
+      response.set_cookie('aw_cookie', "0", max_age=None, expires=date,
+                           path='/', domain=None, secure=False, httponly=True)
 
-    # Registrando Visita con la pagina de donde proviene
-    RecordVisit(userid, lastPage, browser, versionBrowser)
+   # Registrando Visita con la pagina de donde proviene
+   RecordVisit(userid, lastPage, browser, versionBrowser)
 
-    return response
+   return response
 
 
 @require_http_methods(["GET"])

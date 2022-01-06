@@ -1,14 +1,11 @@
+# Django
 from django.db import models
-from django.db.models.signals import pre_save, post_save
+from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+# Own
 from products.models import Category, Product, Brand
 
-from dm.settings import TOKEN_BITLY, DOMAIN
-
-# Para la generacion de las publicaciones
-import uuid
-import json
-import requests
 
 class Queries(models.Model):
 	#	Registra las consultas que se realizan el la barra de busqueda
@@ -90,44 +87,6 @@ class DateOfVisit(models.Model):
 	def __str__(self):
 		return self.User
 
-
-class Publications(models.Model):
-	name = models.CharField(verbose_name="Nombre de la publicacion", max_length=50)
-	products = models.ManyToManyField(Product)
-	datetime = models.DateTimeField(verbose_name="Fecha de creacion", auto_now_add=True, auto_now=False)
-	uuid = models.UUIDField(verbose_name="UUID publicacion", default=uuid.uuid4, editable=False)
-	code = models.CharField(verbose_name="Codigo de la publicacion", max_length=32, blank=True)
-	numberOfVisites = models.PositiveIntegerField(verbose_name="Numero de visitas", default=0)
-	shortLink = models.URLField(verbose_name="Enlace corto", blank=True)
-	longLink = models.URLField(verbose_name="Enlace largo", blank=True)
-	users = models.ManyToManyField(UserInformation)
-
-	class Meta:
-		verbose_name = "Publicacion"
-		verbose_name_plural = "Publicaciones"
-
-	def __str__(self):
-		return self.name
-
-
-@receiver(pre_save, sender=Publications)
-def PreSaveBrand(sender, instance, **kwargs):
-	instance.code = str(instance.uuid).replace("-","s")
-	instance.longLink = DOMAIN + "?c=" + instance.code
-
-	# Peticion a la api de bitly
-	headers = {
-	    'Authorization': f"{TOKEN_BITLY}",
-	    'Content-Type': 'application/json',
-	}
-
-	data = '{ "long_url":"' + instance.longLink + '" , "title": "Tienda Marcia - ' + instance.name + '" }'
-
-
-	response = requests.post('https://api-ssl.bitly.com/v4/bitlinks', headers=headers, data=data)
-	jsonResponse = response.json()
-	instance.shortLink = jsonResponse['link']
-	
 
 @receiver(post_save, sender=Brand)
 def PostSaveBrand(sender, instance, created, **kwargs):

@@ -14,7 +14,7 @@ SECRET_KEY = ENV["DJANGO"]["SECRET_KEY"]
 DEBUG = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DOMAIN = 'https://b032f1195da6.ngrok.io'
-
+BUSINNES_NAME = 'Tienda Marcia'
 ALLOWED_HOSTS = ['*']
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
@@ -38,6 +38,7 @@ LOCAL_APPS = [
     'vendors',
     'user_information',
     'opening',
+    'publications',
     'webp_converter'
 ]
 
@@ -52,10 +53,10 @@ redis_connection = StrictRedis('/tmp/cache.db')
 
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
-    }
+   'default': {
+      'BACKEND': 'django_redis.cache.RedisCache',
+      'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
+   }
 }
 
 #   Tiempo de vida de la cache 365 dias x 24 horas x 60 minutos x 60 segundos: 31536000
@@ -150,9 +151,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 STATICFILES_DIRS = [
-   BASE_DIR / '.static',
-   BASE_DIR / 'contact/static',
-   BASE_DIR / 'products/static'     
+    BASE_DIR / '.static',
+    BASE_DIR / 'contact/static',
+    BASE_DIR / 'products/static'
 ]
 
 
@@ -173,7 +174,8 @@ EMAIL_HOST_PASSWORD = ENV['EMAIL']['PASSWORD']
 
 # Bitly
 
-TOKEN_BITLY = ENV['BITLY']['TOKEN']
+BITLY_TOKEN = ENV['BITLY']['TOKEN']
+BITLY_URL = 'https://api-ssl.bitly.com/v4/bitlinks'
 
 
 # Security

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Queries, UseOfCategories, SearchWords, Publications
+from .models import Queries, UseOfCategories, SearchWords
 
 class QueriesAdmin(admin.ModelAdmin):
 	list_display = ('query',)
@@ -16,11 +16,4 @@ class SearchWordsAdmin(admin.ModelAdmin):
 	list_display = ('string','quantity')
 	readonly_fields = ('string','quantity','idObject','typeString','img')
 admin.site.register(SearchWords, SearchWordsAdmin)
-
-
-class PublicationsAdmin(admin.ModelAdmin):
-	list_display = ('code','name')
-	fields = ('name','code', 'datetime','numberOfVisites', 'shortLink', 'longLink', 'products')
-	readonly_fields = ('code', 'datetime','numberOfVisites', 'shortLink', 'longLink')
-admin.site.register(Publications, PublicationsAdmin)
 

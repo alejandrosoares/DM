@@ -108,32 +108,36 @@ function writeProducts() {
 function SearchOfMatching(e) {
    /* Search of matching
    
-   If e.which not is 13, then write into searchResultList with matched results
+   e is undefined if SearchOfMatching is called from clickInSearch function
+
+   If e.which not is 13 or e is undefined, then write into searchResultList with matched results
    If e.which is 13, then send request to search by words inserted in searchInput
+   
    */
-
-   if (e.which !== 13) {
-      const search = searchInput.value;
-
-      if (search.length > minCharsToSearch) {
-
-         const matching = writeProducts();
-         
-         if (matching) {
-            hideSearchResults(false);
-            addEventToResultItem();
+      if (e === undefined || e.which !== 13) {
+         const search = searchInput.value;
+   
+         if (search.length > minCharsToSearch) {
+   
+            const matching = writeProducts();
+            
+            if (matching) {
+               hideSearchResults(false);
+               addEventToResultItem();
+            } else {
+               hideSearchResults(true);
+            }
          } else {
             hideSearchResults(true);
          }
       } else {
+         searchByWords();
          hideSearchResults(true);
       }
-   } else {
-      searchByWords();
-      hideSearchResults(true);
-   }
-
-   e.stopPropagation();
+      
+      if (e !== undefined) {
+         e.stopPropagation();
+      }
 }
 
 
@@ -187,7 +191,6 @@ function getListProducts() {
       .then(products => PRODUCTS.setProducts = products)
       .catch(error => console.error(error));
 }
-
 
 function loadSearch() {
    /* Load Search

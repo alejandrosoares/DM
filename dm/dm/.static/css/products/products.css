@@ -32,6 +32,10 @@
 }
 
 .product:hover .name p {
+   transition: 1s all ease;
+}
+
+.product:hover .name p {
    color: var(--primary);
 }
 

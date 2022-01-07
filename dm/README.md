@@ -11,3 +11,11 @@ o cuando se realizan cambios en la instancia Opening
 
 String is used in the urls for search the publications 
 because if the format of a uuid is broken it does not match urls
+
+
+
+## Search Mode
+
+- by product
+- by category
+- 

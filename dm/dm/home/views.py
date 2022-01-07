@@ -1,7 +1,6 @@
 # Django
 from django.shortcuts import render
 from django.http import HttpResponse
-from django.db.models import Q
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 

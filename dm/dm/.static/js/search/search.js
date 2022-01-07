@@ -2,13 +2,16 @@
    SEARCH PRODUCTS
    
    variables used:
-   listWordsSearch
+   minCharsToSearch: minimum characters to display results
+
 */
 import { GLOBAL } from "../globals.js";
 import { loadCategoriesSearch, removeStyleSelectedCategory} from "./categories.js";
 import { saveSearchInSessionStorage, loadSearchFromSessionStorage } from "./session_storage.js";
+import { createProductList } from "../products/products.js";
 
 const PRODUCTS = GLOBAL.products;
+const minCharsToSearch = 2;
 
 const searchResultContainer = document.querySelector("#search .search-result-list"),
    searchResultList = searchResultContainer.querySelector("ul"),
@@ -27,6 +30,7 @@ function normalizeSearchValue(text) {
    @param: str
    @return: str
    */
+
    text = text
       .replace("á", "a")
       .replace("é", "e")
@@ -44,96 +48,117 @@ function normalizeSearchValue(text) {
    return text.toUpperCase();
 }
 
+
+function addEventToResultItem() {
+   const resultItems = document.querySelectorAll('.search-result-item');
+
+   resultItems.forEach(item => {
+      item.addEventListener('click', saveSearchInSessionStorage)
+   });
+}
+
 function clickInSearch(e) {
-   SearchWords();
+   SearchOfMatching();
    e.stopPropagation();
 }
 
-function SearchWords() {
+function writeProducts() {
+   /* Write Products
+   Add the li elements into searchResultList
+   */
+   const products = PRODUCTS.getSearchList;
    let search = searchInput.value,
       formatedSearch = normalizeSearchValue(search),
       matching = false;
 
-   if (search.length > 2) {
+   searchResultList.innerHTML = "";
 
-      searchResultList.innerHTML = "";
-
-      for (const p of PRODS) {
-         if (
-            p.normalized_name.search(formatedSearch) != -1 ||
-            p.id == formatedSearch
-         ) { 
-            console.log('existe coincidencia')
-            if (p.img !== null) {
-               // Contains image
-
-               /* Cambiar li, solo debe contener id */
-               searchResultList.innerHTML =
-               searchResultList.innerHTML +
-                  `<li onclick="saveSearchInSessionStorage()">
-                     <a href="/products/${p.id}">\
-                        <img class="img-search-results" src="${p.img}" alt="Imagen">\
-                        <span>${p.name.replace(formatedSearch, '<b>' + formatedSearch + '</b>')}</span>\
-                     </a>
-                  </li>`;
-            } else {
-               // Without image
-               searchResultList.innerHTML =
-               searchResultList.innerHTML +
-                  `<li>
-                     <a href="/products/${p.id}">\
-                        <span> ${p.name.replace(formatedSearch, '<b>' + formatedSearch + '</b>')}</span>
-                     </a>
-                  </li>`;
-            }
-            matching = true;
+   for (const p of products) {
+      if (
+         p.normalized_name.search(formatedSearch) != -1 ||
+         p.id == formatedSearch
+      ) { 
+         if (p.img !== null) {
+            // Contains image
+            searchResultList.innerHTML =
+            searchResultList.innerHTML +
+               `<li class="search-result-item">
+                  <a href="/products/${p.id}">\
+                     <img class="img-search-results" src="${p.img}" alt="Imagen">\
+                     <span>${p.name.replace(formatedSearch, '<b>' + formatedSearch + '</b>')}</span>\
+                  </a>
+               </li>`;
+         } else {
+            // Without image
+            searchResultList.innerHTML =
+            searchResultList.innerHTML +
+               `<li class="search-result-item">
+                  <a href="/products/${p.id}">\
+                     <span> ${p.name.replace(formatedSearch, '<b>' + formatedSearch + '</b>')}</span>
+                  </a>
+               </li>`;
          }
+         matching = true;
       }
-      
-      console.log("matching ", matching);
+   }
+   
+   return matching;
+}
 
-      if (matching) {
-         hideSearchResults(false);
+function SearchOfMatching(e) {
+   /* Search of matching
+   
+   If e.which not is 13, then write into searchResultList with matched results
+   If e.which is 13, then send request to search by words inserted in searchInput
+   */
+
+   if (e.which !== 13) {
+      const search = searchInput.value;
+
+      if (search.length > minCharsToSearch) {
+
+         const matching = writeProducts();
+         
+         if (matching) {
+            hideSearchResults(false);
+            addEventToResultItem();
+         } else {
+            hideSearchResults(true);
+         }
       } else {
          hideSearchResults(true);
       }
    } else {
+      searchByWords();
       hideSearchResults(true);
    }
-}
 
-function SearchById(type, i, id) {
-   // Actua cuando se realiza click en algun resultado de busqueda coincidente con el input de busqueda
-   // Los argumentos de la funcion son:
-   // *type que indica el tipo de consulta, si es un producto o marca (para buscar en la bases de datos)
-   // *i que es el incide de lo clickeado dentro de la lista listWordsSearch, se utiliza para escribir lo clickeado en el input
-   // *id de la consulta, puede ser el id de una marca o de un producto
-   let request;
-
-   searchInput.value = listWordsSearch[i][0];
-
-   request = RequestConstruction();
-
-   if (request) {
-      request.onreadystatechange = function () {
-         if (request.readyState == 4 && request.status == 200) {
-            document.getElementById("productsContainer").innerHTML =
-               request.responseText;
-               removeStyleSelectedCategory(); //Remueve los estilos de las categorias, por si tiene alguna etiqueta seleccionada
-         }
-      };
-      request.open("GET", urlSearchById + `?q=${id}&t=${type}`, true);
-      request.send();
-   }
-}
-
-
-
-function keyPressInSearchInput(e) {
-   if (e.which === 13) {
-      Search();
-   }
    e.stopPropagation();
+}
+
+
+function searchByWords() {
+   /* Search by words inserted into serch input */
+   const  url = document.querySelector(
+         "#products .products-info .url-products-json-all"
+      ).value;
+
+   let query = document.getElementById('searchInput').value;
+
+   if (query !== '') {
+
+      query = encodeURIComponent(query);
+
+      fetch(`${url}?query=${query}`)
+         .then(response => {
+            if (response.ok) return response.json()
+         })
+         .then(products => {
+            PRODUCTS.setProducts = products;
+            createProductList();
+         })
+         .catch(error => console.error(error));
+   }
 }
 
 function hideSearchResults(hide) {
@@ -159,7 +184,7 @@ function getListProducts() {
       .then(response => {
          if (response.ok) return response.json()
       })
-      .then(products => PRODUCTS.set_products = products)
+      .then(products => PRODUCTS.setProducts = products)
       .catch(error => console.error(error));
 }
 
@@ -171,8 +196,8 @@ function loadSearch() {
    */
 
    searchInput.addEventListener('click', clickInSearch);
-   searchInput.addEventListener('keypress', keyPressInSearchInput);
-   searchInput.addEventListener('keypress', SearchWords);
+   searchInput.addEventListener('keyup', SearchOfMatching);
+   searchBtn.addEventListener('click', searchByWords);
 
    getListProducts();
    loadSearchFromSessionStorage(); 
@@ -181,6 +206,4 @@ function loadSearch() {
 
 
 document.addEventListener('DOMContentLoaded', loadSearch);
-
-
 document.addEventListener('click', () => hideSearchResults(true));

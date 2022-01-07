@@ -9,11 +9,11 @@ const PRODUCTS = GLOBAL.products;
 function removeStyleSelectedCategory() {
    /* Remove style of selected category */
 
-   const categories = document.getElementsByClassName("categories");
+   const categories = document.querySelectorAll(".search-categories li");
 
-   for (const category of categories) {
-      category.classList.remove("category-activate");
-   }
+   categories.forEach(category => {
+      category.classList.remove("category-activate")
+   });
 }
 
 function changeStyleCategory(id) {
@@ -22,7 +22,7 @@ function changeStyleCategory(id) {
    const category =  document.querySelector(`.search-categories li[data-id="${id}"]`);
    
    removeStyleSelectedCategory();
-   
+
    category.classList.add('category-activate');
 }
 
@@ -31,6 +31,7 @@ function SearchByCategory(e) {
    /* Send request for search by category 
    @param: li.search-category
    */
+  
    let url = document.querySelector('#search .info .products-url').value,
       liCategory = e.target.closest('.search-category'),
          id = liCategory.getAttribute('data-id');
@@ -40,17 +41,17 @@ function SearchByCategory(e) {
          if (response.ok) return response.json()
       })
       .then(products => {
-         PRODUCTS.set_products = products;
+         PRODUCTS.setProducts = products;
          createProductList();
+         changeStyleCategory(id);
       })
       .catch(error => console.error(error));
-
-   
 }
 
 
 function loadCategoriesSearch() {
    /* Load events and run functions related to categories */
+
    const categories = document.querySelectorAll(".search-categories .search-category");
 
    categories.forEach(category => {

@@ -31,6 +31,10 @@
    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
 }
 
+.product:hover .name p {
+   color: var(--primary);
+}
+
 .product-header {
    display: flex;
    justify-content: center;
@@ -78,4 +82,10 @@
    margin-bottom: 0;
    text-align: center;
    color: var(--dark);
+}
+
+.search-not-found {
+   margin: 15px;
+   font-size: var(--x-lg);
+
 }

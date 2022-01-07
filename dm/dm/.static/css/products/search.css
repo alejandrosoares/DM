@@ -99,3 +99,8 @@
    border-radius: 0 5px 0 5px;
    border-right: 1px solid var(--dark);
 }
+
+.category-activate span {
+   background: var(--blue1);
+   padding: 8px 12px;
+}

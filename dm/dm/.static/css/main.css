@@ -115,18 +115,13 @@ main {
    font-size: 25px;
 }
 
-.category-activate {
-   padding: .7em 1em;
-   cursor: none;
-   background: var(--blue1);
-}
-
 @media screen and (max-width: 576px) {
    .cerrar-modal {
       left: -7px;
       top: -27px;
       font-size: 38px;
    }
+
    .img-modal {
       padding-top: 5px;
    }
@@ -153,6 +148,7 @@ main {
       max-width: 200px;
       max-height: auto;
    }
+
    .welcome-text {
       font-size: 40px;
    }
@@ -163,6 +159,7 @@ main {
       max-width: 250px;
       max-height: auto;
    }
+
    .welcome-text {
       font-size: 45px;
    }
@@ -173,6 +170,7 @@ main {
       max-width: 300px;
       height: auto;
    }
+
    .welcome-text {
       font-size: 55px;
    }
@@ -183,6 +181,7 @@ main {
       max-width: 430px;
       height: auto;
    }
+
    .welcome-text {
       font-size: 60px;
    }

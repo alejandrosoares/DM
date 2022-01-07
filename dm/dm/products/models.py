@@ -3,7 +3,7 @@ from django.db import models
 
 # Own
 from vendors.models import Vendor
-from .utils.models import normalize_text
+from utils.normalize import normalize_text
 
 
 def upload_img(instance, filename):
@@ -68,7 +68,7 @@ class Product(models.Model):
     category = models.ManyToManyField(Category)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     vendor_code = models.CharField("Vendor code", max_length=25)
-    brand_name = models.ForeignKey(
+    brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
     price = models.DecimalField("Price", max_digits=7, decimal_places=2)
 
@@ -86,11 +86,11 @@ class Product(models.Model):
 
     @property
     def Name(self):
-        if self.brand_name:
+        if self.brand:
             return '({}) - {} | {}'.format(
                 self.vendor_code,
                 self.name,
-                self.brand_name
+                self.brand
             )
         else:
             return '({}) - {}'.format(self.vendor_code, self.name)

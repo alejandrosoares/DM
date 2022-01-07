@@ -53,10 +53,10 @@ redis_connection = StrictRedis('/tmp/cache.db')
 
 
 CACHES = {
-   'default': {
-      'BACKEND': 'django_redis.cache.RedisCache',
-      'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
-   }
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
+    }
 }
 
 #   Tiempo de vida de la cache 365 dias x 24 horas x 60 minutos x 60 segundos: 31536000
@@ -152,8 +152,7 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 STATICFILES_DIRS = [
     BASE_DIR / '.static',
-    BASE_DIR / 'contact/static',
-    BASE_DIR / 'products/static'
+    BASE_DIR / 'contact/static'
 ]
 
 

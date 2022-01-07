@@ -13,8 +13,19 @@ def ProductsView(request):
     @return: json
     """
     DOMAIN = request.get_host()
-    products = Product.objects.all()
     product_list = []
+    products = Product.objects.all()
+
+    category_id = request.GET.get('category', False)
+
+    if category_id:
+        try:
+            c = Category.objects.get(id=category_id)
+
+            products = products.filter(category__id=c.id)
+
+        except (Category.DoesNotExist, ValueError):
+            pass
 
     for p in products:
         product = {

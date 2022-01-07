@@ -1,12 +1,12 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 
-{% load static %} 
+{% load static %}
 
 {% block style %}
-<link href="{% static 'products/css/products.css' %}" rel="stylesheet">
-<link href="{% static 'products/css/product.css' %}" rel="stylesheet">
-<link href="{% static 'products/css/questions.css' %}" rel="stylesheet">  
-{% endblock %} 
+<link href="{% static 'css/products/products.css' %}" rel="stylesheet">
+<link href="{% static 'css/products/product.css' %}" rel="stylesheet">
+<link href="{% static 'css/products/questions.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 <div class="container">
@@ -85,7 +85,7 @@
                               <span>{% if p.in_stock %}Disponible{% else %}Sin stock{% endif %}</span>
                            </div>
                         </div>
-            
+
                         <div class="product-title">
                            <div class="name">
                               <p>{{p.name}}</p>
@@ -103,5 +103,5 @@
 </div>
 
 {% endblock %} {% block script %}
-<script src="{% static 'products/js/product.js'%}" type="module"></script>
+<script src="{% static 'js/products/product.js'%}" type="module"></script>
 {% endblock %}

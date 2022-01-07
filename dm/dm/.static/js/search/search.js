@@ -1,12 +1,20 @@
 /*
+   SEARCH PRODUCTS
+   
    variables used:
    listWordsSearch
 */
+import { GLOBAL } from "../globals.js";
+import { loadCategoriesSearch, removeStyleSelectedCategory} from "./categories.js";
+import { saveSearchInSessionStorage, loadSearchFromSessionStorage } from "./session_storage.js";
+
+const PRODUCTS = GLOBAL.products;
 
 const searchResultContainer = document.querySelector("#search .search-result-list"),
    searchResultList = searchResultContainer.querySelector("ul"),
    searchInput = document.getElementById("searchInput"),
    searchBtn = document.getElementById("searchBtn");
+
 
 function ClearSearchInput() {
    searchInput.value = "";
@@ -36,8 +44,10 @@ function normalizeSearchValue(text) {
    return text.toUpperCase();
 }
 
-
-
+function clickInSearch(e) {
+   SearchWords();
+   e.stopPropagation();
+}
 
 function SearchWords() {
    let search = searchInput.value,
@@ -80,7 +90,7 @@ function SearchWords() {
          }
       }
       
-      console.log(matching);
+      console.log("matching ", matching);
 
       if (matching) {
          hideSearchResults(false);
@@ -89,30 +99,6 @@ function SearchWords() {
       }
    } else {
       hideSearchResults(true);
-   }
-}
-
-function Search() {
-   // Funcion para buscar lo que se escribe en el input de busqueda
-   var value = document.getElementById("searchInput").value;
-   let request;
-
-   request = RequestConstruction();
-
-   if (request) {
-      request.onreadystatechange = function () {
-         if (request.readyState == 4 && request.status == 200) {
-            document.getElementById("productsContainer").innerHTML =
-               request.responseText;
-            RemoveStyleCategories();
-            window.setTimeout(function () {
-               // Temporizando para que ocurra el evento keyup y luego oculte el cuadro de busquedas
-               hideSearchResults(true);
-            }, 1000);
-         }
-      };
-      request.open("GET", urlSearch + "?q=" + value, true);
-      request.send();
    }
 }
 
@@ -133,7 +119,7 @@ function SearchById(type, i, id) {
          if (request.readyState == 4 && request.status == 200) {
             document.getElementById("productsContainer").innerHTML =
                request.responseText;
-            RemoveStyleCategories(); //Remueve los estilos de las categorias, por si tiene alguna etiqueta seleccionada
+               removeStyleSelectedCategory(); //Remueve los estilos de las categorias, por si tiene alguna etiqueta seleccionada
          }
       };
       request.open("GET", urlSearchById + `?q=${id}&t=${type}`, true);
@@ -141,33 +127,11 @@ function SearchById(type, i, id) {
    }
 }
 
-function SearchByCategory(id) {
-   let request;
-   request = RequestConstruction();
-   if (request) {
-      request.onreadystatechange = function () {
-         if (request.readyState == 4 && request.status == 200) {
-            document.getElementById("productsContainer").innerHTML =
-               request.responseText;
-            ChangeStyleCategory(id);
-            ClearSearchInput();
-         }
-      };
-      request.open("GET", urlSearchByCategory + "?q=" + id, true);
-      request.send();
-   }
-}
+
 
 function keyPressInSearchInput(e) {
    if (e.which === 13) {
       Search();
-   }
-   e.stopPropagation();
-}
-
-function ShowResults(e) {
-   if (searchResultList.style.display == "none") {
-      SearchWords();
    }
    e.stopPropagation();
 }
@@ -188,32 +152,6 @@ function hideSearchResults(hide) {
    }
 }
 
-function ChangeStyleCategory(id) {
-   const categories = document.getElementsByClassName("categories"),
-      lCategories = categories.length;
-
-   for (var i = 0; i < lCategories; i++) {
-      if (categories[i].getAttribute("idvalue") === id) {
-         categories[i].classList.add("category-activate");
-      } else {
-         categories[i].classList.remove("category-activate");
-      }
-   }
-}
-
-function RemoveStyleCategories() {
-   const categories = document.getElementsByClassName("categories"),
-      lCategories = categories.length;
-   for (var i = 0; i < lCategories; i++) {
-      categories[i].classList.remove("category-activate");
-   }
-}
-
-
-document.addEventListener("click", function () {hideSearchResults(true)});
-
-let PRODS = null;
-
 function getListProducts() {
    const url = document.querySelector('#search .info .products-url').value;
   
@@ -221,37 +159,28 @@ function getListProducts() {
       .then(response => {
          if (response.ok) return response.json()
       })
-      .then(products => {
-         PRODS = products;
-      })
-      .catch(error => {
-         console.log('error')
-         console.error(error)
-      });
+      .then(products => PRODUCTS.set_products = products)
+      .catch(error => console.error(error));
 }
 
-function saveSearchInSessionStorage() {
-   const searchInput = document.getElementById('searchInput');
-   sessionStorage.setItem('search', searchInput.value);
-}
-
-function loadSearchFromSessionStorage() {
-   const sessionValue = sessionStorage.getItem('search');
-
-   if (sessionValue) {
-      const searchInput = document.getElementById('searchInput');
-      searchInput.value = sessionStorage.getItem('search');
-   }
-}
 
 function loadSearch() {
+   /* Load Search
+   Add events to html elements and call to functions for 
+   perform operattions
+   */
 
-   searchInput.addEventListener('keyup', keyPressInSearchInput);
+   searchInput.addEventListener('click', clickInSearch);
+   searchInput.addEventListener('keypress', keyPressInSearchInput);
+   searchInput.addEventListener('keypress', SearchWords);
 
    getListProducts();
-   SearchWords();
-   loadSearchFromSessionStorage();
+   loadSearchFromSessionStorage(); 
+   loadCategoriesSearch();  
 }
 
 
 document.addEventListener('DOMContentLoaded', loadSearch);
+
+
+document.addEventListener('click', () => hideSearchResults(true));

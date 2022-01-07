@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block style %}
-<link href="{% static 'products/css/products.css' %}" rel="stylesheet" />
+<link href="{% static 'css/products/products.css' %}" rel="stylesheet" />
 <link href="{% static 'contact/css/contact.css' %}" rel="stylesheet" />
 {% endblock %}
 
@@ -21,6 +21,6 @@
 
 {% block script %}
 <script src="{% static 'contact/js/contact.js' %}" type="module"></script>
-<script src="{% static 'js/search.js' %}"></script>
-<script src="{% static 'products/js/products.js'%}"></script>
+<script src="{% static 'js/search/search.js' %}" type="module"></script>
+<script src="{% static 'js/products/products.js'%}" type="module"></script>
 {% endblock %}

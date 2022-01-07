@@ -1,4 +1,7 @@
-let PRODUCTS;
+import { GLOBAL } from "../globals.js";
+
+const PRODUCTS = GLOBAL.products;
+
 let START = 0,
    END = 10;
 
@@ -18,7 +21,11 @@ function createProductList() {
    /* Create Product List
    Insert inside .products-list .row with the html elements
    */
-   PRODUCTS.forEach(p => {
+   const products = PRODUCTS.get_products;
+   
+   productsContainer.innerHTML = "";
+
+   products.forEach(p => {
       const card = template.querySelector("div.card"),
          img = template.querySelector("div.product-header img"),
          name = template.querySelector("div.name > p"),
@@ -62,11 +69,15 @@ function loadProducts() {
          if (response.ok) return response.json()
       })
       .then(products => {
-         PRODUCTS = products;
+         PRODUCTS.set_products = products;
          createProductList();
       })
-      .catch(error => console.error(error));
+      //.catch(error => console.error(error));
 }
 
-document.addEventListener("DOMContentLoaded", loadProducts)
-document.addEventListener("click", clickProducts)
+
+document.addEventListener("DOMContentLoaded", loadProducts);
+document.addEventListener("click", clickProducts);
+
+
+export { createProductList };

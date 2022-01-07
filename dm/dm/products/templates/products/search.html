@@ -5,14 +5,13 @@
         <div class="row search-relative-container">
             <div class="col-10 col-sm-11 p-0 h-100">
                 <input type="text" name="q" id="searchInput" class="search-input" placeholder="¿Que buscas?" value=""
-                    onkeypress="keyPressInSearchInput(event)" onkeyup="SearchWords()" onclick="SearchWords()"
                     autocomplete="off">
             </div>
             <div class="col-2 col-sm-1 p-0 h-100">
                 <button type="button" class="search-btn" onclick="Search()" id="searchBtn"><i
                         class="fa fa-search"></i></button>
             </div>
-            <div class="col-12 search-result-list">
+            <div class="col-12 search-result-list d-none">
                 <ul></ul>
             </div>
         </div>
@@ -22,11 +21,13 @@
     <!-- Categories -->
     <div class="col-12 pl-0 pr-0 search-categories">
         <ul class="categories-list">
-            <li><span class="badge badge-primary custom-span-category categories" idvalue="0"
-                    onclick="SearchByCategory('0')">Todos</span></li>
+            <li class="search-category" data-id="0">
+                <span class="badge badge-primary custom-span-category">Todos</span>
+            </li>
             {% for c in categories %}
-            <li><span class="badge badge-primary custom-span-category categories" idvalue="{{c.id}}"
-                    onclick="SearchByCategory('{{c.id}}')">{{c.category}}</span></li>
+            <li class="search-category" data-id="{{c.id}}">
+                <span class="badge badge-primary custom-span-category">{{c.category}}</span>
+            </li>
             {% endfor %}
         </ul>
     </div>

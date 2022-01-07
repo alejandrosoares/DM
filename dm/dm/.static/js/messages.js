@@ -7,9 +7,11 @@ function closeMessage(e){
 
 
 function loadCloseMessage() {
-   const btn = document.getElementById('btn-close-message');
 
-   btn.addEventListener('click', closeMessage);
+	if (document.getElementById('user-messages')) {
+		const btn = document.getElementById('btn-close-message');
+   	btn.addEventListener('click', closeMessage);
+	}
 }
 
 export default loadCloseMessage;

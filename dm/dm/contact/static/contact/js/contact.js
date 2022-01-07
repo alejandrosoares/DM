@@ -123,7 +123,7 @@ function sendMessage(e) {
 }
 
 document.addEventListener("DOMContentLoaded", e => {
-	const btnSend = document.querySelector("#contact button.send");
+	const btnSend = document.querySelector("#contact .contact-form button.send");
 
 	btnSend.addEventListener("click", sendMessage);
 	inputName.addEventListener("focus", removeMessage);

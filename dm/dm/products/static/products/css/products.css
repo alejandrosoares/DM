@@ -1,4 +1,5 @@
 /* PRODUCTS SECTION */
+@import url('search.css');
 
 #products {
    scroll-margin-top: 60px;

@@ -1,228 +1,123 @@
-{% load static %}
-{% load webp_converter %}
+{% load static %} {% load webp_converter %}
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Ventas de juguetes en Ober&aacute; Misiones">
-  <meta name="author" content="Alejandro Soares">
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Ventas de juguetes en Ober&aacute; Misiones" />
+	<meta name="author" content="Alejandro Soares" />
 
-  <title>Tienda Marcia</title>
+	<title>Tienda Marcia</title>
 
-  <!-- Thrid parties -->
-  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+	<!-- Thrid parties -->
+	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" />
+	<link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}" />
 
-  <!-- Own -->
-  <link href="{% static 'css/main.css' %}" rel="stylesheet">
-  {% block style %}{% endblock %}
-  
+	<!-- Own -->
+	<link href="{% static 'css/main.css' %}" rel="stylesheet" />
+	{% block style %}{% endblock %}
 </head>
 
 <body>
-  {% include 'nav.html' %}
-  {% include 'messages.html' %}
+	{% include 'nav.html' %}
+	{% include 'messages.html' %}
 
-  <main>
-    {% block content %}{% endblock %}
-  </main>
+	<main>
+		{% block content %}{% endblock %}
+	</main>
 
-  {% include 'footer.html' %}
+	{% include 'footer.html' %}
 </body>
 
-  <!-- Bootstrap -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- Bootstrap -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-  <!-- Own -->
-  <script src="{% static 'js/main.js' %}" type="module"></script>
-  {% block script %}{% endblock %}
-  
+<!-- Own -->
+<script src="{% static 'js/main.js' %}" type="module"></script>
+{% block script %}{% endblock %}
+
 <script>
 
-const imgCarousel = "{% static_webp 'img/cubes.png' %}",
-      urlSendForm = "{% url 'contact:contact' %}",
-      urlSearchById = "{% url 'home:search-by-id' %}",
-      urlSearchByCategory = "{% url 'home:search-by-category' %}",
-      urlSendingData = "{% url 'home:receiving-data' %}",
-      listWordsSearch = [],
-      codesDisplayed = [],
-      containerSearch = document.querySelector("#containerSearch ul"), //Contenedor .col para guardar la lista
-      containerResults = document.getElementById("containerResults"), // Row de la lista
-      searchInput = document.getElementById("searchInput"),
-      searchBtn = document.getElementById("searchBtn");
+	const urlSearchById = "{% url 'home:search-by-id' %}",
+		urlSearchByCategory = "{% url 'home:search-by-category' %}",
+		urlSendingData = "{% url 'home:receiving-data' %}",
+		listWordsSearch = [],
+		codesDisplayed = [];
 
-let lCodesDisplayed = codesDisplayed.length,
-    screenWidth,
-    screenHeight;
+	let lCodesDisplayed = codesDisplayed.length,
+		screenWidth,
+		screenHeight;
 
 
-// lista de nombres original
-{% for x in listWords %}
-  {% if x.img %}
-    listWordsSearch.push(["{{x.string}}","{{x.img.url}}", "{{x.idObject}}", "{{x.typeString}}"]);
-  {% else %}
-    listWordsSearch.push(["{{x.string}}", null, "{{x.idObject}}", "{{x.typeString}}"]);
-  {% endif %}
-{% endfor %}
+	// lista de nombres original
+	{% for x in listWords %}
+	{% if x.img %}
+	listWordsSearch.push(["{{x.string}}", "{{x.img.url}}", "{{x.idObject}}", "{{x.typeString}}"]);
+	{% else %}
+	listWordsSearch.push(["{{x.string}}", null, "{{x.idObject}}", "{{x.typeString}}"]);
+	{% endif %}
+	{% endfor %}
 
 
-function InsertCodeDisplayed(code){
-  let exist = false;
-  for(var i=0; i < lCodesDisplayed; i++){
-    if(codesDisplayed[i][0] ==  code){
-      // Ya existe el codigo en la lista, por lo que incrementa la cantidad de visualizaciones
-      codesDisplayed[i][1] =  codesDisplayed[i][1] + 1;
-      exist = true;
-      break;
-    }  
-  }
-  if(!exist){ // nuevo codigo en la lista
-      codesDisplayed.push([code,1]);
-  }
-  lCodesDisplayed = codesDisplayed.length;
-}
+	function InsertCodeDisplayed(code) {
+		let exist = false;
+		for (var i = 0; i < lCodesDisplayed; i++) {
+			if (codesDisplayed[i][0] == code) {
+				// Ya existe el codigo en la lista, por lo que incrementa la cantidad de visualizaciones
+				codesDisplayed[i][1] = codesDisplayed[i][1] + 1;
+				exist = true;
+				break;
+			}
+		}
+		if (!exist) { // nuevo codigo en la lista
+			codesDisplayed.push([code, 1]);
+		}
+		lCodesDisplayed = codesDisplayed.length;
+	}
 
-function RequestConstruction(){
-  // Funcion que construye la peticion XmlHttpRequest
-  let built = false,
-      request;
-  if(window.XMLHttpRequest){
-      request = new XMLHttpRequest();
-      built = true;
-  }else{
-    if(window.ActiveXObject){
-      try{
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-        built = true;
-      }catch(error){
-        try{
-          request = new ActiveXObject("Microsoft.XMLHTTP");
-          built = true;
-        }catch(error){
-          console.log("No se pudo construir la peticion");
-        }
-      }
-    }
-  }
+	function HideNavBarElements() {
+		let widthScreen = window.screen.width;
 
-  if(built){
-    return request;
-  }else{
-    return false;
-  }
-}
+		// Verificar el ancho de la pantalla
+		if (widthScreen <= 991) {
+			const btn = document.getElementById("btnNavbarToggler"),
+				div = document.getElementById("navbarResponsive");
 
-function SendingData(){
-  if(lCodesDisplayed !== 0){
-    let formdata = new FormData(),
-      input = document.querySelector("#containerTokenForData > input"),
-      token =  input.value,
-      request;
+			btn.classList.add("collapsed");
+			btn.setAttribute("aria-expanded", "false");
+			div.classList.remove("show");
+		}
+	}
 
-    formdata.append("listCodes", codesDisplayed);
- 
-    request = RequestConstruction();
+	function NavItemsProducts() {
+		const ul = document.getElementById("NavProducts");
+		console.log("ul.style.display: ", ul.style.display);
+		if (ul.style.display == "none" || ul.style.display == "") {
+			ul.style.display = "block";
+		} else {
+			ul.style.display = "none";
+		}
+	}
 
-    if(request){
-      // La peticion fue construida exitosamente
-        request.onreadystatechange = function(){
-        if(this.readyState == 4 && this.status == 200){ 
-          if(this.responseText == "ok"){
-            console.log("Envio de datos exitosos");
-          }
-        }
-      }
-      // el envio de datos tiene que ser sincrono ( por el metodo beforeunload que se utiliza) pero retrasa la carga de la siguiente pagina
-      request.open("POST", urlSendingData, false); 
-      request.setRequestHeader("X-CSRFToken", token);
-      request.send(formdata); 
-    }
-  }
-}
+	function ShowAllProducts() {
+		const row = document.getElementById("btnForPublications");
+		row.style.display = "none";
+		SearchByCategory('0');
+	}
 
+	function InsertImgsCarousel() {
+		const carousel = document.getElementById("carouselIndicators"),
+			items = carousel.querySelectorAll("div.carousel-item");
 
-function SetMeasurements(){
-  // Redimensionan la barra de navegacion y quitar el borde del contenedor de texto del producto en el modal
-  // Agrega o quitar estilos de los items de producto en la barra de navegacion
-  const navbar = document.querySelector("nav.navbar"),
-        modalContent = document.querySelector("div.modal-content"),
-        modalContentText = document.querySelector("div.col-content-modal"),
-        ul = document.getElementById("NavProducts");
-
-
-
-  screenWidth = window.screen.width;
-  //screenHeight = screenHeight;
-
-  let sForNav = "max-width: " + screenWidth + "px !important;";
-  
-  navbar.setAttribute("style", sForNav);
-
-  if(screenWidth <= 991){
-    // Quitando el borde del contenedor de texto del modal
-    modalContentText.classList.remove("border-left");
-
-    // Removiendo la clase de items de navegacion de los productos
-    ul.classList.remove("nav-products-lg");
-  }else{
-    // Agregando la clase de items de navegacion de los productos
-    ul.classList.add("nav-products-lg");
-  }
-}
-
-
-function HideNavBarElements(){
-  let widthScreen = window.screen.width;
-
-  // Verificar el ancho de la pantalla
-  if(widthScreen <= 991){
-      const btn = document.getElementById("btnNavbarToggler"),
-        div = document.getElementById("navbarResponsive");
-
-    btn.classList.add("collapsed");
-    btn.setAttribute("aria-expanded","false");
-    div.classList.remove("show");
-  }
-}
-
-function NavItemsProducts(){
-  const ul = document.getElementById("NavProducts");
-  console.log("ul.style.display: ", ul.style.display );
-  if(ul.style.display == "none" || ul.style.display == "" ){
-    ul.style.display = "block";
-  }else{
-    ul.style.display = "none";
-  }
-}
-
-function ShowAllProducts(){
-  const row = document.getElementById("btnForPublications");
-  row.style.display = "none";
-  SearchByCategory('0');
-}
-
-function InsertImgsCarousel(){
-    const carousel = document.getElementById("carouselIndicators"),
-        items = carousel.querySelectorAll("div.carousel-item");
-
-    items.forEach(item => {
-        item.setAttribute("style", `background-image: url('${imgCarousel}');\
-                                    position:relative;`);
-    })
-}
-
-function loadPage(){
-  SetMeasurements();
-  InsertImgsCarousel();
-}
-
-window.addEventListener("beforeunload", SendingData , false);
-window.addEventListener("load",  loadPage, false);
-window.addEventListener("resize", SetMeasurements , false);
+		items.forEach(item => {
+			item.setAttribute("style", `background-image: url('${imgCarousel}');\
+                                          position:relative;`);
+		})
+	}
 </script>
 
 </html>

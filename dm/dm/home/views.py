@@ -15,7 +15,7 @@ def HomeView(request):
 
     opening = Opening.objects.all()
     products = Product.objects.all()
-    categories = Category.objects.all()
+    categories = Category.objects.filter(enable=True)
 
     context = {
         'products': products,

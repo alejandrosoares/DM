@@ -159,9 +159,12 @@ function searchByWords() {
          })
          .then(products => {
             PRODUCTS.setProducts = products;
-            createProductList(PRODUCTS.setProducts);
+            createProductList(PRODUCTS.getProducts);
          })
          .catch(error => console.error(error));
+   } else {
+      // query is empty
+      createProductList(PRODUCTS.getSearchList);
    }
 }
 

@@ -89,7 +89,7 @@ function loadProductsInGlobal() {
       .then(products => {
          PRODUCTS.setProducts = products;
          PRODUCTS.setSearchList = products;
-         createProductList(PRODUCTS.setProducts);
+         createProductList(PRODUCTS.getProducts);
       })
       .catch(error => console.error(error));
 }

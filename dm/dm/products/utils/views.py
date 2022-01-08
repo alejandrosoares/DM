@@ -13,7 +13,7 @@ def get_recommedations_products(categories, exclude_id=None):
     number_of_items = 4
 
     for c in categories:
-        products = Product.objects.filter(category=c)
+        products = c.product_set.all()
 
         if exclude_id:
             products.exclude(id=exclude_id)

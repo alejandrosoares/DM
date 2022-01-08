@@ -14,8 +14,9 @@ admin.site.register(Brand, BrandAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('category',)
-    fields = ('category',)
+    list_display = ('category', 'num_products')
+    fields = ('category', 'num_products')
+    readonly_fields = ('num_products',)
 
 
 admin.site.register(Category, CategoryAdmin)
@@ -25,7 +26,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'in_stock', 'stock')
     fields = (
         'code', 'name', 'in_stock', 'stock', 'description',
-        'img', 'category', 'vendor', 'vendor_code', 'price',
+        'img', 'categories', 'vendor', 'vendor_code', 'price',
         'brand', 'brand_name'
     )
     readonly_fields = ('code', 'brand_name')

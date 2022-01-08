@@ -10,7 +10,6 @@ from .utils.views import get_recommedations_products
 from user_information.models import Queries
 from utils.normalize import normalize_text
 
-
 # Thrid parties
 from urllib.parse import unquote
 
@@ -24,7 +23,7 @@ def search_by_category(category_id):
     try:
         if category_id != "0":
             c = Category.objects.get(id=category_id)
-            products = Product.objects.filter(category__id=c.id)
+            products = c.product_set.all()
         else:
             products = Product.objects.all()
 
@@ -49,8 +48,9 @@ def search_by_words(query):
     query = normalize_text(query)
 
     products = Product.objects.filter(
-        Q(normalized_name__icontains=query) | Q(
-            code__icontains=query) | Q(brand_name__icontains=query)
+        Q(normalized_name__icontains=query) |
+        Q(code__icontains=query) |
+        Q(brand_name__icontains=query)
     )
 
     return products
@@ -106,7 +106,7 @@ def ProductView(request, product_id):
 
     try:
         product = Product.objects.get(id=product_id)
-        categories = product.category.all()
+        categories = product.categories.filter(enable=True)
         recommendations = get_recommedations_products(categories)
 
         context = {

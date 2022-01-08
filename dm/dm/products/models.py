@@ -1,5 +1,7 @@
 # Django
 from django.db import models
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 # Own
 from vendors.models import Vendor
@@ -41,14 +43,46 @@ class Brand(models.Model):
 class Category(models.Model):
 
     category = models.CharField("Category", max_length=30)
+    num_products = models.PositiveSmallIntegerField("Number of products")
+    enable = models.BooleanField("Enable", default=False)
 
     class Meta:
         verbose_name = "Category"
         verbose_name_plural = "Categories"
 
+    def delete_this_function(self):
+        if self.num_products == 0:
+            self.enable = False
+        else:
+            self.enable = True
+
+    def decrease_num_products_field(self):
+        self.num_products -= 1
+
+        if self.num_products == 0:
+            self.enable = False
+
+        self.save()
+
+    def increase_num_products_field(self):
+        self.num_products += 1
+
+        if self.num_products == 0:
+            self.enable = True
+
+        self.save()
+
+    def format_category_field(self):
+        self.category = self.category.lower().capitalize()
+
+    def pre_save(self):
+        self.category = self.category.lower().capitalize()
+
     def save(self, *args, **kwargs):
 
-        self.category = self.category.lower().capitalize()
+        self.pre_save()
+
+        self.delete_this_function()
 
         super(__class__, self).save(*args, **kwargs)
 
@@ -57,17 +91,19 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """Prodcut Model"""
 
-    code = models.CharField("Product code", max_length=20)
+    code = models.PositiveSmallIntegerField("Product code")
     name = models.CharField("Name", max_length=50)
     normalized_name = models.CharField("Name", max_length=50, blank=True)
     description = models.TextField("Description",  null=True, blank=True)
 
     stock = models.SmallIntegerField("Cantidad disponible", null=True)
     in_stock = models.BooleanField("In stock", default=True)
-    category = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    vendor_code = models.CharField("Vendor code", max_length=25)
+    vendor_code = models.CharField(
+        "Vendor code", max_length=25, blank=True, null=True)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
     brand_name = models.CharField(
@@ -114,29 +150,60 @@ class Product(models.Model):
 
         self.normalized_name = normalize_text(self.name)
 
-    def initial_pre_save(self):
+    def __pre_delete(self):
+        """ Pre delete 
+        When the instance will be deleted, the number of products related
+        to that category decrease
+        """
+        categories = self.categories.all()
+
+        for category in categories:
+            category.decrease_num_products_field()
+
+    def __initial_pre_save(self):
         """ Pre save when the instance will be created """
 
         self.__add_code_field()
         self.__add_normalized_name_field()
         self.__add_brand_field()
 
-    def pre_save(self):
+    def __pre_save(self):
         """Pre save when instance was created """
 
         self.__add_normalized_name_field()
         self.__add_brand_field()
+
+    def delete(self, *args, **kwargs):
+
+        self.__pre_delete()
+
+        super(__class__, self).delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
 
         created = True if self._state.adding else False
 
         if created:
-            self.initial_pre_save()
+            self.__initial_pre_save()
         else:
-            self.pre_save()
+            self.__pre_save()
 
         super(__class__, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.Name
+        return self.name
+
+
+@receiver(m2m_changed, sender=Product.categories.through)
+def changeCategoriesField(sender, instance, **kwargs):
+
+    categories = instance.categories.all()
+
+    for category in categories:
+        if kwargs["action"] == "post_add":
+            print('increase')
+            category.increase_num_products_field()
+
+        elif kwargs["action"] == "post_remove":
+            print('decrease')
+            category.decrease_num_products_field()

@@ -42,7 +42,7 @@ function SearchByCategory(e) {
       })
       .then(products => {
          PRODUCTS.setProducts = products;
-         createProductList();
+         createProductList(PRODUCTS.getProducts );
          changeStyleCategory(id);
       })
       .catch(error => console.error(error));

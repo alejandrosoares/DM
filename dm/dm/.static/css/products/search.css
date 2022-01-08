@@ -89,6 +89,14 @@
    padding-left: 20px;
 }
 
+.search-categories {
+   padding: 12px;
+}
+
+.categories-list {
+   text-align: center;
+}
+
 /* For change borders when div.search-result-list is showed */
 .input-box-result-active {
    border-bottom: 0;

@@ -5,6 +5,7 @@ def normalize_text(text):
     @param: str
     @return: str
     """
+
     text = text.replace("á", "a").replace("é", "e").replace(
         "í", "i").replace("ó", "o").replace("ú", "u")
 

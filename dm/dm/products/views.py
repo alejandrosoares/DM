@@ -2,12 +2,17 @@
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods
 
 # Own
 from .models import Product, Category
 from .utils.views import get_recommedations_products
 from user_information.models import Queries
 from utils.normalize import normalize_text
+
+
+# Thrid parties
+from urllib.parse import unquote
 
 
 def search_by_category(category_id):
@@ -34,8 +39,11 @@ def search_by_words(query):
     @param: str
     @return: QuerySet
     """
-    print(query)
 
+    # Decode url
+    query = unquote(query)
+
+    # Save querie made
     Queries.objects.create(query=query)
 
     query = normalize_text(query)
@@ -69,6 +77,7 @@ def conver_to_dic(products, domain):
     return product_list
 
 
+@require_http_methods(["GET"])
 def ProductsView(request):
     """ Products View.
 
@@ -91,6 +100,7 @@ def ProductsView(request):
     return JsonResponse(products, safe=False)
 
 
+@require_http_methods(["GET"])
 def ProductView(request, product_id):
     """Product View."""
 

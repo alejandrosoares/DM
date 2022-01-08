@@ -42,26 +42,11 @@
 
 <script>
 
-	const urlSearchById = "{% url 'home:search-by-id' %}",
-		urlSearchByCategory = "{% url 'home:search-by-category' %}",
-		urlSendingData = "{% url 'home:receiving-data' %}",
-		listWordsSearch = [],
-		codesDisplayed = [];
+	const codesDisplayed = [];
 
 	let lCodesDisplayed = codesDisplayed.length,
 		screenWidth,
 		screenHeight;
-
-
-	// lista de nombres original
-	{% for x in listWords %}
-	{% if x.img %}
-	listWordsSearch.push(["{{x.string}}", "{{x.img.url}}", "{{x.idObject}}", "{{x.typeString}}"]);
-	{% else %}
-	listWordsSearch.push(["{{x.string}}", null, "{{x.idObject}}", "{{x.typeString}}"]);
-	{% endif %}
-	{% endfor %}
-
 
 	function InsertCodeDisplayed(code) {
 		let exist = false;

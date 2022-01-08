@@ -62,8 +62,8 @@ function clickInSearch(e) {
    e.stopPropagation();
 }
 
-function writeProducts() {
-   /* Write Products
+function writeProductsInSearchResult() {
+   /* Write Products in div.search-result-list 
    Add the li elements into searchResultList
    */
    const products = PRODUCTS.getSearchList;
@@ -119,7 +119,7 @@ function SearchOfMatching(e) {
    
          if (search.length > minCharsToSearch) {
    
-            const matching = writeProducts();
+            const matching = writeProductsInSearchResult();
             
             if (matching) {
                hideSearchResults(false);
@@ -159,7 +159,7 @@ function searchByWords() {
          })
          .then(products => {
             PRODUCTS.setProducts = products;
-            createProductList();
+            createProductList(PRODUCTS.setProducts);
          })
          .catch(error => console.error(error));
    }

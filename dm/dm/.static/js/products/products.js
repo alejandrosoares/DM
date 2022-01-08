@@ -21,11 +21,12 @@ function showLoader(show) {
    loader.classList.remove("d-none"): loader.classList.add("d-none");
 }
 
-function createProductList() {
+function createProductList(products) {
    /* Create Product List
    Insert inside .products-list .row with the html elements
+
+   @param: list
    */
-   const products = PRODUCTS.getProducts;
    
    productsContainer.innerHTML = "";
 
@@ -52,9 +53,9 @@ function createProductList() {
       
    } else {
       productsContainer.innerHTML = `
-      <div class="search-not-found">
-         <p>No encontramos resultados coincidentes.</p>
-      </div>`;
+            <div class="search-not-found">
+               <p>No encontramos resultados coincidentes.</p>
+            </div>`;
    }
 
    showLoader(false);
@@ -88,7 +89,7 @@ function loadProductsInGlobal() {
       .then(products => {
          PRODUCTS.setProducts = products;
          PRODUCTS.setSearchList = products;
-         createProductList();
+         createProductList(PRODUCTS.setProducts);
       })
       .catch(error => console.error(error));
 }
@@ -99,9 +100,7 @@ function loadProducts() {
    loadProductsInGlobal();
 }
 
-
 document.addEventListener("DOMContentLoaded", loadProducts);
 document.addEventListener("click", clickProducts);
-
 
 export { createProductList };

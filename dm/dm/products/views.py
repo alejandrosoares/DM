@@ -41,7 +41,8 @@ def search_by_words(query):
     query = normalize_text(query)
 
     products = Product.objects.filter(
-        Q(normalized_name__icontains=query) | Q(code__icontains=query)
+        Q(normalized_name__icontains=query) | Q(
+            code__icontains=query) | Q(brand_name__icontains=query)
     )
 
     return products

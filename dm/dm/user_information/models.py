@@ -95,7 +95,7 @@ class DateOfVisit(models.Model):
 def PostSaveBrand(sender, instance, created, **kwargs):
     if created:
         SearchWords.objects.create(
-            string=instance.brandName, typeString='b', idObject=instance.id, img=None, priority=True)
+            string=instance.brand, typeString='b', idObject=instance.id, img=None, priority=True)
 
 
 @receiver(post_save, sender=Product)

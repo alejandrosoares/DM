@@ -70,6 +70,8 @@ class Product(models.Model):
     vendor_code = models.CharField("Vendor code", max_length=25)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
+    brand_name = models.CharField(
+        'Brands', max_length=100, blank=True, null=True)
     price = models.DecimalField("Price", max_digits=7, decimal_places=2)
 
     img = models.ImageField("Image", upload_to=upload_img, null=True)
@@ -95,7 +97,12 @@ class Product(models.Model):
         else:
             return '({}) - {}'.format(self.vendor_code, self.name)
 
-    def __add_code(self):
+    def __add_brand_field(self):
+
+        if self.brand:
+            self.brand_name = self.brand.brand.upper()
+
+    def __add_code_field(self):
 
         list_code = __class__.objects.values_list("code", flat=True)
 
@@ -103,15 +110,22 @@ class Product(models.Model):
 
         self.code = reference + 1
 
-    def __add_normalized_name(self):
+    def __add_normalized_name_field(self):
 
         self.normalized_name = normalize_text(self.name)
 
     def initial_pre_save(self):
-        """ Pre save when the instance is created """
+        """ Pre save when the instance will be created """
 
-        self.__add_code()
-        self.__add_normalized_name()
+        self.__add_code_field()
+        self.__add_normalized_name_field()
+        self.__add_brand_field()
+
+    def pre_save(self):
+        """Pre save when instance was created """
+
+        self.__add_normalized_name_field()
+        self.__add_brand_field()
 
     def save(self, *args, **kwargs):
 
@@ -119,7 +133,9 @@ class Product(models.Model):
 
         if created:
             self.initial_pre_save()
-        self.__add_normalized_name()
+        else:
+            self.pre_save()
+
         super(__class__, self).save(*args, **kwargs)
 
     def __str__(self):

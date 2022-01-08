@@ -36,9 +36,9 @@ LOCAL_APPS = [
     'products',
     'contact',
     'vendors',
-    'user_information',
     'opening',
     'publications',
+    'usage_log',
     'webp_converter'
 ]
 

@@ -4,7 +4,7 @@ from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
 
 # Own
-from user_information.models import Queries, SearchWords
+# from user_information.models import Queries, SearchWords
 from opening.models import Opening
 from products.models import Product, Category
 

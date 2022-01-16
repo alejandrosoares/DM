@@ -1,4 +1,7 @@
 # Django
+from opcode import opname
+from pkgutil import ModuleInfo
+from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from django.views.decorators.http import require_http_methods
@@ -7,6 +10,12 @@ from django.views.decorators.http import require_http_methods
 # from user_information.models import Queries, SearchWords
 from opening.models import Opening
 from products.models import Product, Category
+from dm.settings import INITIAL_START, INITIAL_ITEMS
+
+
+# Third parties
+from PIL import Image
+import os
 
 
 @require_http_methods(["GET"])

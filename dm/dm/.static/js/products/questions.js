@@ -8,17 +8,17 @@ const questionsContainer = document.querySelector(
 let questionVisibility = false;
 
 const listMessages = [{
-      numQuestion: 1,
-      message: "¿Tenés disponible?",
-   },
-   {
-      numQuestion: 2,
-      message: "¿Me podés enviar?",
-   },
-   {
-      numQuestion: 3,
-      message: "Otra pregunta",
-   },
+   numQuestion: 1,
+   message: "¿Tenés disponible?",
+},
+{
+   numQuestion: 2,
+   message: "¿Me podés enviar?",
+},
+{
+   numQuestion: 3,
+   message: "Otra pregunta",
+},
 ];
 
 function showOrHideQuestions(e) {
@@ -97,8 +97,8 @@ function performQuestion(e) {
    /* Set the message number and product code */
 
    const messageNumber = parseInt(
-         e.target.getAttribute("data-question")
-      ),
+      e.target.getAttribute("data-question")
+   ),
       productCode = getProductCode();
 
    sendQuestion(messageNumber, productCode);
@@ -111,6 +111,7 @@ function loadQuestions() {
       questions = document.querySelectorAll(".main-product .product-questions li");
 
    btnConsult.addEventListener("click", showOrHideQuestions);
+
    questions.forEach(li => {
       li.addEventListener("click", performQuestion)
    });

@@ -1,11 +1,19 @@
 # Django
+from ctypes.wintypes import SIZE
+from pickletools import optimize
 from django.db import models
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
+from django.core.files.images import ImageFile
 
 # Own
 from vendors.models import Vendor
 from utils.normalize import normalize_text
+from .utils.models import get_file_name, get_extension
+
+# Third parties
+from PIL import Image
+import os
 
 
 def upload_img(instance, filename):
@@ -111,6 +119,12 @@ class Product(models.Model):
     price = models.DecimalField("Price", max_digits=7, decimal_places=2)
 
     img = models.ImageField("Image", upload_to=upload_img, null=True)
+    img_small = models.ImageField(
+        'Image 270 px',
+        upload_to='img/270',
+        null=True,
+        blank=True
+    )
     img_webp = models.ImageField(
         "Image WEBP", upload_to=upload_img_webp, null=True)
 
@@ -151,7 +165,7 @@ class Product(models.Model):
         self.normalized_name = normalize_text(self.name)
 
     def __pre_delete(self):
-        """ Pre delete 
+        """ Pre delete
         When the instance will be deleted, the number of products related
         to that category decrease
         """
@@ -195,7 +209,7 @@ class Product(models.Model):
 
 
 @receiver(m2m_changed, sender=Product.categories.through)
-def changeCategoriesField(sender, instance, **kwargs):
+def change_categories_field(sender, instance, **kwargs):
 
     categories = instance.categories.all()
 
@@ -207,3 +221,46 @@ def changeCategoriesField(sender, instance, **kwargs):
         elif kwargs["action"] == "post_remove":
             print('decrease')
             category.decrease_num_products_field()
+
+
+@receiver(post_save, sender=Product)
+def postsave_products(sender, instance, created, **kwargs):
+
+    QUALITY = 75
+    FILE_SIZE = 270
+
+    if not created:
+
+        if not instance.img_small:
+
+            file_name = get_file_name(instance.img.name)
+            extension = get_extension(instance.img.name)
+            temp_path = '.media/img/temp/' + file_name
+
+            original = Image.open(instance.img.path)
+
+            # Resize Image
+            width, height = original.size
+            r = width / height
+            original.thumbnail((FILE_SIZE, int(FILE_SIZE / r)))
+
+            # Save temp
+            if extension != '.png':
+                original.save(
+                    temp_path,
+                    optimized=True,
+                    quality=QUALITY
+                )
+            else:
+                # .png
+                original.save(temp_path)
+
+            temp = open(temp_path, 'rb')
+
+            # Add temp to img_250 field
+            instance.img_small = ImageFile(temp)
+            instance.img_small.name = file_name
+            instance.save()
+
+            temp.close()
+            os.remove(temp_path)

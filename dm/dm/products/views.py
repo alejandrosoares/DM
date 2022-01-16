@@ -65,6 +65,7 @@ def conver_to_dic(products, domain):
     """
 
     product_list = []
+    append = product_list.append
 
     for p in products:
         product = {
@@ -73,9 +74,10 @@ def conver_to_dic(products, domain):
             "normalized_name": p.normalized_name,
             "price": p.price,
             "code": p.code,
-            "img": f"http://{domain}{p.img.url}"
+            "img": f"http://{domain}{p.img_small.url}"
         }
-        product_list.append(product)
+
+        append(product)
 
     return product_list
 
@@ -100,7 +102,10 @@ def ProductsView(request):
 
     products = conver_to_dic(products, request.get_host())
 
-    return JsonResponse(products, safe=False)
+    response = {
+        'products': products
+    }
+    return JsonResponse(response, safe=False)
 
 
 @require_http_methods(["GET"])

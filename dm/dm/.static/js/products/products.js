@@ -1,12 +1,6 @@
 import { GLOBAL } from "../globals.js";
-
-const PRODUCTS = GLOBAL.products;
-const url = document.querySelector(
-         "#products .products-info .url-products-json-all"
-      ).value;
-
-let START = 0,
-   END = 10;
+import requestProduct from "../request_products.js";
+import { showBtnMoreItems, showMoreItems } from "./more_items.js";
 
 const productsContainer = document.querySelector(".products-list .row"),
    loader = document.querySelector("#products .loader"),
@@ -14,43 +8,65 @@ const productsContainer = document.querySelector(".products-list .row"),
    fragment = document.createDocumentFragment();
 
 
+const productsToShow = GLOBAL.products.toShow;
+
 function showLoader(show) {
    /* Show Loader if show parameter is True, if is False hide loader */
 
    (show) ?
-   loader.classList.remove("d-none"): loader.classList.add("d-none");
+      loader.classList.remove("d-none") : loader.classList.add("d-none");
 }
 
 function createProductList(products) {
    /* Create Product List
    Insert inside .products-list .row with the html elements
 
-   @param: list
+   @param: Object, bool (is add new items or empty productsContainer)
    */
-   
-   productsContainer.innerHTML = "";
 
-   if (products.length) {
+   const productsLength = products.length;
+
+   productsContainer.innerHTML = '';
+
+   if (productsLength > productsToShow) {
+      showBtnMoreItems(true);
+   } else {
+      showBtnMoreItems(false);
+   }
+
+   console.log('length counter ', productsLength);
+
+   if (productsLength) {
+
+      let counter = 0;
+
       products.forEach(p => {
          const card = template.querySelector("div.card"),
             img = template.querySelector("div.product-header img"),
             name = template.querySelector("div.name > p"),
             price = template.querySelector("div.price > span"),
             code = template.querySelector("div.in-stock > span");
-   
+
          card.setAttribute("data-id", p.id);
          img.src = p.img;
          name.textContent = p.name;
          price.textContent = `$ ${p.price}`;
          code.textContent = `Cód: ${p.code}`;
-   
+
+         console.log(counter, productsToShow, counter >= productsToShow);
+
+         if (counter >= productsToShow) {
+            card.classList.add('d-none');
+         }
+         counter += 1;
+
          const clone = document.importNode(template, true);
-   
+
          fragment.appendChild(clone);
       })
-   
+
       productsContainer.appendChild(fragment);
-      
+
    } else {
       productsContainer.innerHTML = `
             <div class="search-not-found">
@@ -74,28 +90,18 @@ function clickProducts(e) {
    }
 }
 
-
 function loadProductsInGlobal() {
    /* Load products in the global variable */
 
-   const url = document.querySelector(
-      "#products .products-info .url-products-json-all"
-   ).value;
-
-   fetch(url)
-      .then(response => {
-         if (response.ok) return response.json()
-      })
-      .then(products => {
-         PRODUCTS.setProducts = products;
-         PRODUCTS.setSearchList = products;
-         createProductList(PRODUCTS.getProducts);
-      })
-      .catch(error => console.error(error));
+   requestProduct(true, createProductList);
 }
 
+
 function loadProducts() {
-   const searchBtn = document.getElementById('searchBtn');
+   /* El orden de las llamadas importa */
+   const btnMoreItems = document.getElementById('btn-more-items');
+
+   btnMoreItems.addEventListener('click', showMoreItems);
 
    loadProductsInGlobal();
 }

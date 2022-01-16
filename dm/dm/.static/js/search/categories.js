@@ -19,8 +19,8 @@ function removeStyleSelectedCategory() {
 function changeStyleCategory(id) {
    /* Add style to selected category */
 
-   const category =  document.querySelector(`.search-categories li[data-id="${id}"]`);
-   
+   const category = document.querySelector(`.search-categories li[data-id="${id}"]`);
+
    removeStyleSelectedCategory();
 
    category.classList.add('category-activate');
@@ -31,18 +31,24 @@ function SearchByCategory(e) {
    /* Send request for search by category 
    @param: li.search-category
    */
-  
+
    let url = document.querySelector('#search .info .products-url').value,
       liCategory = e.target.closest('.search-category'),
-         id = liCategory.getAttribute('data-id');
+      id = liCategory.getAttribute('data-id');
 
    fetch(`${url}?category=${id}`)
       .then(response => {
          if (response.ok) return response.json()
       })
-      .then(products => {
-         PRODUCTS.setProducts = products;
-         createProductList(PRODUCTS.getProducts );
+      .then(response => {
+
+         console.log(response.products);
+
+         const obj = {
+            products: response.products
+         }
+         PRODUCTS.setProducts = obj;
+         createProductList(PRODUCTS.getProducts);
          changeStyleCategory(id);
       })
       .catch(error => console.error(error));
@@ -59,7 +65,7 @@ function loadCategoriesSearch() {
    });
 }
 
-export { 
+export {
    loadCategoriesSearch,
    removeStyleSelectedCategory
 }

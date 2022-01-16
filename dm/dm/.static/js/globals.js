@@ -11,14 +11,15 @@ const GLOBAL = {
    products: {
       searchList: null,
       list: null,
-      set setProducts(list) {
-         this.list = list;
+      toShow: 8,
+      set setProducts(obj) {
+         this.list = obj.products;
       },
       get getProducts() {
          return this.list;
       },
-      set setSearchList(list) {
-         this.searchList = list;
+      set setSearchList(obj) {
+         this.searchList = obj.products;
       },
       get getSearchList() {
          return this.searchList;

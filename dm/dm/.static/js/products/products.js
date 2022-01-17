@@ -1,6 +1,5 @@
 import { GLOBAL } from "../globals.js";
 import requestProduct from "../request_products.js";
-import { showBtnMoreItems, showMoreItems } from "./more_items.js";
 
 const productsContainer = document.querySelector(".products-list .row"),
    loader = document.querySelector("#products .loader"),
@@ -28,17 +27,7 @@ function createProductList(products) {
 
    productsContainer.innerHTML = '';
 
-   if (productsLength > productsToShow) {
-      showBtnMoreItems(true);
-   } else {
-      showBtnMoreItems(false);
-   }
-
-   console.log('length counter ', productsLength);
-
    if (productsLength) {
-
-      let counter = 0;
 
       products.forEach(p => {
          const card = template.querySelector("div.card"),
@@ -52,13 +41,6 @@ function createProductList(products) {
          name.textContent = p.name;
          price.textContent = `$ ${p.price}`;
          code.textContent = `Cód: ${p.code}`;
-
-         console.log(counter, productsToShow, counter >= productsToShow);
-
-         // if (counter >= productsToShow) {
-         //    card.classList.add('d-none');
-         // }
-         counter += 1;
 
          const clone = document.importNode(template, true);
 
@@ -93,15 +75,11 @@ function clickProducts(e) {
 function loadProductsInGlobal() {
    /* Load products in the global variable */
 
-   requestProduct(true, createProductList);
+   requestProduct(null, createProductList, true);
 }
 
 
 function loadProducts() {
-   /* El orden de las llamadas importa */
-   const btnMoreItems = document.getElementById('btn-more-items');
-
-   btnMoreItems.addEventListener('click', showMoreItems);
 
    loadProductsInGlobal();
 }

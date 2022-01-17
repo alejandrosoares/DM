@@ -225,6 +225,9 @@ def change_categories_field(sender, instance, **kwargs):
 
 @receiver(post_save, sender=Product)
 def postsave_products(sender, instance, created, **kwargs):
+    """ Post Save Products
+    resize image and compress to reduce page size
+    """
 
     QUALITY = 75
     FILE_SIZE = 270

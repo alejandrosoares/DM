@@ -6,9 +6,10 @@
 
 */
 import { GLOBAL } from "../globals.js";
-import { loadCategoriesSearch, removeStyleSelectedCategory} from "./categories.js";
+import { loadCategoriesSearch, removeStyleSelectedCategory } from "./categories.js";
 import { saveSearchInSessionStorage, loadSearchFromSessionStorage } from "./session_storage.js";
 import { createProductList } from "../products/products.js";
+import requestProduct from "../request_products.js";
 
 const PRODUCTS = GLOBAL.products;
 const minCharsToSearch = 2;
@@ -77,11 +78,11 @@ function writeProductsInSearchResult() {
       if (
          p.normalized_name.search(formatedSearch) != -1 ||
          p.id == formatedSearch
-      ) { 
+      ) {
          if (p.img !== null) {
             // Contains image
             searchResultList.innerHTML =
-            searchResultList.innerHTML +
+               searchResultList.innerHTML +
                `<li class="search-result-item">
                   <a href="/products/${p.id}">\
                      <img class="img-search-results" src="${p.img}" alt="Imagen">\
@@ -91,7 +92,7 @@ function writeProductsInSearchResult() {
          } else {
             // Without image
             searchResultList.innerHTML =
-            searchResultList.innerHTML +
+               searchResultList.innerHTML +
                `<li class="search-result-item">
                   <a href="/products/${p.id}">\
                      <span> ${p.name.replace(formatedSearch, '<b>' + formatedSearch + '</b>')}</span>
@@ -101,7 +102,7 @@ function writeProductsInSearchResult() {
          matching = true;
       }
    }
-   
+
    return matching;
 }
 
@@ -114,38 +115,38 @@ function SearchOfMatching(e) {
    If e.which is 13, then send request to search by words inserted in searchInput
    
    */
-      if (e === undefined || e.which !== 13) {
-         const search = searchInput.value;
-   
-         if (search.length > minCharsToSearch) {
-   
-            const matching = writeProductsInSearchResult();
-            
-            if (matching) {
-               hideSearchResults(false);
-               addEventToResultItem();
-            } else {
-               hideSearchResults(true);
-            }
+   if (e === undefined || e.which !== 13) {
+      const search = searchInput.value;
+
+      if (search.length > minCharsToSearch) {
+
+         const matching = writeProductsInSearchResult();
+
+         if (matching) {
+            hideSearchResults(false);
+            addEventToResultItem();
          } else {
             hideSearchResults(true);
          }
       } else {
-         searchByWords();
          hideSearchResults(true);
       }
-      
-      if (e !== undefined) {
-         e.stopPropagation();
-      }
+   } else {
+      searchByWords();
+      hideSearchResults(true);
+   }
+
+   if (e !== undefined) {
+      e.stopPropagation();
+   }
 }
 
 
 function searchByWords() {
    /* Search by words inserted into serch input */
-   const  url = document.querySelector(
-         "#products .products-info .url-products-json-all"
-      ).value;
+   const url = document.querySelector(
+      "#products .products-info .url-products-json-all"
+   ).value;
 
    let query = document.getElementById('searchInput').value;
 
@@ -153,15 +154,8 @@ function searchByWords() {
 
       query = encodeURIComponent(query);
 
-      fetch(`${url}?query=${query}`)
-         .then(response => {
-            if (response.ok) return response.json()
-         })
-         .then(products => {
-            PRODUCTS.setProducts = products;
-            createProductList(PRODUCTS.getProducts);
-         })
-         .catch(error => console.error(error));
+      requestProduct(`${url}?query=${query}`, createProductList);
+
    } else {
       // query is empty
       createProductList(PRODUCTS.getSearchList);
@@ -184,16 +178,6 @@ function hideSearchResults(hide) {
    }
 }
 
-function getListProducts() {
-   const url = document.querySelector('#search .info .products-url').value;
-  
-   fetch(url)
-      .then(response => {
-         if (response.ok) return response.json()
-      })
-      .then(products => PRODUCTS.setProducts = products)
-      .catch(error => console.error(error));
-}
 
 function loadSearch() {
    /* Load Search
@@ -205,9 +189,8 @@ function loadSearch() {
    searchInput.addEventListener('keyup', SearchOfMatching);
    searchBtn.addEventListener('click', searchByWords);
 
-   getListProducts();
-   loadSearchFromSessionStorage(); 
-   loadCategoriesSearch();  
+   loadSearchFromSessionStorage();
+   loadCategoriesSearch();
 }
 
 

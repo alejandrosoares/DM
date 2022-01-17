@@ -3,6 +3,7 @@
 */
 import { GLOBAL } from "../globals.js";
 import { createProductList } from "../products/products.js";
+import requestProduct from "../request_products.js";
 
 const PRODUCTS = GLOBAL.products;
 
@@ -36,22 +37,9 @@ function SearchByCategory(e) {
       liCategory = e.target.closest('.search-category'),
       id = liCategory.getAttribute('data-id');
 
-   fetch(`${url}?category=${id}`)
-      .then(response => {
-         if (response.ok) return response.json()
-      })
-      .then(response => {
+   changeStyleCategory(id);
 
-         console.log(response.products);
-
-         const obj = {
-            products: response.products
-         }
-         PRODUCTS.setProducts = obj;
-         createProductList(PRODUCTS.getProducts);
-         changeStyleCategory(id);
-      })
-      .catch(error => console.error(error));
+   requestProduct(`${url}?category=${id}`, createProductList);
 }
 
 

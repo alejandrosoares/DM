@@ -11,7 +11,6 @@ const GLOBAL = {
    products: {
       searchList: null,
       list: null,
-      toShow: 8,
       set setProducts(obj) {
          this.list = obj.products;
       },

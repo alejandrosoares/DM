@@ -55,9 +55,9 @@ function createProductList(products) {
 
          console.log(counter, productsToShow, counter >= productsToShow);
 
-         if (counter >= productsToShow) {
-            card.classList.add('d-none');
-         }
+         // if (counter >= productsToShow) {
+         //    card.classList.add('d-none');
+         // }
          counter += 1;
 
          const clone = document.importNode(template, true);

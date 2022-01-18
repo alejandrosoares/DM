@@ -34,7 +34,7 @@ function createProductList(products) {
             img = template.querySelector("div.product-header img"),
             name = template.querySelector("div.name > p"),
             price = template.querySelector("div.price > span"),
-            code = template.querySelector("div.in-stock > span");
+            code = template.querySelector("div.code > span");
 
          card.setAttribute("data-id", p.id);
          img.src = p.img;

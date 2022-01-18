@@ -10,7 +10,7 @@ from dm.settings import (
     BITLY_URL,
     BITLY_TOKEN,
     DOMAIN,
-    BUSINNES_NAME
+    APP_NAME
 )
 
 # Third parties
@@ -110,7 +110,7 @@ def PostSavePublication(sender, instance, created, **kwargs):
 
         payload = {
             "long_url": instance.link,
-            "title": f'{BUSINNES_NAME} - {instance.name}'
+            "title": f'{APP_NAME} - {instance.name}'
         }
 
         res = requests.post(

@@ -1,4 +1,3 @@
-from redislite import StrictRedis
 from pathlib import Path
 import os
 import json
@@ -14,7 +13,7 @@ SECRET_KEY = ENV["DJANGO"]["SECRET_KEY"]
 DEBUG = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DOMAIN = 'https://b032f1195da6.ngrok.io'
-BUSINNES_NAME = 'Tienda Marcia'
+APP_NAME = 'DM'
 ALLOWED_HOSTS = ['*']
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
@@ -28,7 +27,6 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_user_agents',
 ]
 
 LOCAL_APPS = [
@@ -47,24 +45,20 @@ THIRD_PARTY_APPS = []
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
-# Redislite
-
-redis_connection = StrictRedis('/tmp/cache.db')
-
+# Cache
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': "unix://@%s" % (redis_connection.socket_file, ),
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        },
+        "KEY_PREFIX": APP_NAME,
+        "TIMEOUT": None
     }
 }
 
-#   Tiempo de vida de la cache 365 dias x 24 horas x 60 minutos x 60 segundos: 31536000
-#   Si el valor es 0 la cache expira inmediantamente
-#   Si el valor en None no expira nunca
-CACHE_TTL = None
-
-USER_AGENTS_CACHE = 'default'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,7 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'dm.urls'

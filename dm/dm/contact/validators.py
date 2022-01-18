@@ -1,9 +1,13 @@
+import re
 REGEX_EMAIL = "^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$"
 REGEX_PHONE = r"\+?1?\d{9,16}$"
 
-import re
 
 def validate_email(email):
+    """Validate Email
+    @param: str
+    @return: bool
+    """
 
     if re.search(REGEX_EMAIL, email):
         return True
@@ -12,6 +16,10 @@ def validate_email(email):
 
 
 def validate_phone(phone):
+    """Validate Phone
+    @param: str
+    @return: bool
+    """
 
     if re.search(REGEX_PHONE, phone):
         return True

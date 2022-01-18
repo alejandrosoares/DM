@@ -62,6 +62,8 @@ def search_by_words(query):
 def conver_to_dic(products, domain):
     """Convert list or QuerySet to list of diccionaries
     @param: QuerySet or list, str
+
+    p.img_small: is the optimized image
     """
 
     product_list = []

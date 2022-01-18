@@ -37,6 +37,8 @@ class Vendor(models.Model):
             -average_lead_time
             -max_lead_time
             -min_lead_time
+
+        @param: self, Decimal
         """
 
         if self.average_lead_time == None:
@@ -55,6 +57,8 @@ class Vendor(models.Model):
             -average_lead_time
             -max_lead_time
             -min_lead_time
+
+        @param: self, dic
         """
 
         self.average_lead_time = dic_fields['average']

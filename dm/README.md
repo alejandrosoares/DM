@@ -28,3 +28,10 @@ because if the format of a uuid is broken it does not match urls
 The categories that not have products are not shown
 If one product is add to one category, then it is showed
 It is perfom through m2m_change signal and Product.__pre_delete method
+
+
+
+
+## Web convert 
+
+Usa django web convert para convertir los estaticos el webp

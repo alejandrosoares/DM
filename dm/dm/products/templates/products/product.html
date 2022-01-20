@@ -20,7 +20,7 @@
       <div class="col-12 main-product">
          <div class="row">
             <div class="col-12 col-md-8 product-img">
-               <img src="{{product.img.url}}" alt="Product Image">
+               <img src="{{product.img_webp.url}}" alt="Product Image">
             </div>
             <div class="col-12 col-md-4 product-detail">
                <div class="row product-title">
@@ -77,7 +77,7 @@
                   <a class="col-lg-3 col-sm-6 my-1 px-1 .product" href="{% url 'products:product' product_id=p.id%}">
                      <div class="card product">
                         <div class="product-header">
-                           <img class="card-img-top custom-img" src="{{p.img.url}}" alt="Image">
+                           <img class="card-img-top custom-img" src="{{p.img_small_webp.url}}" alt="Image">
                            <div class="price">
                               <span>{{p.price}}</span>
                            </div>

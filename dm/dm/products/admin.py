@@ -25,8 +25,8 @@ admin.site.register(Category, CategoryAdmin)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'in_stock', 'stock')
     fields = (
-        'code', 'name', 'in_stock', 'stock', 'description',
-        'img', 'img_250', 'categories', 'vendor', 'vendor_code', 'price',
+        'code', 'name', 'load_img',  'in_stock', 'stock', 'description',
+        'img', 'img_small', 'img_webp', 'img_small_webp', 'categories', 'vendor', 'vendor_code', 'price',
         'brand', 'brand_name'
     )
     readonly_fields = ('code', 'brand_name')

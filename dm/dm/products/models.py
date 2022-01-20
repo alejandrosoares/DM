@@ -1,6 +1,4 @@
 # Django
-from ctypes.wintypes import SIZE
-from pickletools import optimize
 from django.db import models
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
@@ -9,7 +7,11 @@ from django.core.files.images import ImageFile
 # Own
 from vendors.models import Vendor
 from utils.normalize import normalize_text
-from .utils.models import get_file_name, get_extension
+from .utils.models import (
+    get_file_name,
+    get_small_filename,
+    replace_extension_to_webp
+)
 
 # Third parties
 from PIL import Image
@@ -17,17 +19,18 @@ import os
 
 
 def upload_img(instance, filename):
-
-    vendor_name = instance.vendor.name.lower().replace(" ", "-")
-
-    return f'img/{vendor_name}/{filename}'
+    """For delete, but conflict in migrations"""
+    return upload_img_product(instance, filename)
 
 
 def upload_img_webp(instance, filename):
+    """For delete, but conflict in migrations"""
+    return upload_img_product(instance, filename)
 
-    vendor_name = instance.vendor.name.lower().replace(" ", "-")
 
-    return f'img/{vendor_name}/{filename}'
+def upload_img_product(instance, filename):
+
+    return f'img/products/{instance.code}/{filename}'
 
 
 class Brand(models.Model):
@@ -115,18 +118,30 @@ class Product(models.Model):
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
     brand_name = models.CharField(
-        'Brands', max_length=100, blank=True, null=True)
+        "Brands", max_length=100, blank=True, null=True)
     price = models.DecimalField("Price", max_digits=7, decimal_places=2)
 
-    img = models.ImageField("Image", upload_to=upload_img, null=True)
+    img = models.ImageField("Image", upload_to=upload_img_product, null=True)
     img_small = models.ImageField(
-        'Image 270 px',
-        upload_to='img/270',
+        "Small version",
+        upload_to=upload_img_product,
         null=True,
         blank=True
     )
     img_webp = models.ImageField(
-        "Image WEBP", upload_to=upload_img_webp, null=True)
+        "Original webp",
+        upload_to=upload_img_product,
+        null=True,
+        blank=True
+    )
+    img_small_webp = models.ImageField(
+        "Small webp",
+        upload_to=upload_img_product,
+        null=True,
+        blank=True
+    )
+
+    load_img = models.BooleanField("Load img", default=False)
 
     class Meta:
         verbose_name = "Product"
@@ -146,6 +161,10 @@ class Product(models.Model):
             )
         else:
             return '({}) - {}'.format(self.vendor_code, self.name)
+
+    def __to_uppercase_name_field(self):
+
+        self.name = self.name.upper()
 
     def __add_brand_field(self):
 
@@ -177,6 +196,7 @@ class Product(models.Model):
     def __initial_pre_save(self):
         """ Pre save when the instance will be created """
 
+        self.__to_uppercase_name_field()
         self.__add_code_field()
         self.__add_normalized_name_field()
         self.__add_brand_field()
@@ -215,55 +235,84 @@ def change_categories_field(sender, instance, **kwargs):
 
     for category in categories:
         if kwargs["action"] == "post_add":
-            print('increase')
             category.increase_num_products_field()
 
         elif kwargs["action"] == "post_remove":
-            print('decrease')
             category.decrease_num_products_field()
 
 
 @receiver(post_save, sender=Product)
 def postsave_products(sender, instance, created, **kwargs):
     """ Post Save Products
-    resize image and compress to reduce page size
+
+    Generate img and load in fields
+
+    Files:
+    1-ORIGINAL
+    2-ORIGINAL WEBP (generated in temp folder)
+    3-RESIZE (generated in temp folder)
+    4-RESIZE WEBP (generated in temp folder)
+
+    Operations:
+    - Save temporal:
+    - Load the file from temp folder and load in  model field 
     """
 
-    QUALITY = 75
     FILE_SIZE = 270
+    TEMP_FOLDER = '.media/img/temp/'
 
-    if not created:
+    if not created and instance.load_img is False:
 
-        if not instance.img_small:
+        filename = get_file_name(instance.img.name)
 
-            file_name = get_file_name(instance.img.name)
-            extension = get_extension(instance.img.name)
-            temp_path = '.media/img/temp/' + file_name
+        img = Image.open(instance.img.path)
 
-            original = Image.open(instance.img.path)
+        ##################################################################
+        # Save 2 ORIGINAL WEBP
+        original_webp_name = replace_extension_to_webp(filename)
+        img.save(TEMP_FOLDER + original_webp_name, format='webp')
 
-            # Resize Image
-            width, height = original.size
-            r = width / height
-            original.thumbnail((FILE_SIZE, int(FILE_SIZE / r)))
+        # Load 2 ORIGINAL WEBP
+        original_webp = open(TEMP_FOLDER + original_webp_name, mode='rb')
+        instance.img_webp = ImageFile(original_webp)
+        instance.img_webp.name = original_webp_name
 
-            # Save temp
-            if extension != '.png':
-                original.save(
-                    temp_path,
-                    optimized=True,
-                    quality=QUALITY
-                )
-            else:
-                # .png
-                original.save(temp_path)
+        os.remove(TEMP_FOLDER + original_webp_name)
 
-            temp = open(temp_path, 'rb')
+        ##################################################################
+        # Save 3 RESIZE
+        width, height = img.size
+        r = width / height
+        img.thumbnail((FILE_SIZE, int(FILE_SIZE / r)))
+        resize_name = get_small_filename(filename)
+        img.save(TEMP_FOLDER + resize_name)
 
-            # Add temp to img_250 field
-            instance.img_small = ImageFile(temp)
-            instance.img_small.name = file_name
-            instance.save()
+        # Load 3 RESIZE
+        resize = open(TEMP_FOLDER + resize_name, 'rb')
+        instance.img_small = ImageFile(resize)
+        instance.img_small.name = resize_name
 
-            temp.close()
-            os.remove(temp_path)
+        os.remove(TEMP_FOLDER + resize_name)
+
+        ##################################################################
+        # Save 4 RESIZE WEBP
+        resize_name_webp = replace_extension_to_webp(resize_name)
+        img.save(TEMP_FOLDER + resize_name_webp, format='webp')
+
+        # Load 4 RESIZE WEBP
+        resize_webp = open(TEMP_FOLDER + resize_name_webp, 'rb')
+        instance.img_small_webp = ImageFile(resize_webp)
+        instance.img_small_webp.name = resize_name_webp
+
+        os.remove(TEMP_FOLDER + resize_name_webp)
+
+        ##################################################################
+        # Save instance
+        instance.load_img = True
+        instance.save()
+
+        # Close files
+        original_webp.close()
+        resize.close()
+        resize_webp.close()
+        img.close()

@@ -116,7 +116,7 @@ def ProductView(request, product_id):
     try:
         product = Product.objects.get(id=product_id)
         categories = product.categories.filter(enable=True)
-        recommendations = get_recommedations_products(categories)
+        recommendations = get_recommedations_products(categories, product.id)
 
         ProductLog.create_log(product)
 

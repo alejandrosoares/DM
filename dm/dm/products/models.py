@@ -1,6 +1,6 @@
 # Django
 from django.db import models
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import m2m_changed, post_save, pre_delete
 from django.dispatch import receiver
 from django.core.files.images import ImageFile
 
@@ -10,12 +10,14 @@ from utils.normalize import normalize_text
 from .utils.models import (
     get_file_name,
     get_small_filename,
-    replace_extension_to_webp
+    replace_extension_to_webp,
+    get_path
 )
 
 # Third parties
 from PIL import Image
 import os
+from shutil import rmtree
 
 
 def upload_img(instance, filename):
@@ -261,7 +263,7 @@ def postsave_products(sender, instance, created, **kwargs):
     FILE_SIZE = 270
     TEMP_FOLDER = '.media/img/temp/'
 
-    if not created and instance.load_img is False:
+    if instance.load_img is False:
 
         filename = get_file_name(instance.img.name)
 
@@ -316,3 +318,13 @@ def postsave_products(sender, instance, created, **kwargs):
         resize.close()
         resize_webp.close()
         img.close()
+
+
+@receiver(pre_delete, sender=Product)
+def predelete_products(sender, instance, **kwargs):
+    """Pre delete products
+    Delete folder of images of the instance
+    """
+    path = get_path(instance.img_webp.path)
+
+    rmtree(path)

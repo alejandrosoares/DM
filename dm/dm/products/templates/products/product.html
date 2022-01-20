@@ -33,7 +33,8 @@
                      <p class="text-success text-left">$ {{product.price}}</p>
                   </div>
                   <div class="col-6 availability">
-                     <p class="text-muted text-right">Disponible</p>
+                     <p class="text-muted text-right">{% if product.in_stock %}Disponible{% else %}Sin stock{% endif %}
+                     </p>
                   </div>
                </div>
                <div class="row product-description">
@@ -81,8 +82,8 @@
                            <div class="price">
                               <span>{{p.price}}</span>
                            </div>
-                           <div class="in-stock">
-                              <span>{% if p.in_stock %}Disponible{% else %}Sin stock{% endif %}</span>
+                           <div class="code">
+                              <span>C&oacute;d: {{p.code}}</span>
                            </div>
                         </div>
 

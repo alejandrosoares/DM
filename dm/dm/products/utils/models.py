@@ -45,3 +45,14 @@ def get_small_filename(filename):
     dot_index = filename.rfind('.')
 
     return filename[:dot_index] + '_small' + filename[dot_index:]
+
+
+def get_path(path):
+    """ Get path
+
+    @param: str
+    @return: str
+    """
+    slash_index = path.rfind('/', 1)
+
+    return path[:slash_index]

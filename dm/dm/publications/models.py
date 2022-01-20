@@ -21,7 +21,7 @@ from random import randint
 
 class Publication(models.Model):
     """Publication
-    These instance are posts to post on social networks
+    Post on social networks
 
     Code is used for search publications
     uuid is used for generate the code field.

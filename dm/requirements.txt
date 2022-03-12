@@ -1,5 +1,5 @@
 django==3.2.11
-Pillow==9.0.0
+Pillow==9.0.1
 redislite==5.0.165407
 django-redis==4.12.1
 django-webp-converter==0.3.0

@@ -4,7 +4,7 @@
 
 {% block style %}
 <link href="{% static 'css/products/products.css' %}" rel="stylesheet" />
-<link href="{% static 'contact/css/contact.css' %}" rel="stylesheet" />
+<link href="{% static 'css/contact.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
@@ -14,13 +14,13 @@
 <div class="container">
    {% include 'products/products.html' %}
    {% include 'opening/index.html' %}
-   {% include 'contact/contact.html' %}
+   {% include 'contact.html' %}
 </div>
 
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'contact/js/contact.js' %}" type="module"></script>
+<script src="{% static 'js/contact/contact.js' %}" type="module"></script>
 <script src="{% static 'js/search/search.js' %}" type="module"></script>
 <script src="{% static 'js/products/products.js'%}" type="module"></script>
 {% endblock %}

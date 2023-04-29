@@ -7,7 +7,6 @@ from django.views.decorators.http import require_http_methods
 # Own
 from .models import Product, Category
 from .utils.views import get_recommedations_products
-from usage_log.models import QueriesLog, CategoryLog, ProductLog
 from utils.normalize import normalize_text
 
 # Thrid parties
@@ -24,8 +23,6 @@ def search_by_category(category_id):
         if category_id != "0":
             c = Category.objects.get(id=category_id)
             products = c.product_set.all()
-
-            CategoryLog.create_log(c)
 
         else:
             products = Product.objects.all()
@@ -46,9 +43,6 @@ def search_by_words(query):
     query = unquote(query)
 
     query = normalize_text(query)
-
-    # Save querie made
-    QueriesLog.objects.create(query=query)
 
     products = Product.objects.filter(
         Q(normalized_name__icontains=query) |
@@ -117,8 +111,6 @@ def ProductView(request, product_id):
         product = Product.objects.get(id=product_id)
         categories = product.categories.filter(enable=True)
         recommendations = get_recommedations_products(categories, product.id)
-
-        ProductLog.create_log(product)
 
         context = {
             "product": product,

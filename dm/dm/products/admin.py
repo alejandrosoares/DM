@@ -26,12 +26,11 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'in_stock', 'stock')
     fields = (
         'code', 'name', 'load_img',  'in_stock', 'stock', 'description',
-        'img', 'img_small', 'img_webp', 'img_small_webp', 'categories', 'vendor', 'vendor_code', 'price',
+        'img', 'img_small', 'img_webp', 'img_small_webp', 'categories', 'price',
         'brand', 'brand_name'
     )
     readonly_fields = ('code', 'brand_name')
     search_fields = ['name', 'code']
-    list_filter = ('vendor__name',)
 
 
 admin.site.register(Product, ProductAdmin)

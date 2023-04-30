@@ -5,7 +5,6 @@ from django.dispatch import receiver
 from django.core.files.images import ImageFile
 
 # Own
-from vendors.models import Vendor
 from utils.normalize import normalize_text
 from .utils.models import (
     get_file_name,
@@ -114,9 +113,6 @@ class Product(models.Model):
     stock = models.SmallIntegerField("Cantidad disponible", null=True)
     in_stock = models.BooleanField("In stock", default=True)
     categories = models.ManyToManyField(Category)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
-    vendor_code = models.CharField(
-        "Vendor code", max_length=25, blank=True, null=True)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
     brand_name = models.CharField(
@@ -156,13 +152,12 @@ class Product(models.Model):
     @property
     def Name(self):
         if self.brand:
-            return '({}) - {} | {}'.format(
-                self.vendor_code,
+            return '{} | {}'.format(
                 self.name,
                 self.brand
             )
         else:
-            return '({}) - {}'.format(self.vendor_code, self.name)
+            return self.name
 
     def __to_uppercase_name_field(self):
 

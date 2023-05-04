@@ -6,8 +6,6 @@
 
 	<div class="col-12 col-md-8 col-lg-6 contact-form">
 		<div class="row justify-content-center">
-			<input type="hidden" class="contact-url" value="{% url 'contact:contact' %}">
-			{% csrf_token %}
 			<div class="col-12 msg-form d-none">
 				<p class="text-center text-muted success">
 					Su mensaje ha sido enviado correctamente 
@@ -87,4 +85,10 @@
 		</div>
 	</div>
 	{% endif %}
+
+	<div class="d-none" id="contact-data">
+		<input type="hidden" class="url" value="{% url 'contact:api:contact' %}">
+		{% csrf_token %}
+	</div>
+	
 </div>

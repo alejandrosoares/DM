@@ -10,14 +10,13 @@
 
 	<title>DM</title>
 
-	<!-- Thrid parties -->
 	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<link rel="preconnect" href="https://fonts.gstatic.com" />
 	<link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}" />
 
-	<!-- Own -->
 	<link href="{% static 'css/main.css' %}" rel="stylesheet" />
+	<link rel="stylesheet" href="{% static 'css/chat.css' %}" />
 	{% block style %}{% endblock %}
 </head>
 
@@ -30,14 +29,15 @@
 	</main>
 
 	{% include 'footer.html' %}
+	{% include 'chat.html' %}
 </body>
 
-<!-- Bootstrap -->
 <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
-<!-- Own -->
 <script src="{% static 'js/main.js' %}" type="module"></script>
+<script src="{% static 'js/chat/chat.js' %}" type="module"></script>
+
 {% block script %}{% endblock %}
 
 <script>

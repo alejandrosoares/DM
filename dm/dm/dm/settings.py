@@ -1,15 +1,16 @@
 from pathlib import Path
 import os
 import json
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Gettings Enviroment variables
-with open(BASE_DIR / ".env" / "env.json") as f:
-    ENV = json.loads(f.read())
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
-SECRET_KEY = ENV["DJANGO"]["SECRET_KEY"]
 
+ENABLE_AUTOMATIC_CHATBOT = False
 DEBUG = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DOMAIN = 'https://b032f1195da6.ngrok.io'
@@ -18,9 +19,9 @@ ALLOWED_HOSTS = ['*']
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
 
-# Apps
 
 DJANGO_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,28 +36,14 @@ LOCAL_APPS = [
     'contact',
     'opening',
     'publications',
-    'webp_converter'
+    'webp_converter',
+    'dm',
+    'chat',
 ]
 
 THIRD_PARTY_APPS = []
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-
-# Cache
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
-        },
-        "KEY_PREFIX": APP_NAME,
-        "TIMEOUT": None
-    }
-}
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -87,6 +74,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'dm.asgi.application'
 WSGI_APPLICATION = 'dm.wsgi.application'
 
 
@@ -99,6 +87,14 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+
 
 
 # Password validation
@@ -158,13 +154,13 @@ MEDIA_ROOT = BASE_DIR / MEDIA_FOLDER
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ENV['EMAIL']['USER']
-EMAIL_HOST_PASSWORD = ENV['EMAIL']['PASSWORD']
+EMAIL_HOST_USER = os.getenv('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 
 
 # Bitly
 
-BITLY_TOKEN = ENV['BITLY']['TOKEN']
+BITLY_API_KEY = os.getenv('BITLY_API_KEY')
 BITLY_URL = 'https://api-ssl.bitly.com/v4/bitlinks'
 
 
@@ -180,3 +176,9 @@ SECURE_SSL_REDIRECT = True
 # Pagination
 INITIAL_START = 0
 INITIAL_ITEMS = 8
+
+
+
+# OPENAI
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')

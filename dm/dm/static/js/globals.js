@@ -1,12 +1,3 @@
-/*
-   GlOBAL VARIABLES
-
-   GLOBAL: global object with others objects to share state between sections
-
-   -products.searchList: is a list with all products used in the search,
-      when loaded it is no longer modified 
-*/
-
 const GLOBAL = {
    products: {
       searchList: null,

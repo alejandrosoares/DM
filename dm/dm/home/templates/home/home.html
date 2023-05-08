@@ -3,24 +3,24 @@
 {% load static %}
 
 {% block style %}
-<link href="{% static 'css/products/products.css' %}" rel="stylesheet" />
-<link href="{% static 'css/contact.css' %}" rel="stylesheet" />
+   <link href="{% static 'css/products/products.css' %}" rel="stylesheet" />
+   <link href="{% static 'css/contact.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid px-0">{% include 'home/header.html' %}</div>
+   <div class="container-fluid px-0">{% include 'home/header.html' %}</div>
 
-<div class="container">
-   {% include 'products/products.html' %}
-   {% include 'opening/index.html' %}
-   {% include 'contact.html' %}
-</div>
+   <div class="container">
+      {% include 'products/products.html' %}
+      {% include 'opening/index.html' %}
+      {% include 'contact.html' %}
+   </div>
 
 {% endblock %}
 
 {% block script %}
-<script src="{% static 'js/contact/contact.js' %}" type="module"></script>
-<script src="{% static 'js/search/search.js' %}" type="module"></script>
-<script src="{% static 'js/products/products.js'%}" type="module"></script>
+   <script src="{% static 'js/contact.js' %}" type="module"></script>
+   <script src="{% static 'js/search/search.js' %}" type="module"></script>
+   <script src="{% static 'js/products/products.js'%}" type="module"></script>
 {% endblock %}

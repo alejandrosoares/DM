@@ -9,7 +9,7 @@ class ContactViewTestCase(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.contact_url = reverse("contact:contact")
+        self.contact_url = reverse("contact:api:contact")
         self.data = {
             'name': 'John',
             'message': 'My message',

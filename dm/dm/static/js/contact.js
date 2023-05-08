@@ -1,4 +1,4 @@
-import sendRequest from "./request.js";
+import { send, buildPostRequest } from "./request.js";
 
 
 const REGEX_EMAIL = /^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$/;
@@ -109,16 +109,27 @@ function buildFormData() {
 
 function sendContactMessage() {
 	if (validateFields()) {
-		const data = buildFormData()
-		sendRequest(data, successfulResponse, failedResponse);
+		const data = buildFormData();
+		const { url, token } = getContactUrlAndToken();
+		const request = buildPostRequest(data, token);
+		send(request, url, successfulResponse, failedResponse);
 	} else {
 		console.warn("Not valid fields in contact form");
 	}
 }
 
+function getContactUrlAndToken() {
+	const divContactData = document.getElementById('contact-data');
+	const url = divContactData.querySelector('input.url').value;
+	const token = divContactData.querySelector('input[name="csrfmiddlewaretoken"]').value;
+	return {
+		url,
+		token
+	}
+}
+
 
 function loadContact() {
-
 	btnSend.addEventListener("click", sendContactMessage);
 	inputName.addEventListener("focus", removeErrorStyleOfField);
 	inputEmail.addEventListener("focus", removeErrorStyleOfField);

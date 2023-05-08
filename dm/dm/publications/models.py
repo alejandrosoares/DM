@@ -8,7 +8,7 @@ from django.urls import reverse
 from products.models import Product
 from dm.settings import (
     BITLY_URL,
-    BITLY_TOKEN,
+    BITLY_API_KEY,
     DOMAIN,
     APP_NAME
 )
@@ -104,7 +104,7 @@ def PostSavePublication(sender, instance, created, **kwargs):
 
         # Request to Bitly API
         headers = {
-            'Authorization': f"{BITLY_TOKEN}",
+            'Authorization': f"{BITLY_API_KEY}",
             'Content-Type': 'application/json',
         }
 

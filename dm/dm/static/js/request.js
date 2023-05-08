@@ -24,11 +24,9 @@ async function sendSync(request, url) {
     async function _send() {
 	    return await fetch(url, request)
             .then( response => {
-                console.log('sendSync ', response);
                 if (response.ok) return response.json();
             })
             .then( object => {
-                console.log('sendSync ', object);
                 return (object.status === "ok")? object: null;
             })
             .catch(error => console.error(error));

@@ -1,16 +1,12 @@
-function closeMessage(e) {
-	/* Close message container */
-
-	const nav = e.target.closest('nav.user-messages');
-	nav.classList.add('d-none');
-}
-
 function loadCloseMessage() {
-
 	if (document.getElementById('user-messages')) {
-		const btn = document.getElementById('btn-close-message');
-		btn.addEventListener('click', closeMessage);
+		const closeBtn = document.getElementById('btn-close-message');
+		closeBtn.addEventListener('click', e => {
+			const nav = e.target.closest('nav.user-messages');
+			nav.classList.add('d-none');
+		});
 	}
 }
+
 
 export default loadCloseMessage;

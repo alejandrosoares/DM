@@ -5,7 +5,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-	<meta name="description" content="Ventas de juguetes en Ober&aacute; Misiones" />
+	<meta name="description" content="Toys" />
 	<meta name="author" content="Alejandro Soares" />
 
 	<title>DM</title>
@@ -39,70 +39,5 @@
 <script src="{% static 'js/chat/chat.js' %}" type="module"></script>
 
 {% block script %}{% endblock %}
-
-<script>
-
-	const codesDisplayed = [];
-
-	let lCodesDisplayed = codesDisplayed.length,
-		screenWidth,
-		screenHeight;
-
-	function InsertCodeDisplayed(code) {
-		let exist = false;
-		for (var i = 0; i < lCodesDisplayed; i++) {
-			if (codesDisplayed[i][0] == code) {
-				// Ya existe el codigo en la lista, por lo que incrementa la cantidad de visualizaciones
-				codesDisplayed[i][1] = codesDisplayed[i][1] + 1;
-				exist = true;
-				break;
-			}
-		}
-		if (!exist) { // nuevo codigo en la lista
-			codesDisplayed.push([code, 1]);
-		}
-		lCodesDisplayed = codesDisplayed.length;
-	}
-
-	function HideNavBarElements() {
-		let widthScreen = window.screen.width;
-
-		// Verificar el ancho de la pantalla
-		if (widthScreen <= 991) {
-			const btn = document.getElementById("btnNavbarToggler"),
-				div = document.getElementById("navbarResponsive");
-
-			btn.classList.add("collapsed");
-			btn.setAttribute("aria-expanded", "false");
-			div.classList.remove("show");
-		}
-	}
-
-	function NavItemsProducts() {
-		const ul = document.getElementById("NavProducts");
-		console.log("ul.style.display: ", ul.style.display);
-		if (ul.style.display == "none" || ul.style.display == "") {
-			ul.style.display = "block";
-		} else {
-			ul.style.display = "none";
-		}
-	}
-
-	function ShowAllProducts() {
-		const row = document.getElementById("btnForPublications");
-		row.style.display = "none";
-		SearchByCategory('0');
-	}
-
-	function InsertImgsCarousel() {
-		const carousel = document.getElementById("carouselIndicators"),
-			items = carousel.querySelectorAll("div.carousel-item");
-
-		items.forEach(item => {
-			item.setAttribute("style", `background-image: url('${imgCarousel}');\
-                                          position:relative;`);
-		})
-	}
-</script>
 
 </html>

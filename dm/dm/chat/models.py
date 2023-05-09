@@ -30,8 +30,8 @@ class ChatMessage(models.Model):
     created_by = models.CharField(max_length=1, choices=ChatRole.choices)
 
     @staticmethod
-    def create(chat_id, content, created_by):
-        chat = Chat.objects.get(uuid=chat_id)
+    def create(chat_uuid, content, created_by):
+        chat = Chat.objects.get(uuid=chat_uuid)
         ChatMessage.objects.create(chat=chat, content=content, created_by=created_by)
 
     def __str__(self):

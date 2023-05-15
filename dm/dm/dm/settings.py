@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 
-ENABLE_AUTOMATIC_CHATBOT = True
+ENABLE_AUTOMATIC_CHATBOT = False
 DEBUG = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DOMAIN = 'https://b032f1195da6.ngrok.io'

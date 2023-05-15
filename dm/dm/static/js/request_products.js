@@ -3,7 +3,7 @@ import { GLOBAL } from "./globals.js";
 const PRODUCTS = GLOBAL.products;
 
 const URL = document.querySelector(
-   "#products .products-info .url-products-json-all"
+   "#products-data .url-get-products"
 ).value;
 
 function requestProduct(url, callback, loadSerchList = false) {
@@ -22,9 +22,11 @@ function requestProduct(url, callback, loadSerchList = false) {
          if (response.ok) return response.json()
       })
       .then(response => {
+         
+         console.log(response);
 
          const obj = {
-            products: response.products
+            products: response.obj.products
          };
 
          if (loadSerchList) {

@@ -13,11 +13,11 @@ def HomeView(request):
 
     contact = ContactInformation.get_first()
     opening = Opening.objects.all()
-    products = Product.objects.all()
+    #products = Product.objects.all()
     categories = Category.objects.filter(enable=True)
-
+    
     context = {
-        'products': products,
+        #'products': products,
         'categories': categories,
         'opening': opening,
         'contact': contact,

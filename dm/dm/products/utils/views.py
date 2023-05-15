@@ -1,27 +1,36 @@
-# Own
+from django.db.models.query import QuerySet
+from django.db.models import Q
+
 from products.models import Product
 
 
-def get_recommedations_products(categories, exclude_id=None):
-    """ Get recommendations products
-    @param: products.Category
-    @return: list
-    """
-
-    initial_list = []
-    clean_list = []
-    number_of_items = 4
-
+# TODO: Cache
+def get_recommended_products_of(
+    product: Product,
+    size: int = 4
+) -> list[Product]:
+    excluded_id = product.id
+    categories = product.categories.filter(enable=True)
+    recommended = set()
+    
     for c in categories:
-        products = c.product_set.all()
-        initial_list.extend(products)
+        recommended.update(c.product_set.all().exclude(id=excluded_id))
 
-    # Clear repeated
-    for product in initial_list:
-        if product not in clean_list and product.id != exclude_id:
-            clean_list.append(product)
+    if len(recommended) < size:
+        excluded_ids = _get_excluded_ids(recommended, excluded_id)
+        amount = size - len(recommended)
+        extra_products = _get_extra_products(excluded_ids, amount)
+        recommended.update(extra_products)
+        
+    return list(recommended)[:size]
 
-    if len(clean_list) > number_of_items:
-        clean_list = clean_list[:number_of_items]
 
-    return clean_list
+def _get_extra_products(excluded_ids: list[int], amount: int) -> list[Product]:
+    extra_products = Product.objects.filter(~Q(id__in=excluded_ids))
+    return extra_products[:amount]
+
+
+def _get_excluded_ids(recommended: list[Product], excluded_id: int) -> list[int]:
+    excluded_ids = [r.id for r in recommended]
+    excluded_ids.append(excluded_id)
+    return excluded_ids

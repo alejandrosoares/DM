@@ -1,15 +1,16 @@
-def normalize_text(text):
-    """ Normalize text
-    Replace accent mark and convert to upper case
+INVALID_CHARACTERS = (
+    ("á", "a"),
+    ("é", "e"),
+    ("í", "i"),
+    ("ó", "o"),
+    ("ú", "u"),
+)
 
-    @param: str
-    @return: str
-    """
 
-    text = text.replace("á", "a").replace("é", "e").replace(
-        "í", "i").replace("ó", "o").replace("ú", "u")
+def normalize_text(text: str) -> str:
+    """Replaces special characters and capitalizes the text"""
 
-    text = text.replace("Á", "A").replace("É", "E").replace(
-        "Í", "I").replace("Ó", "O").replace("Ú", "U")
-
+    for pair in INVALID_CHARACTERS:
+        text = text.replace(*pair)
+        
     return text.upper()

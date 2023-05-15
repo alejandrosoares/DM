@@ -1,8 +1,7 @@
-from django.urls import path
+from django.urls import path, include
 
-from .views import ContactView
 
 app_name = "contact"
 urlpatterns = [
-   path('', ContactView, name="contact"),
+   path('', include('contact.api.urls')),
 ]

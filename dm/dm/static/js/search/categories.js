@@ -1,59 +1,52 @@
-/*
-   CATEGORIES FOR SEARCH 
-*/
-import { GLOBAL } from "../globals.js";
 import { createProductList } from "../products/products.js";
-import requestProduct from "../request_products.js";
+import { sendSync, buildGetRequest } from '../request.js';
 
-const PRODUCTS = GLOBAL.products;
 
-function removeStyleSelectedCategory() {
-   /* Remove style of selected category */
+const categoriesDiv = document.getElementById('categories');
+const categories = categoriesDiv.querySelectorAll(".search-category");
 
-   const categories = document.querySelectorAll(".search-categories li");
 
+function removeAllSelectedStyle() {
    categories.forEach(category => {
       category.classList.remove("category-activate")
    });
 }
 
-function changeStyleCategory(id) {
-   /* Add style to selected category */
 
-   const category = document.querySelector(`.search-categories li[data-id="${id}"]`);
-
-   removeStyleSelectedCategory();
-
+function addSelectedStyle(id) {
+   const category = categoriesDiv.querySelector(`li[data-id="${id}"]`);
+   removeAllSelectedStyle();
    category.classList.add('category-activate');
 }
 
 
-function SearchByCategory(e) {
-   /* Send request for search by category 
-   @param: li.search-category
-   */
-
-   let url = document.querySelector('#search .info .products-url').value,
-      liCategory = e.target.closest('.search-category'),
-      id = liCategory.getAttribute('data-id');
-
-   changeStyleCategory(id);
-
-   requestProduct(`${url}?category=${id}`, createProductList);
+async function searchByCategory(e) {
+   const category  = e.target.closest('.search-category');
+   const categoryId = category.getAttribute('data-id');
+   const response = await getProductsBy(categoryId);
+   addSelectedStyle(categoryId);
+   createProductList(response.obj.products);
 }
 
 
-function loadCategoriesSearch() {
-   /* Load events and run functions related to categories */
+async function getProductsBy(categoryId) {
+   const divData = document.getElementById('categories-data');
+   const url = divData.querySelector('.get-products').value;
+   const urlSearchById = `${url}?category=${categoryId}`;
+   const req = buildGetRequest();
+   const res = await sendSync(req, urlSearchById);
+   return res;
+}
 
-   const categories = document.querySelectorAll(".search-categories .search-category");
 
+function loadCategories() {
    categories.forEach(category => {
-      category.addEventListener('click', SearchByCategory);
+      category.onclick = e => searchByCategory(e);
    });
 }
 
+
 export {
-   loadCategoriesSearch,
-   removeStyleSelectedCategory
+   loadCategories,
+   removeAllSelectedStyle
 }

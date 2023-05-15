@@ -126,4 +126,4 @@ function loadQuestions() {
 }
 
 
-export default loadQuestions;
+export { loadQuestions };

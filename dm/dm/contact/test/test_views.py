@@ -5,7 +5,6 @@ from django.urls import reverse
 
 
 class ContactViewTestCase(TestCase):
-    pass
 
     def setUp(self):
         self.client = Client()

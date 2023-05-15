@@ -2,19 +2,19 @@ const GLOBAL = {
    products: {
       searchList: null,
       list: null,
-      set setProducts(obj) {
-         this.list = obj.products;
+      setProducts: function(products) {
+         this.list = products;
       },
-      get getProducts() {
+      getProducts: function() {
          return this.list;
       },
-      set setSearchList(obj) {
-         this.searchList = obj.products;
+      setSearchList: function(products) {
+         this.searchList = products;
       },
-      get getSearchList() {
+      getSearchList: function() {
          return this.searchList;
       }
-   }
+   },
 }
 
 

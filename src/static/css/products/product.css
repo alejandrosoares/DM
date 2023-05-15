@@ -1,0 +1,61 @@
+/* 
+   PRODUCT SECTION 
+   Main product is the product that show their details and image with larger size
+*/
+
+.main-product {
+   border: 1px solid var(--border-color);
+   background-color: var(--white);
+   border-radius: 10px;
+}
+
+.main-product .product-img,
+.main-product .product-detail {
+   padding: 15px;
+}
+
+.main-product .product-title h2 {
+   text-align: center;
+   font-size: var(--x-lg);
+}
+
+.main-product .product-info {
+   padding: 5px 10px;
+   margin-bottom: 0;
+}
+
+.main-product .product-img > img {
+   display: block;
+   margin: auto;
+}
+
+.main-product .product-detail {
+   border-left: 1px solid var(--border-color);
+}
+
+.main-product .product-info .price p {
+   font-size: var(--lg);
+}
+
+.main-product .product-info .availability p,
+.main-product .product-description .code p {
+   font-size: var(--sm);
+}
+
+@media screen and (max-width: 575px) {
+   .main-product {
+      margin-left: 5px;
+      margin-right: 5px;
+   }
+   .main-product .product-img > img {
+      max-width: 300px;
+      height: auto;
+   }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+   .main-product .product-img > img {
+      max-width: 600px;
+      height: auto;
+   }
+}

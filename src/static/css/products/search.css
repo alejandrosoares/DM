@@ -1,0 +1,114 @@
+/*
+   SEARCH CONTAINER 
+*/
+
+#searchInput:focus {
+   box-shadow: none;
+   outline: none;
+}
+
+.search-relative-container {
+   position: relative;
+   height: 40px;
+   margin: 0 16px;
+   justify-content: center;
+}
+
+.search-btn {
+   border-radius: 0 5px 5px 0;
+   border-style: none;
+   background: var(--dark);
+   height: 38px;
+   width: 100%;
+}
+
+.search-btn i {
+   color: var(--white);
+}
+
+.search-input {
+   height: 38px;
+   border-radius: 5px 0 0 5px;
+   border-style: none;
+   padding: 0 10px;
+   border-left: 2px solid var(--dark);
+   border-top: 2px solid var(--dark);
+   border-bottom: 2px solid var(--dark);
+   width: 100%;
+}
+
+
+.search-result-list {
+   background-color: var(--white);
+   border: 2px solid var(--dark);
+   border-bottom-left-radius: 5px;
+   border-bottom-right-radius: 5px;
+   border-top: 1px solid var(--border-color);
+   position: absolute;
+   top: 38px;
+   z-index: 999;
+   overflow-y: scroll;
+   max-height: 150px;
+   padding: 0 !important;
+}
+
+.search-result-list>ul {
+   list-style: none;
+}
+
+.search-result-list ul li {
+   border-bottom: 1px solid var(--border-color);
+   font-size: var(--sm);
+}
+
+.search-result-list ul li a {
+   color: var(--dark);
+   padding: 4px 8px;
+   display: block;
+}
+
+.search-result-list ul li:hover a {
+   text-decoration: none;
+}
+
+.search-result-list ul li:last-child {
+   border-bottom: none;
+}
+
+.search-result-list ul li:hover>a span {
+   color: var(--primary);
+}
+
+.img-search-results {
+   width: 35px;
+   height: 35px;
+   border: 4px;
+}
+
+.brand-li {
+   padding-left: 20px;
+}
+
+.search-categories {
+   padding: 12px;
+}
+
+.categories-list {
+   text-align: center;
+}
+
+/* For change borders when div.search-result-list is showed */
+.input-box-result-active {
+   border-bottom: 0;
+   border-radius: 5px 0 0 0px;
+}
+
+.btn-box-result-active {
+   border-radius: 0 5px 0 5px;
+   border-right: 1px solid var(--dark);
+}
+
+.category-activate span {
+   background: var(--blue1);
+   padding: 8px 12px;
+}

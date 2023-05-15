@@ -133,7 +133,6 @@ export default class Chat {
 }
 
 
-
 function loadChatScript() {
     const script = document.createElement('script');
 
@@ -149,3 +148,4 @@ function loadChatScript() {
 
 
 loadChatScript();
+

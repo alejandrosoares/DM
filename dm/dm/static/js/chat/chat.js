@@ -2,28 +2,11 @@ import { CONTEXT_VARIABLES as CONTEXT, ROLE } from './constants.js';
 import { sendSync, buildPostRequest, buildGetRequest } from '../request.js';
 
 
-function loadChatScript() {
-    const script = document.createElement('script');
-
-    if (CONTEXT.enableAutomaticChatBot) {
-        script.setAttribute("src", `/static/js/chat/automaticChat.js`);
-    } else {
-        script.setAttribute("src", `/static/js/chat/realTimeChat.js`);
-    }
-
-    script.setAttribute("type", "module");
-    document.body.appendChild(script);
-}
-
-
-loadChatScript();
-
-
 export default class Chat {
     constructor(sendMessageCb) {
         this._sendFn = sendMessageCb;
         this.showing = false;
-        this.chatId = this._getChatId();
+        this.chatId = null;
         this.role = ROLE.USER;
         this.elements = {
             chatDiv: document.getElementById('chat'),
@@ -35,8 +18,13 @@ export default class Chat {
             closeBtn: document.getElementById('close-chat')
         }
 
+        this._loadChat();
+    }
+    
+    _loadChat = async function() {
+        this.chatId = await this._getChatId();
+        await this._loadPreviousMessages();
         this._loadEvents();
-        this._loadPreviousMessages();
     }
     
     _send = function(sendCb) {
@@ -95,10 +83,10 @@ export default class Chat {
         this.elements.input.value = '';
     }
 
-    _getChatId = function() {
+    _getChatId = async function() {
         let chatId = localStorage.getItem('chatId');
         if (!chatId) {
-            chatId = this._getNewChatId();
+            chatId = await this._getNewChatId();
             localStorage.setItem('chatId', chatId);
         }
         return chatId;
@@ -144,3 +132,20 @@ export default class Chat {
     } 
 }
 
+
+
+function loadChatScript() {
+    const script = document.createElement('script');
+
+    if (CONTEXT.enableAutomaticChatBot) {
+        script.setAttribute("src", `/static/js/chat/automaticChat.js`);
+    } else {
+        script.setAttribute("src", `/static/js/chat/realTimeChat.js`);
+    }
+
+    script.setAttribute("type", "module");
+    document.body.appendChild(script);
+}
+
+
+loadChatScript();

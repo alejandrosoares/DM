@@ -19,10 +19,7 @@ function send(request, url, success, failed) {
 
 
 async function sendSync(request, url) {
-    const response = await _send();
-
-    async function _send() {
-	    return await fetch(url, request)
+    const response = await fetch(url, request)
             .then( response => {
                 if (response.ok) return response.json();
             })
@@ -30,8 +27,6 @@ async function sendSync(request, url) {
                 return (object.status === "ok")? object: null;
             })
             .catch(error => console.error(error));
-    }
-
     return response;
 }
 

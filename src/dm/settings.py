@@ -9,7 +9,7 @@ load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'invalid-secret-key')
 
 
 ENABLE_AUTOMATIC_CHATBOT = True
@@ -179,4 +179,4 @@ INITIAL_ITEMS = 8
 
 # OPENAI
 
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY', 'invalid-token')

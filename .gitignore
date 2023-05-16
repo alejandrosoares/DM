@@ -1,4 +1,4 @@
 **/venv
 **/__pycache__
 **/img_with_text
-src/.env
+#src/.env

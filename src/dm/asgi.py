@@ -7,18 +7,17 @@ from django.core.asgi import get_asgi_application
 
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'djangochat.settings')
-django_asgi_app = get_asgi_application() 
+django_asgi_app = get_asgi_application()
 
 
-import chat.routing
+import chat.routing  # noqa: E402
 
 
 application = ProtocolTypeRouter({
     'http': django_asgi_app,
     'websocket': AllowedHostsOriginValidator(
         AuthMiddlewareStack(
-                    URLRouter(chat.routing.websocket_urlpatterns)
+            URLRouter(chat.routing.websocket_urlpatterns)
         )
     )
 })
-

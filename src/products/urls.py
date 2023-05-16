@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views import  product_view
+from .views import product_view
 
 
 app_name = "products"

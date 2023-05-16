@@ -3,11 +3,11 @@ import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 
-from .models import Chat, ChatMessage, ChatRole
+from .models import ChatMessage
 
 
 class ChatConsumer(WebsocketConsumer):
-    
+
     def connect(self):
 
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]

@@ -29,7 +29,7 @@ class Opening(models.Model):
             self.__set_schedule_range()
 
         self.save()
-    
+
     def __set_schedule_range(self):
         sep_schedule = SEP_SCHEDULE
         schedules = self.schedulerange_set.all().order_by('order')

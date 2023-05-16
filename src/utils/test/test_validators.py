@@ -2,7 +2,7 @@ from django.test import TestCase
 
 from utils.validators import (
     validate_email_or_phone,
-    validate_email, 
+    validate_email,
     validate_phone,
 )
 from utils.test.constants import (
@@ -36,7 +36,7 @@ class TestsUtilsValidators(TestCase):
     def test_validate_phone_with_invalid_phone(self):
         for invalid_phone in self.invalid_phones:
             self.assertFalse(validate_phone(invalid_phone))
-    
+
     def test_validate_email_or_phone_with_valid_email_or_phone(self):
 
         for valid_email in self.valid_emails:
@@ -52,5 +52,3 @@ class TestsUtilsValidators(TestCase):
 
         for invalid_phone in self.invalid_phones:
             self.assertFalse(validate_email_or_phone(invalid_phone))
-
-

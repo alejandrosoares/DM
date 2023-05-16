@@ -21,7 +21,7 @@ class TestsUtilsValidators(TestCase):
         self.assertEqual(data['status'], StatusResponse.SUCCESS.value)
         self.assertEqual(data['message'], 'success')
         self.assertIsNone(data['obj'])
-    
+
     def test_response_builder_with_custom_message(self):
         self.response_builder.message = 'Custom message'
         response = self.response_builder.get_response()
@@ -31,7 +31,7 @@ class TestsUtilsValidators(TestCase):
         self.assertIsNone(data['obj'])
 
     def test_response_builder_with_obj(self):
-        self.response_builder.obj = { 'chatId': 1234}
+        self.response_builder.obj = {'chatId': 1234}
         response = self.response_builder.get_response()
         data = loads(response.content)
         self.assertEqual(data['status'], StatusResponse.SUCCESS.value)
@@ -44,5 +44,3 @@ class TestsUtilsValidators(TestCase):
         data = loads(response.content)
         self.assertEqual(data['status'], StatusResponse.FAIL.value)
         self.assertEqual(data['message'], 'Error message')
-
-

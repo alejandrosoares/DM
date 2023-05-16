@@ -20,6 +20,6 @@ def validate_phone(phone: str) -> bool:
 
 
 phone_validator = RegexValidator(
-    regex = REGEX_PHONE,
-    message = "Format: +549999999999 o 549999999999 up to 16 digits."
+    regex=REGEX_PHONE,
+    message="Format: +549999999999 o 549999999999 up to 16 digits."
 )

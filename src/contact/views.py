@@ -22,5 +22,3 @@ def contact_view(request):
     except ValueError:
         response_builder.set_error_with('Invalid email or phone.')
     return response_builder.get_response()
-
-

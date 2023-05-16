@@ -56,9 +56,9 @@ class Category(models.Model):
 class Product(models.Model):
 
     categories = models.ManyToManyField(Category)
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, 
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE,
                               null=True, blank=True)
-    
+
     code = models.PositiveSmallIntegerField()
     name = models.CharField(max_length=50)
     normalized_name = models.CharField(max_length=50, blank=True)
@@ -80,5 +80,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-

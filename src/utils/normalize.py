@@ -12,5 +12,5 @@ def normalize_text(text: str) -> str:
 
     for pair in INVALID_CHARACTERS:
         text = text.replace(*pair)
-        
+
     return text.upper()

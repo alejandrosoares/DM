@@ -10,7 +10,7 @@ class ContactTestCase(TestCase):
             'name': 'John',
             'message': 'My message',
         }
-    
+
     def test_create_contact_with_valid_email(self):
         self.data['email'] = 'john@gmail.com'
         Contact.create(self.data)
@@ -24,7 +24,7 @@ class ContactTestCase(TestCase):
         first = Contact.objects.first()
         self.assertEqual(first.phone, self.data['phone'])
         self.assertIsNone(first.email)
-    
+
     def test_create_contact_with_invalid_email(self):
         self.data['email'] = 'john@gmail'
         with self.assertRaises(ValueError):
@@ -34,10 +34,10 @@ class ContactTestCase(TestCase):
         self.data['email'] = '+adsfasdf'
         with self.assertRaises(ValueError):
             Contact.create(self.data)
-       
+
 
 class ContactInformationTestCase(TestCase):
-    
+
     def setUp(self):
         self.data = {
             'facebook': 'http://www.facebook.com/test123',
@@ -47,6 +47,6 @@ class ContactInformationTestCase(TestCase):
             'whatsapp': True
         }
         ContactInformation.objects.create(**self.data)
-        
+
     def test_get_first(self):
         self.assertEqual(ContactInformation.get_first(), self.data)

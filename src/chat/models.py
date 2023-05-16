@@ -37,4 +37,3 @@ class ChatMessage(models.Model):
     def __str__(self):
         time = self.created.strftime('%d.%m.%Y %H:%M')
         return f'{self.chat.shorted_id} - {time} - {self.created_by}:{self.content}'
-    

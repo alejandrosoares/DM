@@ -25,12 +25,10 @@ class TestsUtilsViews(TestCase):
     def test_get_data_from_with_valid_data(self):
         data = {"name": "John", "age": 30}
         request_body = dumps(data).encode('utf-8')
-        extracted_data = get_data_from(request_body)     
+        extracted_data = get_data_from(request_body)
         self.assertEqual(extracted_data, data)
 
     def test_get_data_from_with_invalid_data(self):
         with self.assertRaises(JSONDecodeError):
             malformed_json = b'{"name": "John", "age": 30'
-            _ = get_data_from(malformed_json)     
-    
-    
+            _ = get_data_from(malformed_json)

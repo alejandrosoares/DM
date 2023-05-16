@@ -1,11 +1,13 @@
 from pathlib import Path
 import os
-import json
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
@@ -94,8 +96,6 @@ CHANNEL_LAYERS = {
 }
 
 
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -175,7 +175,6 @@ SECURE_SSL_REDIRECT = True
 # Pagination
 INITIAL_START = 0
 INITIAL_ITEMS = 8
-
 
 
 # OPENAI

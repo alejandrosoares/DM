@@ -34,11 +34,10 @@ def get_chat_messages(request):
     res_builder = ResponseJsonBuilder()
     uuid = request.GET.get('chatId', None)
     try:
-        chat = Chat.objects.get(uuid=uuid)   
-    except Chat.DoesNotExist: 
+        chat = Chat.objects.get(uuid=uuid)
+    except Chat.DoesNotExist:
         res_builder.set_error_with('Chat with sent id does not exist')
     else:
         messages = get_message_of(chat)
         res_builder.obj = messages
     return res_builder.get_response()
-

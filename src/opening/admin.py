@@ -5,4 +5,3 @@ from .models import Opening, ScheduleRange
 
 admin.site.register(Opening)
 admin.site.register(ScheduleRange)
-

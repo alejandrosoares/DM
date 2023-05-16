@@ -12,7 +12,7 @@ def create_product(name: str = None, price: Decimal = None) -> Product:
     product = Product.objects.create(name=name, price=price)
     return product
 
-    
+
 class ProductsModelTestCase(TestCase):
 
     def setUp(self) -> None:

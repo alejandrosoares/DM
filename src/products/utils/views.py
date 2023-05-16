@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from django.db.models import Q
 
 from products.models import Product
@@ -12,7 +11,7 @@ def get_recommended_products_of(
     excluded_id = product.id
     categories = product.categories.filter(enable=True)
     recommended = set()
-    
+
     for c in categories:
         recommended.update(c.product_set.all().exclude(id=excluded_id))
 
@@ -21,7 +20,7 @@ def get_recommended_products_of(
         amount = size - len(recommended)
         extra_products = _get_extra_products(excluded_ids, amount)
         recommended.update(extra_products)
-        
+
     return list(recommended)[:size]
 
 

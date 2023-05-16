@@ -1,8 +1,4 @@
 from django.test import TestCase
-from unittest.mock import Mock
-
-from products.models import Product
-from products.utils import views
 
 
 class ProductsUtilsTestCase(TestCase):

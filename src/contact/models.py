@@ -49,7 +49,8 @@ class ContactInformation(models.Model):
         null=True,
         validators=[phone_validator])
     whatsapp = models.BooleanField("Do you have whatsapp?", default=False)
-
+    address = models.CharField(max_length=100)
+    
     class Meta:
         verbose_name = "Contact Information"
         verbose_name_plural = "Contact Information"

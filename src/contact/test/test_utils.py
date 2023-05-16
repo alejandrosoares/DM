@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from utils.test.constants import (
-    VALID_EMAILS, 
+    VALID_EMAILS,
     VALID_PHONES,
     INVALID_EMAILS,
     INVALID_PHONES

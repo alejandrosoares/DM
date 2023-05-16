@@ -17,8 +17,8 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'code', 'in_stock', 'stock')
     fields = (
-        'code', 'name',  'in_stock', 'stock', 'description',
-        'img', 'img_webp', 'img_small_webp', 'categories', 
+        'code', 'name', 'in_stock', 'stock', 'description',
+        'img', 'img_webp', 'img_small_webp', 'categories',
         'price', 'brand'
     )
     readonly_fields = ('code',)

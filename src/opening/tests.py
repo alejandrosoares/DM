@@ -16,9 +16,9 @@ class OpeningTestCase(TestCase):
         self.end = "10"
         self.opening = Opening.objects.create(day=self.day)
         self.schedule = ScheduleRange.objects.create(
-            opening = self.opening,
-            start = self.start,
-            end = self.end
+            opening=self.opening,
+            start=self.start,
+            end=self.end
         )
 
     def test_get_schedule_range(self):

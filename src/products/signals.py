@@ -4,8 +4,8 @@ from shutil import rmtree
 
 from django.db.models.signals import (
     m2m_changed,
-    pre_save, 
-    post_save, 
+    pre_save,
+    post_save,
     pre_delete
 )
 from django.dispatch import receiver
@@ -39,7 +39,7 @@ def pre_save_products(sender, instance, **kwargs):
         finally:
             code = ref + 1
             return code
-        
+
     instance.name = instance.name.upper()
     instance.code = get_product_code()
     instance.normalized_name = normalize_text(instance.name)
@@ -81,6 +81,3 @@ def pre_delete_products(sender, instance, **kwargs):
 
     delete_image_folder()
     decrease_number_of_products_of_category()
-    
-
-

@@ -45,7 +45,7 @@ _TOPICS = [
         'ANOTHER',
         'If the user is asking about something that isn\'t in all previous topics',
         get_another_action),
-    ]
+]
 
 
 class Topic:
@@ -60,4 +60,3 @@ class Topic:
     def get_topic_key_from(content: str) -> str:
         topic_key = content.replace('Topic:', '').replace(' ', '')
         return topic_key
-

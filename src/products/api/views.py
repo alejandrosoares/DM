@@ -21,7 +21,7 @@ def get_products_view(request):
     res_builder = ResponseJsonBuilder()
     category_id = request.GET.get('category', False)
     query = request.GET.get('query', False)
-    
+
     if category_id:
         products = search_by_category(category_id)
     elif query:
@@ -54,8 +54,7 @@ def search_by_words(query):
     query = normalize_text(query)
 
     products = Product.objects.filter(
-        Q(normalized_name__icontains=query) |
-        Q(code__icontains=query) 
+        Q(normalized_name__icontains=query) | Q(code__icontains=query)
     )
 
     return products

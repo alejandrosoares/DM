@@ -13,15 +13,15 @@ class ContactViewTestCase(TestCase):
             'name': 'John',
             'message': 'My message',
         }
-        
+
     def test_create_contact_with_valid_email(self):
         self.data['email'] = 'john@gmail.com'
         res = self.client.post(
-            self.contact_url, 
+            self.contact_url,
             self.data,
             content_type="application/json",
             HTTP_ACCEPT="application/json",
-            )
+        )
         data_res = loads(res.content)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data_res['status'], 'ok')
@@ -32,4 +32,3 @@ class ContactViewTestCase(TestCase):
         data_res = loads(res.content)
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data_res['status'], 'fail')
-        

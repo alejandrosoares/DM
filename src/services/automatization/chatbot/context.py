@@ -1,8 +1,8 @@
-""" Context for chat bot 
+""" Context for chat bot
     It has three parts:
-        - Introduction: where the business is explained 
+        - Introduction: where the business is explained
         - Context: where to put all topics (and information related to them) to automate
-        - Instruction: where to put the instruction for the chatbot, what should it make  
+        - Instruction: where to put the instruction for the chatbot, what should it make
 """
 
 USER_QUESTION_KEYWORD = '<user_question>'
@@ -13,7 +13,7 @@ _INTRODUCTION = """
     Your role is to get the topic of the user's questioN
     """
 
-_CONTEXT = f"""
+_CONTEXT = """
     Topic
     key:                description:
     WELCOME_GREETING    if the user is greeting welcome
@@ -24,7 +24,7 @@ _CONTEXT = f"""
     OPENING             User is asking for our opening hours
     """
 
-_INSTRUCTION = f"""
+_INSTRUCTION = """
     Search the topic (by it description) for which the user is asking and response the topic key.
     If you don't find one matched topic please respond the word "ANOTHER"
     Below you have the user's question delimited by triple quotes.

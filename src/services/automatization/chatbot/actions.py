@@ -2,12 +2,13 @@
 
 from contact.models import ContactInformation
 
+
 def get_contact():
     contact = ContactInformation.objects.first()
     phone = contact.phone
     return f"""
     <p class="text-dark">You can contact us through:</p>
-    <p class="text-muted">Phone: {phone} or 
+    <p class="text-muted">Phone: {phone} or
         <a href="https://api.whatsapp.com/send?phone={phone}">
             <i class="fa fa-whatsapp"></i> Whats app
         </a>
@@ -44,6 +45,7 @@ def get_welcome_greeting():
     return """
     Hello :) May I help you?
     """
+
 
 def get_goodbye_greeting():
     return """

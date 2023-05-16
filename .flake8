@@ -1,0 +1,27 @@
+[flake8]
+#ignore = C101,D403,F403,F405,I100,I201,W503,W504
+ignore = C101,D403,I100,I201
+max-line-length = 90
+exclude=
+    .git,
+    README.md,
+    requirements.txt,
+    */migrations/*,
+    __pycache__,
+    venv
+
+filename = *.py
+accept-encodings = utf-8
+inline-quotes = single
+max-complexity = 10
+max-linenumber = 300
+multiline-quotes = double
+per-file-ignores =
+    src/dm/settings.py: F405,F403,F401,E501
+    src/utils/constants.py: W605
+    src/services/automatization/chatbot/context.py: E501
+    */tests.py: F401
+    */admin.py: F401
+    */apps.py: F401
+    */__init__.py: W292
+

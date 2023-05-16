@@ -17,8 +17,11 @@ def get_contact():
 
 
 def get_location():
-    return """
-        We are in Katstrasse 404. We wait you!!
+    contact = ContactInformation.objects.first()
+    address = contact.address
+    return f"""
+        <p class="text-dark">We are in {address}.</p>
+        <p class="text-dark">We wait you!!.</p>
         <a href="http://localhost:8000">Mi address</a>
         """
 

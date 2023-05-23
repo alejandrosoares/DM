@@ -1,3 +1,6 @@
+from urllib.parse import unquote
+
+
 INVALID_CHARACTERS = (
     ("á", "a"),
     ("é", "e"),
@@ -14,3 +17,9 @@ def normalize_text(text: str) -> str:
         text = text.replace(*pair)
 
     return text.upper()
+
+
+def normalize_query_string(query_string: str) -> str:
+    query = unquote(query_string)
+    query = normalize_text(query)
+    return query

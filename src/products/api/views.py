@@ -1,9 +1,11 @@
-from urllib.parse import unquote
-
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
+from django.db.models.query import QuerySet
+from django.core.paginator import Paginator
+from django.urls import reverse
+from django.conf import settings
 
-from utils.normalize import normalize_text
+from utils.normalize import normalize_query_string
 from utils.response import ResponseJsonBuilder
 from products.models import Product, Category
 
@@ -29,53 +31,59 @@ def get_products_view(request):
     else:
         products = Product.objects.all()
 
-    products = convert_to_dict(products, request.get_host())
-    res_builder.obj = {'products': products}
+    products, pagination = get_pagination(request.GET, products)
+    products_list = make_list_of(products)
+    res_builder.obj = {
+        'products': products_list,
+        'pagination': pagination
+    }
     return res_builder.get_response()
 
 
-def search_by_category(category_id):
-
+def search_by_category(category_id: str) -> QuerySet:
     try:
-        if category_id != "0":
-            c = Category.objects.get(id=category_id)
-            products = c.product_set.all()
-        else:
-            products = Product.objects.all()
-
+        c = Category.objects.get(id=category_id)
     except (Category.DoesNotExist, ValueError):
-        products = []
-
+        products = Product.objects.all()
+    else:
+        products = c.product_set.all()
     return products
 
 
-def search_by_words(query):
-    query = unquote(query)
-    query = normalize_text(query)
-
+def search_by_words(query: str) -> QuerySet:
+    query = normalize_query_string(query)
     products = Product.objects.filter(
         Q(normalized_name__icontains=query) | Q(code__icontains=query)
     )
-
     return products
 
 
-def convert_to_dict(products, domain):
-
+def make_list_of(products: QuerySet) -> list[dict]:
+    url = settings.DOMAIN
     product_list = []
-    append = product_list.append
-
-    for p in products:
-
-        product = {
-            "id": p.id,
-            "name": p.name,
-            "normalized_name": p.normalized_name,
-            "price": p.price,
-            "code": p.code,
-            "img": f"http://{domain}{p.img_small_webp.url}"
+    for product in products:
+        item = {
+            'id': product.id,
+            'name': product.name,
+            'normalizedName': product.normalized_name,
+            'price': product.price,
+            'code': product.code,
+            'img': f'{url}{product.img_small_webp.url}',
+            'productLink': reverse('products:product', kwargs={'product_id': product.id})
         }
-
-        append(product)
-
+        product_list.append(item)
     return product_list
+
+
+def get_pagination(request_get: dict, query: QuerySet) -> tuple[QuerySet, dict]:
+    page_param = request_get.get('page', 1)
+    items_param = request_get.get('items', 12)
+    paginator = Paginator(query, items_param)
+    page = paginator.page(page_param)
+    pagination = {
+        'page': page_param,
+        'hasPrevious': page.has_previous(),
+        'hasNext': page.has_next(),
+        'numPages': paginator.num_pages
+    }
+    return page.object_list, pagination

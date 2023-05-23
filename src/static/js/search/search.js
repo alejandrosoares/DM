@@ -6,13 +6,11 @@ import { normalizeText } from '../helpers/normalize.js';
 import { buildGetRequest, sendSync } from "../request.js";
 
 
-const PRODUCTS = GLOBAL.products;
 const searchDiv = document.getElementById('search');
 const searchResultContainer = searchDiv.querySelector(".search-result-list");
 const searchResultList = searchResultContainer.querySelector("ul");
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
-
 
 function addEventToResultItem() {
    const resultItems = document.querySelectorAll('.search-result-item');
@@ -40,15 +38,15 @@ function typingInInputSearch(e) {
 
 
 function writeMatches() {
-   const products = PRODUCTS.getSearchList();
+   const searchList = GLOBAL.products.getSearchList();
    const toSearch = searchInput.value;
    const normalizedSearch = normalizeText(toSearch);
    let match = false;
    searchResultList.innerHTML = "";
 
-   for (const p of products) {
+   for (const p of searchList) {
       const hasMatching = (
-         p.normalized_name.search(normalizedSearch) !== -1 
+         p.normalizedName.search(normalizedSearch) !== -1 
          || p.id === normalizedSearch
       );
 
@@ -99,6 +97,8 @@ function searchForMatching() {
 
 
 async function searchByWords() {
+   const pagination = GLOBAL.pagination.getPagination();
+   const searchList = GLOBAL.products.getSearchList();
    const url = document.querySelector("#products-data .url-get-products").value;
    const toSearch = searchInput.value;
   
@@ -106,9 +106,9 @@ async function searchByWords() {
       const urlSearchByWords = `${url}?query=${encodeURIComponent(toSearch)}`;
       const req = buildGetRequest();
       const res = await sendSync(req, urlSearchByWords);
-      createProductList(res.obj.products);
+      createProductList(res.obj.products, res.obj.pagination);
    } else {
-      createProductList(PRODUCTS.getSearchList());
+      createProductList(searchList, pagination);
    }
 
    removeSelectedCategoryStyle();

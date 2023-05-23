@@ -15,6 +15,15 @@ const GLOBAL = {
          return this.searchList;
       }
    },
+   pagination: {
+      pagination: null,
+      setPagination: function(pagination) {
+         this.list = pagination;
+      },
+      getPagination: function() {
+         return this.pagination;
+      }
+   }
 }
 
 

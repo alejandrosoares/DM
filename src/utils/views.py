@@ -12,6 +12,6 @@ def get_data_from(request_body: bytes) -> dict:
     return data
 
 
-def queryset_to_dict(query:QuerySet, fields: list[str]) -> list[dict]:
+def queryset_to_dict(query: QuerySet, fields: list[str]) -> list[dict]:
     json = serialize('json', query, fields=[*fields])
     return loads(json)

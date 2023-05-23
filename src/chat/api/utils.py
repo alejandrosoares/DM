@@ -28,7 +28,7 @@ def get_and_save_automatic_message(user_message: dict) -> dict:
 
 def get_message_of(chat: Chat) -> list[dict]:
     chats = ChatMessage.objects.filter(chat__id=chat.id).order_by('created')
-    fields=['content', 'created', 'created_by']
+    fields = ['content', 'created', 'created_by']
     messages = queryset_to_dict(chats, fields)
     return messages
 

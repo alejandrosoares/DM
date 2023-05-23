@@ -23,7 +23,6 @@ def get_products_view(request):
     res_builder = ResponseJsonBuilder()
     category_id = request.GET.get('category', False)
     query = request.GET.get('query', False)
-    
 
     if category_id:
         products = search_by_category(category_id)
@@ -43,7 +42,7 @@ def get_products_view(request):
 
 def search_by_category(category_id: str) -> QuerySet:
     try:
-        c = Category.objects.get(id=category_id)    
+        c = Category.objects.get(id=category_id)
     except (Category.DoesNotExist, ValueError):
         products = Product.objects.all()
     else:
@@ -88,5 +87,3 @@ def get_pagination(request_get: dict, query: QuerySet) -> tuple[QuerySet, dict]:
         'numPages': paginator.num_pages
     }
     return page.object_list, pagination
-    
-    

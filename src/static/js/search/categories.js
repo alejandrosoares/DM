@@ -23,9 +23,9 @@ function addSelectedStyle(id) {
 async function searchByCategory(e) {
    const category  = e.target.closest('.search-category');
    const categoryId = category.getAttribute('data-id');
-   const response = await getProductsBy(categoryId);
+   const res = await getProductsBy(categoryId);
    addSelectedStyle(categoryId);
-   createProductList(response.obj.products);
+   createProductList(res.obj.products, res.obj.pagination);
 }
 
 

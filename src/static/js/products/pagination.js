@@ -1,4 +1,4 @@
-import { sendSync, buildGetRequest } from "../request.js";
+import { sendSync, buildGetRequest } from "../helpers/request.js";
 
 
 export default class Pagination {

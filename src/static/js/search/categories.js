@@ -1,5 +1,5 @@
-import { createProductList } from "../products/products.js";
-import { sendSync, buildGetRequest } from '../request.js';
+import { createProductList } from "../products/index.js";
+import { sendSync, buildGetRequest } from '../helpers/request.js';
 
 
 const categoriesDiv = document.getElementById('categories');

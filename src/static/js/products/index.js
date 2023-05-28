@@ -1,5 +1,5 @@
 import { GLOBAL } from "../globals.js";
-import { sendSync, buildGetRequest } from "../request.js";
+import { sendSync, buildGetRequest } from "../helpers/request.js";
 import Pagination from './pagination.js';
 
 const productDivId = 'products';

@@ -1,6 +1,3 @@
-/* 
-   FUNCTIONS FOR SEND QUESTIONS TO SELLER
-*/
 const questionsContainer = document.querySelector(
    ".main-product .product-questions"
 );

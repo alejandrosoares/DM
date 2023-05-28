@@ -1,8 +1,8 @@
 import { CONTEXT_VARIABLES as CONTEXT, ROLE } from './constants.js';
-import { sendSync, buildPostRequest, buildGetRequest } from '../request.js';
+import { sendSync, buildPostRequest, buildGetRequest } from '../helpers/request.js';
 
 
-export default class Chat {
+class Chat {
     constructor(sendMessageCb) {
         this._sendFn = sendMessageCb;
         this.showing = false;
@@ -147,5 +147,8 @@ function loadChatScript() {
 }
 
 
-loadChatScript();
+export {
+    Chat,
+    loadChatScript,
+}
 

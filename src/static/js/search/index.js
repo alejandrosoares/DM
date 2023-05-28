@@ -1,9 +1,9 @@
 import { GLOBAL } from "../globals.js";
 import { loadCategories, removeAllSelectedStyle as removeSelectedCategoryStyle } from "./categories.js";
 import { saveSearchInSessionStorage, loadSearchFromSessionStorage } from "./session_storage.js";
-import { createProductList } from "../products/products.js";
+import { createProductList } from "../products/index.js";
 import { normalizeText } from '../helpers/normalize.js';
-import { buildGetRequest, sendSync } from "../request.js";
+import { buildGetRequest, sendSync } from "../helpers/request.js";
 
 
 const searchDiv = document.getElementById('search');
@@ -11,6 +11,7 @@ const searchResultContainer = searchDiv.querySelector(".search-result-list");
 const searchResultList = searchResultContainer.querySelector("ul");
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
+
 
 function addEventToResultItem() {
    const resultItems = document.querySelectorAll('.search-result-item');

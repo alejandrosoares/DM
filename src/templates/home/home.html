@@ -2,9 +2,14 @@
 
 {% load static %}
 
+{% block preload %}
+   <link rel="preload" href="{% static 'css/products/products.css' %}" as="style">
+   <link rel="preload" href="{% static 'js/products/index.js'%}" as="script">
+{% endblock %}
+
 {% block style %}
-   <link href="{% static 'css/products/products.css' %}" rel="stylesheet" />
-   <link href="{% static 'css/contact.css' %}" rel="stylesheet" />
+   <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+   <link rel="stylesheet" href="{% static 'css/contact.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -20,7 +25,7 @@
 {% endblock %}
 
 {% block script %}
-   <script src="{% static 'js/contact.js' %}" type="module"></script>
-   <script src="{% static 'js/search/index.js' %}" type="module"></script>
    <script src="{% static 'js/products/index.js'%}" type="module"></script>
+   <script async src="{% static 'js/contact.js' %}" type="module"></script>
+   <script async src="{% static 'js/search/index.js' %}" type="module"></script>
 {% endblock %}

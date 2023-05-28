@@ -2,10 +2,16 @@
 
 {% load static %}
 
+{% block preload %}
+<link rel="preload" href="{% static 'css/products/products.css' %}" as="style">
+<link rel="preload" href="{% static 'css/products/product.css' %}" as="style">
+<link rel="preload" href="{% static 'css/products/questions.css' %}" as="style">
+{% endblock %}
+
 {% block style %}
-<link href="{% static 'css/products/products.css' %}" rel="stylesheet">
-<link href="{% static 'css/products/product.css' %}" rel="stylesheet">
-<link href="{% static 'css/products/questions.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/product.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/questions.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -100,6 +106,8 @@
    </div>
 </div>
 
-{% endblock %} {% block script %}
+{% endblock %} 
+
+{% block script %}
 <script src="{% static 'js/products/product.js'%}" type="module"></script>
 {% endblock %}

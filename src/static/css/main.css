@@ -5,18 +5,11 @@
 @import url('footer.css');
 
 :root {
-   /* Color utilizando en la etiqueta de categorias */
    --blue1: #0268D5;
-   /* Cuando la etiqueta tiene el evento hover o esta seleccionada */
-   /* Colores para el formulario de contacto  y el box shadow del card del producto*/
    --gray1: rgba(0, 0, 0, .2);
-   /* Cuando los inputs no tienen foco*/
    --gray2: rgba(0, 0, 0, .5);
-   /* Cuando los inputs tienen foco */
    --gray3: rgba(0, 0, 0, .125);
-   /* Separa el cuerpo de la img en las card de los productos */
    --green1: rgba(0, 128, 0, 0.5);
-   /* inputs validos */
    --red: #dc3545;
    --border-color: rgba(0, 0, 0, .05);
    --white: white;

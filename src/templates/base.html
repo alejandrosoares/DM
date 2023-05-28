@@ -9,14 +9,24 @@
 	<meta name="author" content="Alejandro Soares" />
 
 	<title>DM</title>
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
 
-	<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" />
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" />
-	<link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}" />
+	<link rel="preload" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" as="style">
+	<link rel="preload" href="{% static 'font/bootstrap-icons.min.css' %}" as="style">
+	<link rel="preload" href="{% static 'css/main.css' %}" as="style">
+	<link rel="preload" href="{% static 'css/chat.css' %}" as="style">
+	<link rel="preload" href="{% static 'vendor/jquery/jquery.min.js' %}" as="script">
+	<link rel="preload" href="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}" as="script">
+	<link rel="preload" href="{% static 'js/index.js' %}" as="script">	
+	{% block preload %}{% endblock %}
 
-	<link href="{% static 'css/main.css' %}" rel="stylesheet" />
-	<link rel="stylesheet" href="{% static 'css/chat.css' %}" />
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+
 	{% block style %}{% endblock %}
 </head>
 
@@ -37,5 +47,5 @@
 
 <script src="{% static 'js/index.js' %}" type="module"></script>
 {% block script %}{% endblock %}
-<script src="{% static 'js/chat/index.js' %}" type="module"></script>
+<script async src="{% static 'js/chat/index.js' %}" type="module"></script>
 </html>

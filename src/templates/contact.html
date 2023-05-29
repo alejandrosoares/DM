@@ -30,7 +30,7 @@
 					placeholder="Ingrese su mensaje aqu&iacute; *"></textarea>
 			</div>
 			<div class="col-12">
-				<button type="button" class="btn btn-primary w-100 send">Enviar</button>
+				<button type="button" class="btn btn-dark w-100 send">Enviar</button>
 			</div>
 		</div>
 	</div>
@@ -47,35 +47,35 @@
 				<ul>
 					{% if contact.facebook %}
 					<li>
-						<a href="{{ contact.facebook }}">
+						<a href="{{ contact.facebook }}" aria-label="Facebook">
 							<i class="bi bi-facebook"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.instagram %}
 					<li>
-						<a href="{{ contact.instagram }}">
+						<a href="{{ contact.instagram }}" aria-label="Instagram">
 							<i class="bi bi-instagram"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.twitter %}
 					<li>
-						<a href="{{ contact.twitter }}">
+						<a href="{{ contact.twitter }}" aria-label="Twitter">
 							<i class="bi bi-twitter"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.phone %}
 					<li>
-						<a href="tel:{{ contact.phone }}">
+						<a href="tel:{{ contact.phone }}" aria-label="Telephone">
 							<i class="bi bi-telephone"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.phone %}
 					<li>
-						<a href="https://api.whatsapp.com/send?phone={{ contact.phone }}">
+						<a href="https://api.whatsapp.com/send?phone={{ contact.phone }}" aria-label="Whats App">
 							<i class="bi bi-whatsapp"></i>
 						</a>
 					</li>

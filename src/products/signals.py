@@ -40,8 +40,10 @@ def pre_save_products(sender, instance, **kwargs):
             code = ref + 1
             return code
 
+    if instance.code is None:
+        instance.code = get_product_code()
+
     instance.name = instance.name.upper()
-    instance.code = get_product_code()
     instance.normalized_name = normalize_text(instance.name)
 
 
@@ -59,20 +61,28 @@ def post_save_products(sender, instance, created, **kwargs):
 
     if instance.optimize_image is False and instance.img:
         upload_path = upload_to(instance.code)
-        img = Image.open(instance.img.path)
-        load_webp_img_field(img, upload_path)
-        load_small_webp_img_field(img, upload_path)
+        try:
+            img = Image.open(instance.img.path)
+        except FileNotFoundError as e:
+            print(f'POST_SAVE-PRODUCTS-ERROR: {e}')
+        else:
+            load_webp_img_field(img, upload_path)
+            load_small_webp_img_field(img, upload_path)
 
-        instance.optimize_image = True
-        instance.save()
-        img.close()
+            instance.optimize_image = True
+            instance.save()
+            img.close()
 
 
 @receiver(pre_delete, sender=Product)
 def pre_delete_products(sender, instance, **kwargs):
     def delete_image_folder():
         image_folder = os.path.dirname(instance.img.path)
-        rmtree(image_folder)
+        try:
+            rmtree(image_folder)
+        except FileNotFoundError as e:
+            print(f'PRE_DEL-PRODUCTS-ERROR: {e}')
+        
 
     def decrease_number_of_products_of_category():
         categories = instance.categories.all()

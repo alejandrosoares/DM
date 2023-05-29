@@ -8,7 +8,7 @@ from django.conf import settings
 class IConvertor(ABC):
 
     @abstractmethod
-    def save_resized_image(self, width: int = 270) -> str:
+    def save_resized_image(self, width: int = 376) -> str:
         pass
 
     @abstractmethod
@@ -25,8 +25,9 @@ class ImageConvertor(IConvertor):
         self.upload_path = upload_path
         self.media_dir = settings.BASE_DIR / settings.MEDIA_FOLDER
         self.full_upload_path = self.media_dir / self.upload_path
-
-    def save_resized_image(self, width: int = 270) -> str:
+    
+    def save_resized_image(self, width: int = 376) -> str:
+        # 376px min expected sized obtained from lighthouse
         self.__resize(width)
         name = self._get_name_of_resized()
         self._save_in_media_folder(name)

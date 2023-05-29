@@ -2,6 +2,7 @@ import { GLOBAL } from "../globals.js";
 import { sendSync, buildGetRequest } from "../helpers/request.js";
 import Pagination from './pagination.js';
 
+
 const productDivId = 'products';
 const productsContainer = document.querySelector(".products-list .row");
 const searchNotFound = document.getElementById('search-not-found');
@@ -50,7 +51,9 @@ function createProductList(products, pagination) {
 
          card.setAttribute('data-id', p.id);
          card.setAttribute('data-product-link', p.productLink);
-         img.src = p.img;
+         img.src = p.img.url;
+         img.width = p.img.width;
+         img.height = p.img.height;
          name.textContent = p.name;
          price.textContent = `$ ${p.price}`;
          code.textContent = `Code: ${p.code}`;

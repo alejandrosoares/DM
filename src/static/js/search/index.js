@@ -105,6 +105,7 @@ async function searchByWords() {
   
    if (toSearch !== '') {
       const urlSearchByWords = `${url}?query=${encodeURIComponent(toSearch)}`;
+      console.log(urlSearchByWords);
       const req = buildGetRequest();
       const res = await sendSync(req, urlSearchByWords);
       createProductList(res.obj.products, res.obj.pagination);
@@ -130,13 +131,14 @@ function showSearchResults(show) {
 
 
 function loadSearch() {
-   searchInput.addEventListener('click', clickInInputSearch);
-   searchInput.addEventListener('keyup', typingInInputSearch);
-   searchBtn.addEventListener('click', searchByWords);
+   document.onclick = e => showSearchResults(false);
+   searchInput.onclick = e => clickInInputSearch(e);
+   searchInput.onkeyup = e => typingInInputSearch(e);
+   searchBtn.onclick = e => searchByWords(e);
    loadSearchFromSessionStorage();
    loadCategories();
+   
 }
 
 
-document.addEventListener('DOMContentLoaded', loadSearch);
-document.addEventListener('click', () => showSearchResults(false));
+loadSearch();

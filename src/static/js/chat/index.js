@@ -143,6 +143,7 @@ function loadChatScript() {
     }
 
     script.setAttribute("type", "module");
+    
     document.body.appendChild(script);
 }
 

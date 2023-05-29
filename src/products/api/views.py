@@ -4,9 +4,11 @@ from django.db.models.query import QuerySet
 from django.core.paginator import Paginator
 from django.urls import reverse
 from django.conf import settings
+from django.core.cache import cache
 
 from utils.normalize import normalize_query_string
 from utils.response import ResponseJsonBuilder
+from utils.cache.constants import CACHE_KEY_MOD_PRODUCTS
 from products.models import Product, Category
 
 
@@ -29,7 +31,7 @@ def get_products_view(request):
     elif query:
         products = search_by_words(query)
     else:
-        products = Product.objects.all()
+        products = cache.get_or_set(CACHE_KEY_MOD_PRODUCTS, Product.objects.all())
 
     products, pagination = get_pagination(request.GET, products)
     products_list = make_list_of(products)
@@ -68,7 +70,11 @@ def make_list_of(products: QuerySet) -> list[dict]:
             'normalizedName': product.normalized_name,
             'price': product.price,
             'code': product.code,
-            'img': f'{url}{product.img_small_webp.url}',
+            'img': {
+                'url': f'{url}{product.img_small_webp.url}',
+                'width': product.img_small_webp.width,
+                'height': product.img_small_webp.height
+            },
             'productLink': reverse('products:product', kwargs={'product_id': product.id})
         }
         product_list.append(item)

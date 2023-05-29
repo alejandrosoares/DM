@@ -2,30 +2,51 @@
 
 {% load static %}
 
+{% load compress %}
+
+{% load cache %}
+
 {% block preload %}
-   <link rel="preload" href="{% static 'css/products/products.css' %}" as="style">
-   <link rel="preload" href="{% static 'js/products/index.js'%}" as="script">
+   <!-- images header -->
+   <link rel="preload" media="(max-width: 576px)" href="static/img/webp/cubes_small.webp" as="image">
+   <link rel="preload" media="(min-width: 577px) and (max-width: 768px)" href="static/img/webp/cubes_medium.webp" as="image">
+   <link rel="preload" media="(min-width: 769px)" href="static/img/webp/cubes.webp" as="image">
+
+   <link rel="preload" href="{{ static_home_css_url }}" as="style">
+   <link rel="preload" href="{% static 'js/header.js' %}" as="script">
+   <link rel="preload" href="{% static 'js/products/index.js' %}" as="script">
 {% endblock %}
 
 {% block style %}
+   {% compress css file compressed_home_css %}
+   <link rel="stylesheet" href="{% static 'css/products/search.css' %}">
    <link rel="stylesheet" href="{% static 'css/products/products.css' %}">
    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+   {% endcompress %}
 {% endblock %}
 
 {% block content %}
 
-   <div class="container-fluid px-0">{% include 'home/header.html' %}</div>
+   <div class="container-fluid px-0">
+      {% include 'home/header.html' %}
+   </div>
 
    <div class="container">
       {% include 'products/products.html' %}
       {% include 'opening.html' %}
-      {% include 'contact.html' %}
+
+      {% cache CACHE_TIMEOUT tem_contact %}
+         {% include 'contact.html' %}
+      {% endcache %}
+
    </div>
 
 {% endblock %}
 
 {% block script %}
-   <script src="{% static 'js/products/index.js'%}" type="module"></script>
-   <script async src="{% static 'js/contact.js' %}" type="module"></script>
+   <script src="{% static 'js/products/index.js' %}" type="module"></script>
+   <script src="{% static 'js/header.js' %}"></script>
+
    <script async src="{% static 'js/search/index.js' %}" type="module"></script>
+   <script async src="{% static 'js/contact.js' %}" type="module"></script>
 {% endblock %}

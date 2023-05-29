@@ -1,8 +1,3 @@
-/* 
-   PRODUCT SECTION 
-   Main product is the product that show their details and image with larger size
-*/
-
 .main-product {
    border: 1px solid var(--border-color);
    background-color: var(--white);

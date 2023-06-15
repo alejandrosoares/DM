@@ -1,7 +1,3 @@
-/*
-   SEARCH CONTAINER 
-*/
-
 #searchInput:focus {
    box-shadow: none;
    outline: none;

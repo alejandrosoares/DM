@@ -2,10 +2,16 @@
 
 {% load static %}
 
+{% block preload %}
+<link rel="preload" href="{% static 'css/products/products.css' %}" as="style">
+<link rel="preload" href="{% static 'css/products/product.css' %}" as="style">
+<link rel="preload" href="{% static 'css/products/questions.css' %}" as="style">
+{% endblock %}
+
 {% block style %}
-<link href="{% static 'css/products/products.css' %}" rel="stylesheet">
-<link href="{% static 'css/products/product.css' %}" rel="stylesheet">
-<link href="{% static 'css/products/questions.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/products/products.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/product.css' %}">
+<link rel="stylesheet" href="{% static 'css/products/questions.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -15,12 +21,11 @@
       <div class="col-12">
          <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"></i>Inicio</a>
       </div>
-
-      <!-- product -->
+      
       <div class="col-12 main-product">
          <div class="row">
             <div class="col-12 col-md-8 product-img">
-               <img src="{{product.img_webp.url}}" alt="Product Image">
+               <img src="{{product.img_webp.url}}" alt="Product Image" loading="lazy">
             </div>
             <div class="col-12 col-md-4 product-detail">
                <div class="row product-title">
@@ -62,9 +67,7 @@
             </div>
          </div>
       </div>
-      <!-- /product -->
 
-      <!-- More Products -->
       <div class="col-12 recommendations">
          <div class="row my-4">
             <div class="col-12">
@@ -78,7 +81,7 @@
                   <a class="col-lg-3 col-sm-6 my-1 px-1 .product" href="{% url 'products:product' product_id=p.id%}">
                      <div class="card product">
                         <div class="product-header">
-                           <img class="card-img-top custom-img" src="{{p.img_small_webp.url}}" alt="Image">
+                           <img class="card-img-top custom-img" src="{{p.img_small_webp.url}}" alt="Image" loading="lazy">
                            <div class="price">
                               <span>{{p.price}}</span>
                            </div>
@@ -99,10 +102,12 @@
             </div>
          </div>
       </div>
-      <!-- /recommendations -->
+
    </div>
 </div>
 
-{% endblock %} {% block script %}
+{% endblock %} 
+
+{% block script %}
 <script src="{% static 'js/products/product.js'%}" type="module"></script>
 {% endblock %}

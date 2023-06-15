@@ -1,4 +1,4 @@
-import { send, buildPostRequest } from "./request.js";
+import { send, buildPostRequest } from "./helpers/request.js";
 
 
 const REGEX_EMAIL = /^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$/;

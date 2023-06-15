@@ -1,4 +1,4 @@
-import Chat from "./chat.js";
+import { Chat } from "./index.js";
 
 
 let chat = new Chat(sendMessage);

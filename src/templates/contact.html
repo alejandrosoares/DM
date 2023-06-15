@@ -30,7 +30,7 @@
 					placeholder="Ingrese su mensaje aqu&iacute; *"></textarea>
 			</div>
 			<div class="col-12">
-				<button type="button" class="btn btn-primary w-100 send">Enviar</button>
+				<button type="button" class="btn btn-dark w-100 send">Enviar</button>
 			</div>
 		</div>
 	</div>
@@ -47,36 +47,36 @@
 				<ul>
 					{% if contact.facebook %}
 					<li>
-						<a href="{{ contact.facebook }}">
-							<i class="fa fa-facebook-f"></i>
+						<a href="{{ contact.facebook }}" aria-label="Facebook">
+							<i class="bi bi-facebook"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.instagram %}
 					<li>
-						<a href="{{ contact.instagram }}">
-							<i class="fa fa-instagram"></i>
+						<a href="{{ contact.instagram }}" aria-label="Instagram">
+							<i class="bi bi-instagram"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.twitter %}
 					<li>
-						<a href="{{ contact.twitter }}">
-							<i class="fa fa-twitter"></i>
+						<a href="{{ contact.twitter }}" aria-label="Twitter">
+							<i class="bi bi-twitter"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.phone %}
 					<li>
-						<a href="tel:{{ contact.phone }}">
-							<i class="fa fa-phone"></i>
+						<a href="tel:{{ contact.phone }}" aria-label="Telephone">
+							<i class="bi bi-telephone"></i>
 						</a>
 					</li>
 					{% endif %}
 					{% if contact.phone %}
 					<li>
-						<a href="https://api.whatsapp.com/send?phone={{ contact.phone }}">
-							<i class="fa fa-whatsapp"></i>
+						<a href="https://api.whatsapp.com/send?phone={{ contact.phone }}" aria-label="Whats App">
+							<i class="bi bi-whatsapp"></i>
 						</a>
 					</li>
 					{% endif %}

@@ -3,6 +3,7 @@
   margin-top: 50px;
   margin-bottom: 50px;
 }
+
 .contact-form .field-form {
   display: block;
   width: 100%;
@@ -13,15 +14,18 @@
   color: var(--dark);
   font-size: var(--md);
 }
+
 .contact-form .name,
 .contact-form .email,
 .contact-form .message {
   margin: 5px auto;
 }
+
 .contact-form .field-form:focus{
   border: 1px solid var(--blue);
   outline: none;
 }
+
 .contact-form .msg-field {
   margin-bottom: 0;
   text-align: center;
@@ -30,30 +34,38 @@
   padding: 0 4px;
   margin-bottom: 4px;
 }
+
 .contact-form .msg-field.error {
   color: var(--red);
 }
+
 .contact-form .msg-field.error + input,
 .contact-form .msg-field.error + textarea {
   border: 1px solid var(--red);
 }
+
 .contact-information {
   color: var(--dark);
 }
+
 .contact-information-title {
   font-size: var(--md);
 }
+
 .contact-information-body {
   display: flex; 
   justify-content: center;
 }
+
 .contact-information-body ul {
   list-style: none;
   padding-left: 0;
 }
+
 .contact-information-body  ul li {
   display: inline-block;
 }
+
 .contact-information-body  a {
   font-size: 24px;
   text-decoration: none;
@@ -66,10 +78,16 @@
   justify-content: center;
   align-items: center;
 }
+
 .contact-information-body  a > i {
   margin-right: 0;
 }
+
 .contact-information-body  a:hover {
   color: var(--dark);
   background-color: rgba(0, 0, 0, 0.08);
+}
+
+.contact-form button {
+  font-weight: 600;
 }

@@ -26,3 +26,5 @@ It is perform through m2m_change signal and Product.__pre_delete method
 
 django-webp-converted is used for convert image to webp format
 
+
+Bootstrap v4.5.3

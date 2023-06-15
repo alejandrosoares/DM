@@ -1,5 +1,5 @@
-import { send, buildPostRequest } from './../request.js';
-import Chat from './chat.js';
+import { send, buildPostRequest } from '../helpers/request.js';
+import { Chat } from './index.js';
 import { CONTEXT_VARIABLES as CONTEXT, ROLE } from './constants.js';
 
 

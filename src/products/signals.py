@@ -6,12 +6,15 @@ from django.db.models.signals import (
     m2m_changed,
     pre_save,
     post_save,
-    pre_delete
+    pre_delete,
+    post_delete
 )
 from django.dispatch import receiver
+from django.core.cache import cache
 
+from utils.cache.constants import CACHE_KEY_MOD_CATEGORIES, CACHE_KEY_MOD_PRODUCTS
 from utils.normalize import normalize_text
-from .models import Product, upload_to
+from .models import Product, Category, upload_to
 from .utils.models import ImageConvertorFactory
 
 
@@ -40,8 +43,10 @@ def pre_save_products(sender, instance, **kwargs):
             code = ref + 1
             return code
 
+    if instance.code is None:
+        instance.code = get_product_code()
+
     instance.name = instance.name.upper()
-    instance.code = get_product_code()
     instance.normalized_name = normalize_text(instance.name)
 
 
@@ -59,20 +64,29 @@ def post_save_products(sender, instance, created, **kwargs):
 
     if instance.optimize_image is False and instance.img:
         upload_path = upload_to(instance.code)
-        img = Image.open(instance.img.path)
-        load_webp_img_field(img, upload_path)
-        load_small_webp_img_field(img, upload_path)
+        try:
+            img = Image.open(instance.img.path)
+        except FileNotFoundError as e:
+            print(f'POST_SAVE-PRODUCTS-ERROR: {e}')
+        else:
+            load_webp_img_field(img, upload_path)
+            load_small_webp_img_field(img, upload_path)
 
-        instance.optimize_image = True
-        instance.save()
-        img.close()
+            instance.optimize_image = True
+            instance.save()
+            img.close()
+
+    cache.delete(CACHE_KEY_MOD_PRODUCTS)
 
 
 @receiver(pre_delete, sender=Product)
 def pre_delete_products(sender, instance, **kwargs):
     def delete_image_folder():
         image_folder = os.path.dirname(instance.img.path)
-        rmtree(image_folder)
+        try:
+            rmtree(image_folder)
+        except FileNotFoundError as e:
+            print(f'PRE_DEL-PRODUCTS-ERROR: {e}')
 
     def decrease_number_of_products_of_category():
         categories = instance.categories.all()
@@ -81,3 +95,14 @@ def pre_delete_products(sender, instance, **kwargs):
 
     delete_image_folder()
     decrease_number_of_products_of_category()
+    cache.delete(CACHE_KEY_MOD_PRODUCTS)
+
+
+@receiver(post_save, sender=Category)
+def post_save_category(sender, instance, created, **kwargs):
+    cache.delete(CACHE_KEY_MOD_CATEGORIES)
+
+
+@receiver(post_delete, sender=Category)
+def post_delete_category(sender, instance, **kwargs):
+    cache.delete(CACHE_KEY_MOD_CATEGORIES)

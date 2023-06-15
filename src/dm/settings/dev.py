@@ -18,6 +18,7 @@ INTERNAL_IPS = [
 CACHE_TIMEOUT = 3600 * 24 * 7  # one week
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
     }
 }

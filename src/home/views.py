@@ -14,10 +14,13 @@ from contact.models import ContactInformation
 
 @require_http_methods(["GET"])
 def HomeView(request):
-    
+
     contact = cache.get_or_set(CACHE_KEY_MOD_CONTACT, ContactInformation.get_first)
     opening = cache.get_or_set(CACHE_KEY_MOD_OPENING, Opening.objects.all())
-    categories = cache.get_or_set(CACHE_KEY_MOD_CATEGORIES, Category.objects.filter(enable=True))
+    categories = cache.get_or_set(
+        CACHE_KEY_MOD_CATEGORIES,
+        Category.objects.filter(
+            enable=True))
 
     context = {
         'categories': categories,

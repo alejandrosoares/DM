@@ -14,4 +14,3 @@ def _get_context():
         'ENABLE_AUTOMATIC_CHATBOT': settings.ENABLE_AUTOMATIC_CHATBOT
     }
     return context
-    

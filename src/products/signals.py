@@ -75,7 +75,7 @@ def post_save_products(sender, instance, created, **kwargs):
             instance.optimize_image = True
             instance.save()
             img.close()
-    
+
     cache.delete(CACHE_KEY_MOD_PRODUCTS)
 
 

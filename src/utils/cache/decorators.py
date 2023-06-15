@@ -11,5 +11,3 @@ def cache_view(key: str):
             return res
         return wrapper
     return fn_wrapper
-
-

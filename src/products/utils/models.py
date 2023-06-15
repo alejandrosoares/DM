@@ -25,7 +25,7 @@ class ImageConvertor(IConvertor):
         self.upload_path = upload_path
         self.media_dir = settings.BASE_DIR / settings.MEDIA_FOLDER
         self.full_upload_path = self.media_dir / self.upload_path
-
+        
     def save_resized_image(self, width: int = 376) -> str:
         # 376px min expected sized obtained from lighthouse
         self.__resize(width)

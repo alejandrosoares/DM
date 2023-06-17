@@ -7,7 +7,6 @@ CACHE_KEY_MOD_OPENING = 'mod_opening'
 # VIEWS
 CACHE_KEY_VIEW_PRODUCTS = 'view_products'
 
-
 # FUNCTIONS
 CACHE_KEY_FN_STATICFILES_CONTEXT = 'fn_staticfiles_context'
 CACHE_KEY_FN_CHAT_CONTEXT = 'fn_chat_context'

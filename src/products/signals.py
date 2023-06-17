@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 from shutil import rmtree
+import logging
 
 from django.db.models.signals import (
     m2m_changed,
@@ -16,6 +17,9 @@ from utils.cache.constants import CACHE_KEY_MOD_CATEGORIES, CACHE_KEY_MOD_PRODUC
 from utils.normalize import normalize_text
 from .models import Product, Category, upload_to
 from .utils.models import ImageConvertorFactory
+
+
+logger = logging.getLogger(__name__)
 
 
 @receiver(m2m_changed, sender=Product.categories.through)
@@ -67,7 +71,7 @@ def post_save_products(sender, instance, created, **kwargs):
         try:
             img = Image.open(instance.img.path)
         except FileNotFoundError as e:
-            print(f'POST_SAVE-PRODUCTS-ERROR: {e}')
+            logger.error(f'post_save_products: {e}')
         else:
             load_webp_img_field(img, upload_path)
             load_small_webp_img_field(img, upload_path)
@@ -86,7 +90,7 @@ def pre_delete_products(sender, instance, **kwargs):
         try:
             rmtree(image_folder)
         except FileNotFoundError as e:
-            print(f'PRE_DEL-PRODUCTS-ERROR: {e}')
+            logger.error(f'pre_delete_products: {e}')
 
     def decrease_number_of_products_of_category():
         categories = instance.categories.all()

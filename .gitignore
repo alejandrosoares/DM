@@ -2,3 +2,4 @@
 **/__pycache__
 **/img_with_text
 src/.env
+logs/*.log

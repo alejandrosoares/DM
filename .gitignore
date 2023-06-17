@@ -1,5 +1,5 @@
 **/venv
 **/__pycache__
 **/img_with_text
-**/.logs/*
+**/logs/*
 src/.env

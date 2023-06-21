@@ -68,11 +68,10 @@ function writeMatches() {
 function getHtmlOfResultWithImg(p, normalizedSearch) {
    return `<li class="search-result-item">
             <a href="/products/${p.id}">\
-               <img class="img-search-results" src="${p.img}" alt="Image">\
+               <img class="img-search-results" src="${p.img.url}" alt="Image">\
                <span>${p.name.replace(normalizedSearch, '<b>' + normalizedSearch + '</b>')}</span>\
             </a>
          </li>`;
-}
 
 
 function getHtmlOfResultWithOutImg(p, normalizedSearch) {

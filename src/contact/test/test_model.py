@@ -44,7 +44,6 @@ class ContactInformationTestCase(TestCase):
             'instagram': 'http://www.instagram.com/test123',
             'twitter': 'http://www.twitter.com/test123',
             'phone': '1234567890',
-            'whatsapp': True
         }
         ContactInformation.objects.create(**self.data)
 

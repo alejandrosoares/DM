@@ -37,6 +37,10 @@
    font-size: var(--sm);
 }
 
+.product-questions li:hover {
+   cursor: pointer;
+}
+
 @media screen and (max-width: 575px) {
    .main-product {
       margin-left: 5px;

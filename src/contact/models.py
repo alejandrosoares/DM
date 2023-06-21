@@ -39,16 +39,10 @@ class Contact(models.Model):
 
 class ContactInformation(models.Model):
 
-    facebook = models.URLField("Facebook", null=True, blank=True)
-    instagram = models.URLField("Instagram", null=True, blank=True)
-    twitter = models.URLField("Twitter", null=True, blank=True)
-    phone = models.CharField(
-        "Phone",
-        max_length=17,
-        blank=True,
-        null=True,
-        validators=[phone_validator])
-    whatsapp = models.BooleanField("Do you have whatsapp?", default=False)
+    facebook = models.URLField(null=True, blank=True)
+    instagram = models.URLField(null=True, blank=True)
+    twitter = models.URLField(null=True, blank=True)
+    phone = models.CharField(max_length=17, validators=[phone_validator])
     address = models.CharField(max_length=100)
 
     class Meta:
@@ -62,6 +56,5 @@ class ContactInformation(models.Model):
             'facebook': contact.facebook if contact else None,
             'instagram': contact.instagram if contact else None,
             'twitter': contact.twitter if contact else None,
-            'phone': contact.phone if contact else None,
-            'whatsapp': contact.whatsapp if contact else False
+            'phone': contact.phone
         }

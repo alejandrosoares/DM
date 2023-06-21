@@ -1,6 +1,9 @@
 from typing import Any
 from enum import Enum
+from json import loads
 
+from django.core.serializers import serialize
+from django.db.models.query import QuerySet
 from django.http import JsonResponse
 
 
@@ -45,10 +48,15 @@ class ResponseJsonBuilder:
         self._status = StatusResponse.FAIL
         self.message = message
 
-    def get_response(self) -> JsonResponse:
+    def get_response(self, safe=True) -> JsonResponse:
         data = {
             'status': self.status.value,
             'message': self.message,
             'obj': self.obj
         }
-        return JsonResponse(data)
+        return JsonResponse(data, safe=safe)
+
+
+def get_dict_from(query: QuerySet, fields: list[str] = None) -> list:
+    data = serialize('json', query, fields=fields)
+    return loads(data)

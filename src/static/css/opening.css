@@ -1,0 +1,24 @@
+#opening {
+    scroll-margin-top: 60px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.opening-body {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.opening-body  .opening-item {
+    padding: 4px 12px;
+}
+
+.opening-body span {
+    color: var(--dark);
+}
+
+.opening-body span:first-child {
+    margin-right: 12px;
+}

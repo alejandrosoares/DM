@@ -1,0 +1,156 @@
+:root {
+   --blue1: #0268D5;
+   --gray1: rgba(0, 0, 0, .2);
+   --gray2: rgba(0, 0, 0, .5);
+   --gray3: rgba(0, 0, 0, .125);
+   --green1: rgba(0, 128, 0, 0.5);
+   --red: #dc3545;
+   --border-color: rgba(0, 0, 0, .1);
+   --white: white;
+   --green: #3d8a4e;
+   --dark: #343a40;
+   --sm: 14px;
+   --md: 16px;
+   --lg: 18px;
+   --x-lg: 22px;
+}
+
+*,
+*::before,
+*::after {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+   padding-top: 56px;
+   overflow-x: hidden;
+   background-color: #f4f4f4;
+   font-family: 'Quicksand', sans-serif;
+   display: flex;
+   flex-direction: column;
+   flex-wrap: wrap;
+   min-height: 100vh;
+   width: 100%;
+   position: relative;
+}
+
+main {
+   flex-grow: 1;
+}
+
+.container {
+   padding-left: 0;
+   padding-right: 0;
+}
+
+.loader img {
+   display: block;
+   margin: 30px auto;
+}
+
+.welcome-text {
+   font-family: 'Courgette', cursive;
+   font-size: 48px;
+}
+
+
+
+.carousel-item {
+   height: 65vh;
+   min-height: 300px;
+   background: no-repeat center center scroll;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
+   background-size: cover;
+}
+
+.categories-list {
+   list-style: none;
+}
+
+.categories-list li {
+   display: inline;
+}
+
+.custom-span-category {
+   padding: .5em .7em;
+   cursor: pointer;
+   margin: 1px;
+}
+
+.custom-span-category:hover {
+   background: var(--blue1);
+}
+
+@media screen and (max-width: 250px) {
+   .carousel-inner {
+      height: 100px;
+   }
+
+   .container {
+      padding: 4px;
+   }
+}
+
+@media screen and (min-width: 251px) and (max-width: 300px) {
+   .carousel-inner {
+      height: 150px;
+   }
+
+   .container {
+      padding: 4px;
+   }
+}
+
+@media screen and (min-width: 301px) and (max-width: 575px) {
+   .carousel-inner {
+      height: 200px;
+   }
+
+   nav.navbar {
+      padding-right: 24px;
+   }
+
+   .container {
+      padding: 4px;
+   }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+   .carousel-inner {
+      height: 300px;
+   }
+}
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+   .carousel-inner {
+      height: 400px;
+   }
+}
+
+i.bi {
+   margin-right: 5px;
+   transition: .5s all ease;
+}
+
+.btn-link:focus {
+   outline: none;
+   border: none;
+   box-shadow: none;
+}
+
+.btn-link:hover {
+   text-decoration: none;
+}
+
+.btn-link:hover i.left {
+   display: inline-block;
+   padding-right: 4px;
+}

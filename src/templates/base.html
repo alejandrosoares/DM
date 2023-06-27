@@ -1,0 +1,68 @@
+{% load static %} 
+
+{% load compress %}
+
+{% load cache %}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="Toys" />
+	<meta name="author" content="Alejandro Soares" />
+
+	<title>DM</title>
+	
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link rel="preload" href="{{ static_main_css_url }}" as="style">
+	
+	{% block preload %}{% endblock %}
+
+	{% compress css file compressed_main_css %}
+	<link rel="stylesheet" href="{% static 'font/courgette.css' %}"> 
+	<link rel="stylesheet" href="{% static 'font/quicksand.css' %}"> 
+	<link rel="stylesheet" href="{% static 'font/bootstrap-icons.min.css' %}">
+
+	<link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+	<link rel="stylesheet" href="{% static 'css/messages.css' %}">
+	<link rel="stylesheet" href="{% static 'css/opening.css' %}">
+	<link rel="stylesheet" href="{% static 'css/chat.css' %}">
+	{% endcompress %}
+
+	{% block style %}{% endblock %}
+	
+</head>
+
+<body>
+	{% include 'nav.html' %}
+	{% include 'messages.html' %}
+
+	<main>
+		{% block content %}{% endblock %}
+	</main>
+
+	{% cache CACHE_TIMEOUT tem_footer %}
+		{% include 'footer.html' %}
+	{% endcache %}
+
+	{% cache CACHE_TIMEOUT tem_chat %}
+		{% include 'chat.html' %}
+	{% endcache %}
+	
+</body>
+
+{% compress js file compressed_main_js %}
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+{% endcompress %}
+
+<script async src="{% static 'js/index.js' %}" type="module"></script>
+<script async src="{% static 'js/chat/index.js' %}" type="module"></script>
+{% block script %}{% endblock %}
+
+
+</html>

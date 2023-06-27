@@ -72,6 +72,7 @@ function getHtmlOfResultWithImg(p, normalizedSearch) {
                <span>${p.name.replace(normalizedSearch, '<b>' + normalizedSearch + '</b>')}</span>\
             </a>
          </li>`;
+}
 
 
 function getHtmlOfResultWithOutImg(p, normalizedSearch) {

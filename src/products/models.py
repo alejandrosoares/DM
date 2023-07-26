@@ -33,6 +33,11 @@ class Category(models.Model):
     num_products = models.PositiveSmallIntegerField("Number of products")
     enable = models.BooleanField(default=False)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['enable'], name='category_enable_idx')
+        ]
+
     def decrease_num_products(self):
         self.num_products -= 1
         if self.num_products == 0:
@@ -74,7 +79,6 @@ class Product(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['code']),
             models.Index(fields=['code'], name='product_code_idx')
         ]
 

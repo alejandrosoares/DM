@@ -1,7 +1,8 @@
 from django.urls import path, include
+from django.conf import settings
 
 
 app_name = "contact"
 urlpatterns = [
-    path('', include('contact.api.urls')),
+    path(f'api/{settings.API_VERSION}/', include('contact.api.urls')),
 ]

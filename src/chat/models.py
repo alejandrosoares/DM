@@ -14,6 +14,11 @@ class Chat(models.Model):
     uuid = models.UUIDField(editable=False, default=uuid.uuid4)
     created = models.DateTimeField(auto_now=False, auto_now_add=True)
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['uuid'], name='chat_uuid_idx')
+        ]
+
     @property
     def shorted_id(self):
         shorted_id = str(self.uuid)[:6]

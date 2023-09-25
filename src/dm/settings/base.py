@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'invalid-secret-key')
 
 DEBUG = True
-ENABLE_AUTOMATIC_CHATBOT = True
+ENABLE_AUTOMATIC_CHATBOT = False
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APP_NAME = 'DM'
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
@@ -208,3 +208,6 @@ KEEP_COMMENTS_ON_MINIFYING = False
 
 REDIS_USER = os.getenv('REDIS_USER',)
 REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
+
+
+API_VERSION = 'v1'

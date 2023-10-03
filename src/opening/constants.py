@@ -1,23 +1,23 @@
 SEP_SCHEDULE = 'to'
 
 DIC_DAYS = {
-    1: "Lunes",
-    2: "Martes",
-    3: "Miércoles",
-    4: "Jueves",
-    5: "Viernes",
-    6: "Sábado",
-    7: "Domingo"
+    1: "Monday",
+    2: "Tuesday",
+    3: "Wednesday",
+    4: "Thursday",
+    5: "Friday",
+    6: "Saturday",
+    7: "Sunday"
 }
 
 DAYS = [
-    (1, "Lunes"),
-    (2, "Martes"),
-    (3, "Miércoles"),
-    (4, "Jueves"),
-    (5, "Viernes"),
-    (6, "Sábado"),
-    (7, "Domingo")
+    (1, "Monday"),
+    (2, "Tuesday"),
+    (3, "Wednesday"),
+    (4, "Thursday"),
+    (5, "Friday"),
+    (6, "Saturday"),
+    (7, "Sunday")
 ]
 
 HOURS = [

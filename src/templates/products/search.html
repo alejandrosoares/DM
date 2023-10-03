@@ -3,7 +3,7 @@
     <div class="col-12 col-md-8 search-container">
         <div class="row search-relative-container">
             <div class="col-10 col-sm-11 p-0 h-100">
-                <input type="text" name="q" id="searchInput" class="search-input" placeholder="¿Que buscas?" value=""
+                <input type="text" name="q" id="searchInput" class="search-input" placeholder="Search" value=""
                     autocomplete="off">
             </div>
             <div class="col-2 col-sm-1 p-0 h-100">
@@ -18,7 +18,7 @@
     <div class="col-12 pl-0 pr-0 search-categories" id="categories">
         <ul class="categories-list">
             <li class="search-category" data-id="0">
-                <span class="badge badge-primary custom-span-category">Todos</span>
+                <span class="badge badge-primary custom-span-category">All</span>
             </li>
             {% for c in categories %}
             <li class="search-category" data-id="{{c.id}}">

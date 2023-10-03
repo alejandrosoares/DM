@@ -10,29 +10,29 @@
             <ul class="navbar-nav ml-auto">
                 {% if request.path == "/" %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#home" >Inicio</a>
+                    <a class="nav-link" href="#home" >Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#products" >Productos</a>
+                    <a class="nav-link" href="#products" >Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#opening" >Horarios</a>
+                    <a class="nav-link" href="#opening" >Opening hours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#contact" >Contacto</a>
+                    <a class="nav-link" href="#contact" >Contact</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home:home' %}#home" >Inicio</a>
+                    <a class="nav-link" href="{% url 'home:home' %}#home" >Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home:home' %}#products">Productos</a>
+                    <a class="nav-link" href="{% url 'home:home' %}#products">Products</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home:home' %}#opening" >Horarios</a>
+                    <a class="nav-link" href="{% url 'home:home' %}#opening" >Opening hours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'home:home' %}#contact" >Contacto</a>
+                    <a class="nav-link" href="{% url 'home:home' %}#contact" >Contact</a>
                 </li>
                 {% endif %}
             </ul>

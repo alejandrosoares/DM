@@ -34,7 +34,7 @@ def get_products_view(request):
         products = cache.get_or_set(CACHE_KEY_MOD_PRODUCTS, Product.objects.all())
 
     products, pagination = get_pagination(request.GET, products)
-    products_list = make_list_of(products)
+    products_list = convert_to_list(products)
     res_builder.obj = {
         'products': products_list,
         'pagination': pagination
@@ -60,7 +60,7 @@ def search_by_words(query: str) -> QuerySet:
     return products
 
 
-def make_list_of(products: QuerySet) -> list[dict]:
+def convert_to_list(products: QuerySet) -> list[dict]:
     url = settings.DOMAIN
     product_list = []
     for product in products:

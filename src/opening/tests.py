@@ -26,7 +26,7 @@ class OpeningTestCase(TestCase):
             start=self.start,
             end=self.end
         )
-    
+
     def __get_expected_schedule_range(self, start, end):
         expected_str = '{} {} {}'.format(
             start.strftime(self.cls.time_format),

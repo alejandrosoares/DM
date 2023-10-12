@@ -20,4 +20,3 @@ DAYS = [
     (6, "Saturday"),
     (7, "Sunday")
 ]
-

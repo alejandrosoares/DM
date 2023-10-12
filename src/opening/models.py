@@ -21,7 +21,7 @@ class Opening(models.Model):
 
     class Meta:
         ordering = ['day']
-    
+
     @property
     def day_str(self):
         return DIC_DAYS[self.day]

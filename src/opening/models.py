@@ -2,51 +2,42 @@ from django.db import models
 
 from .constants import (
     SEP_SCHEDULE,
+    SEP_RANGE,
     DIC_DAYS,
-    DAYS,
-    HOURS,
-    ORDER_OF_HOURS
+    DAYS
 )
 
 
 class Opening(models.Model):
 
-    day = models.SmallIntegerField(
+    day = models.PositiveSmallIntegerField(
         choices=DAYS,
         unique=True,
         error_messages={'unique': 'This day already exists.'}
     )
+    weekday = models.PositiveSmallIntegerField()
     schedule_range = models.CharField(max_length=36, null=True, blank=True)
     closed = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['day']
 
+    @property
+    def day_str(self):
+        return DIC_DAYS[self.day]
+
     def update_schedule_range(self):
         if self.closed:
             self.schedule_range = 'Closed'
         else:
             self.__set_schedule_range()
-
         self.save()
 
     def __set_schedule_range(self):
-        sep_schedule = SEP_SCHEDULE
-        schedules = self.schedulerange_set.all().order_by('order')
-        schedule_range = ''
-
-        for sch in schedules:
-            schedule_range += '{} {} {} - '.format(
-                sch.start,
-                sep_schedule,
-                sch.end
-            )
-
-        schedule_range = schedule_range[:-3]  # Removing last dash
-        self.schedule_range = schedule_range
-
-    def get_str_day(self):
-        return DIC_DAYS[self.day]
+        separator = SEP_SCHEDULE
+        schedules = self.schedules.all().order_by('start')
+        schedule_range = [f'{s.start_str} {separator} {s.end_str}' for s in schedules]
+        self.schedule_range = SEP_RANGE.join(schedule_range)
 
     def __str__(self):
         return DIC_DAYS[self.day]
@@ -54,18 +45,21 @@ class Opening(models.Model):
 
 class ScheduleRange(models.Model):
 
-    opening = models.ForeignKey(Opening, on_delete=models.CASCADE)
-    start = models.CharField(max_length=5, choices=HOURS)
-    end = models.CharField(max_length=5, choices=HOURS)
-    order = models.SmallIntegerField(blank=True)
+    opening = models.ForeignKey(
+        Opening,
+        on_delete=models.CASCADE,
+        related_name='schedules'
+    )
+    start = models.TimeField()
+    end = models.TimeField()
 
-    def save(self, *args, **kwargs):
-        self.__update_order()
-        super(__class__, self).save(*args, **kwargs)
+    @property
+    def start_str(self):
+        return self.start.strftime('%H:%M')
 
-    def __update_order(self):
-        self.order = ORDER_OF_HOURS[self.start]
+    @property
+    def end_str(self):
+        return self.end.strftime('%H:%M')
 
     def __str__(self):
-        day = self.opening.get_str_day()
-        return f'{day}: {self.start} to {self.end}'
+        return f'{self.opening.day_str}: {self.start} to {self.end}'

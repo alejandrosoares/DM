@@ -55,5 +55,11 @@ Introducing our cutting-edge Product Catalog, a seamless blend of technology and
 
 ## Microservices
 Make sure to run the next microservices before:
-* [dm-recommendations](https://github.com/alejandrosoares/dm-recommendations)
+* [dm-recommendations](https://user-images.githubusercontent.com/48335948/277250835-24b43490-1e7f-4e86-9a75-459f5edfbac7.png)
 
+
+
+## Screenshots
+![Search](https://user-images.githubusercontent.com/48335948/277250835-24b43490-1e7f-4e86-9a75-459f5edfbac7.png)
+![Opening Hours](https://user-images.githubusercontent.com/48335948/277250843-23c8b6f3-3bf6-4804-a09c-4991903d6636.png)
+![Product Detail and recommendations](https://user-images.githubusercontent.com/48335948/277250845-adb42a65-2b78-4cda-923e-408c3e3f05d4.png)

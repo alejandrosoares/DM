@@ -33,20 +33,21 @@
 
    <div class="container">
       {% include 'products/products.html' %}
-      {% include 'opening.html' %}
+
+      <opening-hours id="opening"></opening-hours>
 
       {% cache CACHE_TIMEOUT tem_contact %}
          {% include 'contact.html' %}
       {% endcache %}
 
    </div>
-
-{% endblock %}
-
-{% block script %}
+   {% endblock %}
+   
+   {% block script %}
    <script src="{% static 'js/products/index.js' %}" type="module"></script>
    <script src="{% static 'js/header.js' %}"></script>
-
+   
    <script async src="{% static 'js/search/index.js' %}" type="module"></script>
    <script async src="{% static 'js/contact.js' %}" type="module"></script>
+   <script async src="{% static 'js/components/opening.js' %}" type="module"></script>
 {% endblock %}

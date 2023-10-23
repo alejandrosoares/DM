@@ -2,8 +2,8 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
+from services.recommendations import get_recommended_products
 from .models import Product
-from .utils.views import get_recommended_products_of
 
 
 @require_http_methods(["GET"])
@@ -14,7 +14,7 @@ def product_view(request, product_id):
     except Product.DoesNotExist:
         raise Http404("Product Not Found")
     else:
-        recommendations = get_recommended_products_of(product)
+        recommendations = get_recommended_products(product.id)
         context = {
             "product": product,
             "recommendations": recommendations

@@ -13,6 +13,7 @@ from django.db.models.signals import (
 from django.dispatch import receiver
 from django.core.cache import cache
 
+from utils.cache.recommendations import delete_all_cache_recommendations
 from utils.cache.constants import CACHE_KEY_MOD_CATEGORIES, CACHE_KEY_MOD_PRODUCTS
 from utils.normalize import normalize_text
 from .models import Product, Category, upload_to
@@ -81,6 +82,7 @@ def post_save_products(sender, instance, created, **kwargs):
             img.close()
 
     cache.delete(CACHE_KEY_MOD_PRODUCTS)
+    delete_all_cache_recommendations()
 
 
 @receiver(pre_delete, sender=Product)
@@ -100,6 +102,11 @@ def pre_delete_products(sender, instance, **kwargs):
     delete_image_folder()
     decrease_number_of_products_of_category()
     cache.delete(CACHE_KEY_MOD_PRODUCTS)
+
+
+@receiver(post_delete, sender=Product)
+def post_delete_product(sender, instance, **kwargs):
+    delete_all_cache_recommendations()
 
 
 @receiver(post_save, sender=Category)

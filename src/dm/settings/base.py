@@ -125,9 +125,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'es-ar'
+LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Argentina/Buenos_Aires'
+TIME_ZONE = 'Europe/Zurich'
 
 USE_I18N = True
 
@@ -211,3 +211,6 @@ REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
 
 
 API_VERSION = 'v1'
+
+
+DEFAULT_RECOMMENDATIONS_PRODUCT = 4

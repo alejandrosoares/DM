@@ -24,7 +24,7 @@ class AuthRecommendationService:
         if self.token is None:
             self.token = self._get_token()
         return self.token
-    
+
     def refresh_and_get_token(self) -> Token:
         self.token = self._get_token()
         return self.token
@@ -32,20 +32,20 @@ class AuthRecommendationService:
     def _get_token(self) -> str:
         response = self._get_response()
         assert response.status_code == 200, 'Error getting token'
-        
+
         response_data = response.json()
         expiry_time = datetime.now() + timedelta(seconds=response_data['expires_in'])
         token = Token(response_data['access_token'], expiry_time)
         return token
-    
+
     def _get_response(self):
         auth = self._get_auth()
         data = self._get_data()
         request = Request.Builder(self.url) \
-                .with_post_method() \
-                .with_data(data) \
-                .with_auth(auth) \
-                .build()
+            .with_post_method() \
+            .with_data(data) \
+            .with_auth(auth) \
+            .build()
         response = request.send()
         return response
 

@@ -18,8 +18,8 @@ class Request:
             response = requests.get(self.url, params=self.params, headers=self.headers)
         elif self.method == 'POST':
             response = requests.post(
-                self.url, 
-                data=self.data, 
+                self.url,
+                data=self.data,
                 headers=self.headers,
                 auth=self.auth
             )
@@ -38,7 +38,7 @@ class Request:
         def with_data(self, data: dict) -> Self:
             self.data = data
             return self
-        
+
         def with_auth(self, auth: tuple) -> Self:
             self.auth = auth
             return self

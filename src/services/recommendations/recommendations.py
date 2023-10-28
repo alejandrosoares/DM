@@ -31,7 +31,7 @@ def _fetch_recommended_products(product_id: int, limit: int) -> list[int]:
     return []
 
 
-def _get_response(product_id: int, limit:int) -> Response:
+def _get_response(product_id: int, limit: int) -> Response:
     params = {'product_id': product_id, 'limit': limit}
     headers = _get_headers()
     request = Request.Builder(URL_DMREC_SERVICE_PRODUCTS) \
@@ -40,6 +40,7 @@ def _get_response(product_id: int, limit:int) -> Response:
         .build()
     response = request.send()
     return response
+
 
 def _get_headers() -> dict:
     token = _get_auth_token_for_service()

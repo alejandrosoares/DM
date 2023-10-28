@@ -41,6 +41,15 @@ Introducing our cutting-edge Product Catalog, a seamless blend of technology and
     REDIS_PASSWORD
 ```
 
+Set the next variables to use DM Recommendation Microservice:
+```
+    DMREC_HOST
+    DMREC_CLIENT_ID
+    DMREC_CLIENT_SECRET
+    DMREC_USERNAME
+    DMREC_PASSWORD
+```
+
 2. Inside your virtual environment:
 ```
     pip install requirements/dev.txt

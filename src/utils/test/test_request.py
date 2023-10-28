@@ -17,6 +17,7 @@ class TestRequest(TestCase):
         }
         self.mock_data = {'title': 'foo', 'body': 'bar', 'userId': 1}
         self.mock_params = {'page': 1, 'items': 10}
+        self.headers = {'Content-Type': 'application/json'}
 
     def test_with_data(self):
         request = Request.Builder(self.url).with_data(
@@ -26,6 +27,10 @@ class TestRequest(TestCase):
     def test_with_params(self):
         request = Request.Builder(self.url).with_params(self.mock_params).build()
         self.assertEqual(request.params, self.mock_params)
+    
+    def test_with_headers(self):
+        request = Request.Builder(self.url).with_headers(self.headers).build()
+        self.assertEqual(request.headers, self.headers)
 
     def test_send_get_request(self):
         request = Request.Builder(self.url).build()

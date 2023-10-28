@@ -17,6 +17,7 @@ class TestRequest(TestCase):
         }
         self.mock_data = {'title': 'foo', 'body': 'bar', 'userId': 1}
         self.mock_params = {'page': 1, 'items': 10}
+        self.headers = {'Content-Type': 'application/json'}
 
     def test_with_data(self):
         request = Request.Builder(self.url).with_data(
@@ -27,6 +28,10 @@ class TestRequest(TestCase):
         request = Request.Builder(self.url).with_params(self.mock_params).build()
         self.assertEqual(request.params, self.mock_params)
 
+    def test_with_headers(self):
+        request = Request.Builder(self.url).with_headers(self.headers).build()
+        self.assertEqual(request.headers, self.headers)
+
     def test_send_get_request(self):
         request = Request.Builder(self.url).build()
         response_mock = Mock()
@@ -34,7 +39,7 @@ class TestRequest(TestCase):
         response_mock.json.return_value = self.mock_response
         with patch.object(requests, 'get', return_value=response_mock) as mock_method:
             response = request.send()
-            mock_method.assert_called_once_with(self.url, params=None)
+            mock_method.assert_called_once_with(self.url, params=None, headers=None)
             self.assertEqual(response.status_code, 200)
             self.assertEqual(response.json(), self.mock_response)
 
@@ -46,6 +51,11 @@ class TestRequest(TestCase):
         response_mock.json.return_value = self.mock_response
         with patch.object(requests, 'post', return_value=response_mock) as mock_method:
             response = request.send()
-            mock_method.assert_called_once_with(self.url, json=self.mock_data)
+            mock_method.assert_called_once_with(
+                self.url,
+                data=self.mock_data,
+                headers=None,
+                auth=None
+            )
             self.assertEqual(response.status_code, 201)
             self.assertEqual(response.json(), self.mock_response)

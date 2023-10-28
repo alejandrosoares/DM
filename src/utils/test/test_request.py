@@ -51,6 +51,11 @@ class TestRequest(TestCase):
         response_mock.json.return_value = self.mock_response
         with patch.object(requests, 'post', return_value=response_mock) as mock_method:
             response = request.send()
-            mock_method.assert_called_once_with(self.url, data=self.mock_data, headers=None, auth=None)
+            mock_method.assert_called_once_with(
+                self.url,
+                data=self.mock_data,
+                headers=None,
+                auth=None
+            )
             self.assertEqual(response.status_code, 201)
             self.assertEqual(response.json(), self.mock_response)

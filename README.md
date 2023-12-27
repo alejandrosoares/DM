@@ -64,7 +64,7 @@ Set the next variables to use DM Recommendation Microservice:
 
 ## Microservices
 Make sure to run the next microservices before:
-* [dm-recommendations](https://user-images.githubusercontent.com/48335948/277250835-24b43490-1e7f-4e86-9a75-459f5edfbac7.png)
+* [dm-recommendations](https://github.com/alejandrosoares/dm-recommendations)
 
 
 

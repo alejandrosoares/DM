@@ -13,11 +13,12 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'invalid-secret-key')
 
 DEBUG = True
 ENABLE_AUTOMATIC_CHATBOT = False
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 APP_NAME = 'DM'
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
+DEFAULT_RECOMMENDED_PRODUCTS_LIMIT = 4
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DJANGO_APPS = [
     'daphne',
@@ -213,12 +214,19 @@ REDIS_PASSWORD = os.getenv('REDIS_PASSWORD')
 API_VERSION = 'v1'
 
 
-DEFAULT_RECOMMENDATIONS_PRODUCT = 4
-
-
 # DM RECOMMENDATIONS SERVICE
 DMREC_HOST = os.getenv('DMREC_HOST')
 DMREC_CLIENT_ID = os.getenv('DMREC_CLIENT_ID')
 DMREC_CLIENT_SECRET = os.getenv('DMREC_CLIENT_SECRET')
 DMREC_USERNAME = os.getenv('DMREC_USERNAME')
 DMREC_PASSWORD = os.getenv('DMREC_PASSWORD')
+
+
+# MICROSERVICES
+
+MICROSERVICES = {
+    "DM_REC": {
+        "ENABLED": False,
+        "DEFAULT_LIMIT": DEFAULT_RECOMMENDED_PRODUCTS_LIMIT,
+    }
+}

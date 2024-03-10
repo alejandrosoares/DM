@@ -13,7 +13,13 @@ from .authentication import AuthRecommendationService
 
 
 def get_recommended_products(product_id: int) -> QuerySet:
-    limit = settings.DEFAULT_RECOMMENDATIONS_PRODUCT
+    if settings.MICROSERVICES["DM_REC"]["ENABLED"]:
+        return _get_from_microservice(product_id)
+    return _get_random_products(product_id)
+
+
+def _get_from_microservice(product_id: int) -> list[int]:
+    limit = settings.MICROSERVICES["PR"]["DEFAULT_LIMIT"]
     cache_key = get_cache_recommendation_key_of(product_id, limit)
     recommended_id_list = cache.get(cache_key)
     if recommended_id_list is None:
@@ -56,3 +62,14 @@ def _get_auth_token_for_service() -> str:
     if is_expired:
         token = auth.refresh_and_get_token()
     return token.value
+
+
+def _get_random_products(product_id: int) -> QuerySet:
+    product_id_list = _get_random_product_id_list(product_id)
+    products = Product.objects.filter(id__in=product_id_list)
+    return products
+
+
+def _get_random_product_id_list(product_id: int) -> list[int]:
+    product_id_list = Product.objects.values_list('id', flat=True).exclude(id=product_id)
+    return product_id_list

@@ -61,11 +61,13 @@ Set the next variables to use DM Recommendation Microservice:
 ```
 
 
-
 ## Microservices
-Make sure to run the next microservices before:
-* [dm-recommendations](https://github.com/alejandrosoares/dm-recommendations)
 
+### Product recommendation
+If you want to get better product recommendation in the details section:
+1. Run the following microservice:
+* [dm-recommendations](https://github.com/alejandrosoares/dm-recommendations)
+2. Enable this microservice in the dm/settings/base.py file
 
 
 ## Screenshots

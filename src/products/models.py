@@ -60,7 +60,7 @@ class Category(models.Model):
 
 class Product(models.Model):
 
-    categories = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category, related_name='products')
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE,
                               null=True, blank=True)
 

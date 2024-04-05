@@ -1,13 +1,12 @@
 import uuid
 
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 
 class ChatRole(models.TextChoices):
-    USER = 'U', _('user')
-    SYSTEM = 'S', _('system')
-    ASSISTANT = 'A', _('assistant')
+    USER = 'U', 'user'
+    SYSTEM = 'S', 'system'
+    ASSISTANT = 'A', 'assistant'
 
 
 class Chat(models.Model):

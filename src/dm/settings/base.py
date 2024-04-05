@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'invalid-secret-key')
 
 DEBUG = True
-ENABLE_AUTOMATIC_CHATBOT = False
+ENABLE_AUTOMATIC_CHATBOT = True
 APP_NAME = 'DM'
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]

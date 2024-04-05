@@ -42,3 +42,15 @@ class ChatMessage(models.Model):
     def __str__(self):
         time = self.created.strftime('%d.%m.%Y %H:%M')
         return f'{self.chat.shorted_id} - {time} - {self.created_by}:{self.content}'
+
+
+class ChatDocument(models.Model):
+    title = models.CharField(max_length=100)
+    source = models.CharField(max_length=100, blank=True)
+    content = models.TextField()
+    is_enabled = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now=False, auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
+
+    def __str__(self):
+        return self.title

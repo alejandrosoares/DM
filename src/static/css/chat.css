@@ -71,7 +71,7 @@
     padding: 8px;
 }
 
-#chat .chat-box .message.user {
+#chat .chat-box .message.U {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     border-bottom-right-radius: 0px;
@@ -79,7 +79,7 @@
     background-color: #e7f2f0;
 }
 
-#chat .chat-box .message.assistant {
+#chat .chat-box .message.A {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     border-bottom-right-radius: 8px;

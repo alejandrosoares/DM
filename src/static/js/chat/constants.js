@@ -1,7 +1,7 @@
 const CONTEXT_VARIABLES = loadContextVariables();
 const ROLE = {
-    USER: 'user',
-    ASSISTANT: 'assistant'
+    USER: 'U',
+    ASSISTANT: 'A'
 }
 
 

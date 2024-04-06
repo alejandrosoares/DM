@@ -48,7 +48,7 @@ def search_by_category(category_id: str) -> QuerySet:
     except (Category.DoesNotExist, ValueError):
         products = Product.objects.all()
     else:
-        products = c.product_set.all()
+        products = c.products.all()
     return products
 
 

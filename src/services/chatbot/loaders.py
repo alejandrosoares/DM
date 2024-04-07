@@ -9,7 +9,7 @@ from chat.models import ChatDocument
 
 
 class IDocumentLoader(ABC):
-    
+
     @abstractmethod
     def get_documents(self) -> List[Document]:
         pass
@@ -17,11 +17,11 @@ class IDocumentLoader(ABC):
     @abstractmethod
     def _build_document(self, document: Any) -> Document:
         pass
-    
+
     @abstractmethod
     def _format_document_content(self, document: Any) -> str:
         pass
-    
+
     @abstractmethod
     def _get_document_source(self, document: Any) -> str:
         pass
@@ -34,7 +34,7 @@ class ChatDocumentLoader(IDocumentLoader):
 
     def get_documents(self) -> List[Document]:
         return [self._build_document(cd) for cd in self.chat_documents]
-    
+
     def _get_chat_documents(self) -> List[Document]:
         return [self._build_document(cd) for cd in self.chat_documents]
 
@@ -46,10 +46,10 @@ class ChatDocumentLoader(IDocumentLoader):
 
     def _format_document_content(self, chat_document: ChatDocument) -> str:
         return '{}\n{}'.format(
-            chat_document.title, 
+            chat_document.title,
             chat_document.content
         )
-    
+
     def _get_document_source(self, chat_document: ChatDocument) -> str:
         return '{}.{}:{}'.format(
             ChatDocument.__module__,
@@ -64,21 +64,21 @@ class MultipleSourceLoader:
     and splits docs in the right size.
     """
 
-    def __init__(self, 
-        document_loaders: List[IDocumentLoader],
-        splitter: TextSplitter
-    ):
+    def __init__(self,
+                 document_loaders: List[IDocumentLoader],
+                 splitter: TextSplitter
+                 ):
         self.document_loaders = document_loaders
         self.splitter = splitter
-    
+
     def get_documents(self) -> List[Document]:
         documents = self._get_documents()
         splitted_documents = self._split_documents(documents)
         return splitted_documents
-    
+
     def _split_documents(self, documents: List[Document]) -> List[Document]:
         return self.splitter.split_documents(documents)
-    
+
     def _get_documents(self) -> List[Document]:
         documents = []
         for loader in self.document_loaders:

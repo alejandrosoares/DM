@@ -1,12 +1,6 @@
-from django.conf import settings
-
-from services.automatization.chatbot.chat import ChatBot
+from services.chatbot import ChatBotOpenAI
 from utils.views import get_data_from, queryset_to_dict
 from chat.models import Chat, ChatMessage, ChatRole
-
-
-if settings.ENABLE_AUTOMATIC_CHATBOT:
-    ChatBotService = ChatBot()
 
 
 def get_and_save_user_message(req_body: bytes) -> dict:
@@ -16,9 +10,10 @@ def get_and_save_user_message(req_body: bytes) -> dict:
 
 
 def get_and_save_automatic_message(user_message: dict) -> dict:
-    assistant_response = ChatBotService.get_response(user_message['content'])
+    chat = ChatBotOpenAI()
+    assistant_response = chat.get_answer(user_message['content'])
     assistant_data = {
-        'content': assistant_response,
+        'content': assistant_response['result'],
         'chatId': user_message['chatId'],
         'role': ChatRole.ASSISTANT.value
     }

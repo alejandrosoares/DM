@@ -39,7 +39,7 @@ pytz==2023.3
 PyYAML==6.0.1
 rcssmin==1.1.1
 redis==4.5.4
-requests==2.27.0
+requests==2.31.0 
 rjsmin==1.2.1
 service-identity==21.1.0
 six==1.16.0
@@ -56,3 +56,5 @@ webencodings==0.5.1
 webp-converter==4.1.0
 yarl==1.9.2
 zope.interface==6.0
+langchain==0.1.14
+chromadb==0.4.24

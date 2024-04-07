@@ -29,7 +29,7 @@ class ChatBotOpenAI:
             return_source_documents=True
         )
         self._load_api_key()
-        
+
     def get_answer(self, question: str) -> dict:
         result = self.qa({
             "query": question
@@ -37,7 +37,7 @@ class ChatBotOpenAI:
         return {
             "result": result.get("result")
         }
-    
+
     def get_answer_and_sources(self, question: str) -> dict:
         result = self.qa({
             "query": question

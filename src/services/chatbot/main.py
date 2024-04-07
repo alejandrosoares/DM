@@ -29,7 +29,7 @@ class ChatBotOpenAI:
             return_source_documents=True
         )
         self._load_api_key()
-    
+
     def get_answer(self, question: str) -> dict:
         result = self.qa({
             "query": question
@@ -37,7 +37,7 @@ class ChatBotOpenAI:
         return {
             "result": result.get("result")
         }
-    
+
     def get_answer_and_sources(self, question: str) -> dict:
         result = self.qa({
             "query": question
@@ -47,13 +47,12 @@ class ChatBotOpenAI:
             "result": result.get("result"),
             "source_documents": sources
         }
-    
+
     def _get_source_list(self, sources: List[Document]) -> List[str]:
         return [source.metadata.get('source') for source in sources]
-    
+
     def _load_api_key(self):
         import openai
         from django.conf import settings
-    
-        openai.api_key = settings.OPENAI_API_KEY
 
+        openai.api_key = settings.OPENAI_API_KEY

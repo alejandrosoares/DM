@@ -4,12 +4,14 @@ from typing import NamedTuple
 from datetime import datetime, timedelta
 
 from utils.request import Request
+from utils.decorators import singleton
 from .constants import URL_DMREC_SERVICE_TOKEN
 
 
 Token = NamedTuple('Token', [('value', str), ('expiry_time', datetime)])
 
 
+@singleton
 class AuthRecommendationService:
 
     def __init__(self):
@@ -21,12 +23,9 @@ class AuthRecommendationService:
         self.token = None
 
     def get_token(self) -> Token:
-        if self.token is None:
+        now = datetime.now()
+        if self.token is None or self.token.expiry_time < now:
             self.token = self._get_token()
-        return self.token
-
-    def refresh_and_get_token(self) -> Token:
-        self.token = self._get_token()
         return self.token
 
     def _get_token(self) -> str:
@@ -58,6 +57,3 @@ class AuthRecommendationService:
 
     def _get_auth(self) -> tuple[str]:
         return (self.client_id, self.client_secret)
-
-
-AuthRecommendationServiceInstance = AuthRecommendationService()

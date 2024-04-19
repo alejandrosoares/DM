@@ -2,7 +2,7 @@ from django.http import Http404
 from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
-from services.recommendations.recommendations import get_recommended_products
+from services.recommendations import get_recommended_products
 from .models import Product
 
 

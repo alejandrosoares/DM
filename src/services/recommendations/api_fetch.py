@@ -1,4 +1,3 @@
-from datetime import datetime
 from requests.models import Response
 
 from utils.request import Request
@@ -31,11 +30,6 @@ def _get_headers() -> dict:
 
 
 def _get_auth_token_for_service() -> str:
-    now = datetime.now()
     auth = AuthRecommendationService()
     token = auth.get_token()
-
-    is_expired = token.expiry_time > now
-    if is_expired:
-        token = auth.refresh_and_get_token()
     return token.value

@@ -16,7 +16,6 @@ ENABLE_AUTOMATIC_CHATBOT = True
 APP_NAME = 'DM'
 ADMINS = [('Alejandro', 'soaresalejandro@outlook.com')]
 MANAGERS = [('Alejandro', 'soaresalejandro@outlook.com')]
-DEFAULT_RECOMMENDED_PRODUCTS_LIMIT = 4
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -28,6 +27,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
 ]
 
 LOCAL_APPS = [
@@ -227,6 +227,6 @@ DMREC_PASSWORD = os.getenv('DMREC_PASSWORD')
 MICROSERVICES = {
     "DM_REC": {
         "ENABLED": False,
-        "DEFAULT_LIMIT": DEFAULT_RECOMMENDED_PRODUCTS_LIMIT,
+        "DEFAULT_LIMIT": 4,
     }
 }

@@ -22,7 +22,7 @@
          <a href="{% url 'home:home'%}#products" class="btn btn-link"><i class="bi bi-arrow-left left"></i>Home</a>
       </div>
       
-      <div class="col-12 main-product">
+      <div class="col-12 main-product" data-product-id="{{ product.id }}">
          <div class="row">
             <div class="col-12 col-md-8 product-img">
                <img src="{{product.img_webp.url}}" alt="Product Image" loading="lazy">
@@ -47,7 +47,7 @@
                      <p>{{product.description}}</p>
                   </div>
                   <div class="col-12 code" data-code="{{product.code}}">
-                     <p class="text-muted text-left">C&oacute;d: {{product.code}}</p>
+                     <p class="text-muted text-left">Code: {{product.code}}</p>
                   </div>
                </div>
                <div class="row product-consult">
@@ -70,33 +70,38 @@
                <p class="text-center">Products may you be interested in:</p>
             </div>
          </div>
-         <div class="row products">
-            <div class="col-12 products-list">
-               <div class="row justify-content-center">
-                  {% for p in recommendations %}
-                  <a class="col-lg-3 col-sm-6 my-1 px-1 .product" href="{% url 'products:product' product_id=p.id%}">
-                     <div class="card product">
-                        <div class="product-header">
-                           <img class="card-img-top custom-img" src="{{p.img_small_webp.url}}" alt="Image" loading="lazy">
-                           <div class="price">
-                              <span>{{p.price}}</span>
-                           </div>
-                           <div class="code">
-                              <span>C&oacute;d: {{p.code}}</span>
-                           </div>
-                        </div>
 
-                        <div class="product-title">
-                           <div class="name">
-                              <p>{{p.name}}</p>
-                           </div>
-                        </div>
-                     </div>
-                  </a>
-                  {% endfor %}
+         <div class="row products">
+
+            <div class="col-12 products-loader">
+               <img src="/static/img/loader.svg" alt="Loading Image">
+               <span class="loading-text">Loading related products...</span>
+            </div>
+
+            <div class="col-12 products-list d-none">
+               <div class="row justify-content-center">
                </div>
             </div>
          </div>
+
+         <template id="template-product-card">
+            <a class="col-lg-3 col-sm-6 my-1 px-1 .product" href="">
+               <div class="card product">
+                  <div class="product-header">
+                     <img class="card-img-top custom-img" src="" alt="Image" loading="lazy">
+                     <div class="price">
+                        <span></span>
+                     </div>
+                  </div>
+
+                  <div class="product-title">
+                     <div class="name">
+                        <span></span>
+                     </div>
+                  </div>
+               </div>
+            </a>
+         </template>
       </div>
 
    </div>
@@ -111,4 +116,5 @@
 
 {% block script %}
 <script async src="{% static 'js/products/questions.js'%}" type="module"></script>
+<script async src="{% static 'js/products/recommendedProducts.js'%}" type="module"></script>
 {% endblock %}

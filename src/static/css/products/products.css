@@ -25,11 +25,11 @@
    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.2);
 }
 
-.product .name p {
+.product .name span {
    transition: 1.5s all ease;
 }
 
-.product:hover .name p {
+.product:hover .name span {
    color: var(--primary);
    font-weight: 500;
 }

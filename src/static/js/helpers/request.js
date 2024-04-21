@@ -65,10 +65,102 @@ function getDefaultToken() {
     return inputToken.value;
 }
 
+// TODO: Replace functions above with the Request class below
+class Request {
+
+    constructor(build) {
+        this.url = build.url;
+        this.body = build.body;
+        this.method = build.method;
+        this.headers = build.headers;
+        this.params = build.params;
+    }
+
+    send = async () => {
+        const req = this._build();
+        const url = this._getUrlWithParamsIfNeeded();
+        try {
+            return await fetch(url, req);
+        } catch (error) {
+            console.error(`Error fetching resourse: ${this.url}`, error);
+            throw error;
+        }
+    }
+
+    _getUrlWithParamsIfNeeded = () => {
+        if (!this.params) return this.url;
+        const params = new URLSearchParams(this.params);
+        return `${this.url}?${params}`;
+    }
+
+    _build = () => {
+        const req = {
+            method: this.method,
+            headers: this.headers,
+            body: this.body ? JSON.stringify(this.body) : null,
+        };
+        return req;
+    }
+
+    static get Builder() {
+
+        class Builder {
+            constructor(url) {
+                this.url = url;
+                this.method = 'GET';
+                this.headers = new Headers({ 'Content-Type': 'application/json' });
+                this.body = null;
+                this.params = null;
+            }
+
+            withBody(body) {
+                this.body = body;
+                return this;
+            }
+
+            withGetMethod() {
+                this.method = 'GET';
+                return this;
+            }
+
+            withPostMethod() {
+                const csrfToken = this._getCsrfToken();
+                this.method = 'POST';
+                this.headers.set('X-CSRFToken', csrfToken);
+                return this;
+            }
+
+            withGetParams(params) {
+                this.params = params;
+                return this;
+            }
+
+            build() {
+                return new Request(this);
+            }
+
+            _getCsrfToken() {
+                const pageData = document.getElementById('page-data');
+                const selector = 'input[name="csrfmiddlewaretoken"]';
+                const element = pageData.querySelector(selector);
+
+                if (!element) {
+                    throw new Error('CSRF token not found');
+                }
+
+                return element.value;
+            }
+        }
+
+        return Builder;
+    }
+}
+
 
 export {
     send,
     sendSync,
     buildPostRequest,
-    buildGetRequest
+    buildGetRequest,
+    Request
 };

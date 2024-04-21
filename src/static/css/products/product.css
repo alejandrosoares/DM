@@ -41,6 +41,24 @@
    cursor: pointer;
 }
 
+.products-loader {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+   height: 200px;
+}
+
+.product .name span {
+   transition: 1.5s all ease;
+   color: var(--dark);
+}
+
+.product:hover .name span {
+   color: var(--primary);
+   font-weight: 500;
+}
+
 @media screen and (max-width: 575px) {
    .main-product {
       margin-left: 5px;

@@ -9,7 +9,10 @@ from django.core.cache import cache
 from utils.normalize import normalize_query_string
 from utils.response import ResponseJsonBuilder
 from utils.cache.constants import CACHE_KEY_MOD_PRODUCTS
+from services.recommendations import get_recommended_products
 from products.models import Product, Category
+from .serializers import ProductListSerializer
+from .utils import get_limit
 
 
 @require_http_methods(["GET"])
@@ -39,6 +42,16 @@ def get_products_view(request):
         'products': products_list,
         'pagination': pagination
     }
+    return res_builder.get_response()
+
+
+@require_http_methods(["GET"])
+def get_recommended_products_view(request, product_id: int):
+    res_builder = ResponseJsonBuilder()
+    limit = get_limit(request.GET)
+    products = get_recommended_products(product_id, limit)
+    data = ProductListSerializer(products, many=True).data
+    res_builder.obj = data
     return res_builder.get_response()
 
 

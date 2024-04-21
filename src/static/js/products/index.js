@@ -45,7 +45,7 @@ function createProductList(products, pagination) {
       products.forEach(p => {
          const card = template.querySelector("div.card");
          const img = template.querySelector("div.product-header img");
-         const name = template.querySelector("div.name > p");
+         const name = template.querySelector("div.name > span");
          const price = template.querySelector("div.price > span");
          const code = template.querySelector("div.code > span");
 

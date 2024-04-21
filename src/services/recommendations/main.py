@@ -8,7 +8,6 @@ from .api_fetch import fetch_recommended_products
 
 
 def get_recommended_products(product_id: int, limit: int = None) -> QuerySet:
-    limit = settings.MICROSERVICES["DM_REC"]["DEFAULT_LIMIT"] if limit is None else limit
     if settings.MICROSERVICES["DM_REC"]["ENABLED"]:
         return _get_from_microservice(product_id, limit)
     return _get_random_products(product_id, limit)
